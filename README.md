@@ -7,4 +7,4 @@ https://github.com/hl7
 https://github.com/crs4/hl7apy
 
 For NDC Drug Code
-- Brand - NDC10 NDC 12 done w8ith recursive group by
+- Brand - NDC10 NDC 12 done with recursive group by
