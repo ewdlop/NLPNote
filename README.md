@@ -22,3 +22,8 @@ Health Insurance...and Blockchian or something...
 Disturable computing with vanacant office desktops....
 
 https://www.cs.cmu.edu/~15110-f19/slides/week10-2-multiprocessing.pdf vs HyperLogLog
+
+
+Nuclear medicine
+
+Premed = physics + biochemistry + mathematics...+ 
