@@ -34,3 +34,5 @@ https://medicalphysics.duke.edu/about/what-is-medical-physics/
 
 
 VR Capital Punishment........
+
+medical humamoid to help prisoners
