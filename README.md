@@ -58,3 +58,11 @@ Not good enough?!
 
 # Too formal?
 https://plato.stanford.edu/entries/mathematics-explanation/
+
+# |-> (|-> |->) ->  |-> (|-> |->)
+
+https://en.wikipedia.org/wiki/Tupper%27s_self-referential_formula
+
+https://en.wikipedia.org/wiki/Quine_(computing)
+
+https://en.wikipedia.org/wiki/Strange_loop
