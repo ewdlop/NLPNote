@@ -56,7 +56,10 @@ https://en.wikipedia.org/wiki/Kolmogorov_complexity
 
 Not good enough?!
 
-# Too formal?
+# Too formal?(face vs 客氣 vs 做作)
+
+factitious vs https://www.reddit.com/r/ChineseLanguage/comments/itxjaz/%E5%81%9A%E4%BD%9C_pretentious_an_easy_word_with_a_fun_mnemonic/
+
 https://plato.stanford.edu/entries/mathematics-explanation/
 
 # |-> (|-> |->) ->  |-> (|-> |->)
