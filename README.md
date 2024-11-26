@@ -8,3 +8,5 @@ https://github.com/crs4/hl7apy
 
 For NDC Drug Code
 - Brand - NDC10 NDC 12 done with recursive group by
+
+Medical Doctor detection Phone App
