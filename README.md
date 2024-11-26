@@ -16,3 +16,6 @@ Entity-Relationships using graph database
 https://roadmap.sh/ai/explore
 
 https://en.wikipedia.org/wiki/Centralized_database
+
+Health Insurance...and Blockchian or something...
+
