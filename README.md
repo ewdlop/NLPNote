@@ -41,3 +41,8 @@ medical humamoid to help prisoners
 Random person speaking intense Chinese added me on linkeidn ...didnt sounds like a normal person....
 
 same goes for your skilset
+
+
+https://www.youtube.com/watch?v=BML1YHZpx2o
+
+![Screenshot 2024-11-26 171729](https://github.com/user-attachments/assets/3b56637b-cec4-4ea9-a08f-f1dfafb0a073)
