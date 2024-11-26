@@ -36,3 +36,8 @@ https://medicalphysics.duke.edu/about/what-is-medical-physics/
 VR Capital Punishment........
 
 medical humamoid to help prisoners
+
+
+Random person speaking intense Chinese added me on linkeidn ...didnt sounds like a normal person....
+
+same goes for your skilset
