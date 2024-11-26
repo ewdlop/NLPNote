@@ -31,3 +31,6 @@ Premed = physics + biochemistry + mathematics...+
 vs 
 
 https://medicalphysics.duke.edu/about/what-is-medical-physics/
+
+
+VR Captial Punishment........
