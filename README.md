@@ -43,3 +43,18 @@ The same goes for your skilset
 - https://www.youtube.com/watch?v=BML1YHZpx2o
 
 ![Screenshot 2024-11-26 171729](https://github.com/user-attachments/assets/3b56637b-cec4-4ea9-a08f-f1dfafb0a073)
+
+# Explanity issue vs patients with kids/Childrens
+
+the whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy.....
+
+Explanity(that was a mathematical definition written down on mathoverflow)
+
+but with this bear in mind!
+
+https://en.wikipedia.org/wiki/Kolmogorov_complexity
+
+Not good enough?!
+
+# Too formal?
+https://plato.stanford.edu/entries/mathematics-explanation/
