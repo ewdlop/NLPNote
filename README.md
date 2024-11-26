@@ -27,3 +27,7 @@ https://www.cs.cmu.edu/~15110-f19/slides/week10-2-multiprocessing.pdf vs HyperLo
 Nuclear medicine
 
 Premed = physics + biochemistry + mathematics...+ 
+
+vs 
+
+https://medicalphysics.duke.edu/about/what-is-medical-physics/
