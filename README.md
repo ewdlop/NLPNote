@@ -45,6 +45,9 @@ The same goes for your skilset
 ![Screenshot 2024-11-26 171729](https://github.com/user-attachments/assets/3b56637b-cec4-4ea9-a08f-f1dfafb0a073)
 
 # Explanity issue vs patients with kids/Childrens
+## Explanity issue vs be patient with patient with kids/Childrens
+## Explanity issue vs be patient with kids/Childrens
+### Language Art
 
 the whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy.....
 
