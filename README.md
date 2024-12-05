@@ -1,5 +1,6 @@
 # NLPNote
 
+========================================================================
 - https://www.icd10data.com/ICD10CM/Codes with Trie
 
 - https://github.com/hl7
@@ -10,6 +11,8 @@ For NDC Drug Code
 - ..  - Brand - NDC10 - NDC 12 done with the recursive group by methdd
 
 - Medical Doctor/Healthcare Provider detection Phone App
+
+==========================================================================
 
 - Entity-Relationships using graph database
 
@@ -22,6 +25,8 @@ For NDC Drug Code
 - Disturable computing with vanacant office desktops....
 
 - https://www.cs.cmu.edu/~15110-f19/slides/week10-2-multiprocessing.pdf vs HyperLogLog
+
+=======================================
 
 - Nuclear medicine
 
