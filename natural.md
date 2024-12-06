@@ -1,4 +1,4 @@
-I asked this to gpt: what is the thing call when american overestimate themselves when they think other cannot speak proper english
+I asked this to gpt: "what is the thing call when american overestimate themselves when they think other cannot speak proper English"
 
 ChatGPT:
 
@@ -12,7 +12,7 @@ Native Speaker Bias: The tendency to view native speakers as the ultimate standa
 
 Cultural Superiority: A broader attitude where individuals from one culture (e.g., American) assume their norms, including language use, are inherently superior to those of others.
 
-Xenolinguistic Prejudice: Prejudice against individuals based on their language or accent, often linked to assumptions about intelligence or competence.
+Xenolinguistic Prejudice: Prejudice against individuals based on their language or accent, is often linked to assumptions about intelligence or competence.
 
 In Psychology and Sociology:
 This behavior can stem from ethnocentrism, where individuals view their own culture, language, or norms as the default or superior standard.
@@ -22,4 +22,6 @@ This mindset contributes to microaggressions, such as assuming a non-native spea
 
 I thought about this afterward:
 
-You are you are entitled to be feel disrespected.
+You are entitled to feel disrespected.
+
+I need to do better, or else I will go to hell.
