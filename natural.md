@@ -27,3 +27,6 @@ You are entitled to feel disrespected.
 I need to do better, or else I will go to hell.
 
 It is your lawful birth right.
+
+
+#ethnocentrism #Xenolinguistic #microaggressions
