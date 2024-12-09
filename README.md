@@ -7,8 +7,8 @@
 
 - https://github.com/crs4/hl7apy
 
-For NDC Drug Code
-- ..  - Brand - NDC10 - NDC 12 done with the recursive group by methdd
+For NDC (National Drug Code)
+- ..  - Brand - NDC10 - NDC 12 done with the recursive group by method
 
 - Medical Doctor/Healthcare Provider detection Phone App
 
@@ -20,9 +20,9 @@ For NDC Drug Code
 
 - https://en.wikipedia.org/wiki/Centralized_database
 
-- Health Insurance...and Blockchian or something...
+- Health Insurance...and Blockchain or something...
 
-- Disturable computing with vanacant office desktops....
+- "Disturable" computing with vacant office desktops....
 
 - https://www.cs.cmu.edu/~15110-f19/slides/week10-2-multiprocessing.pdf vs HyperLogLog
 
@@ -41,22 +41,22 @@ https://medicalphysics.duke.edu/about/what-is-medical-physics/
 
 and medical humanoids that can help prisoners
 
-- A random person speaking intense Chinese added me on linkeidn ...didnt sound like a normal person....
+- A random person speaking intense Chinese added me on LinkedIn... didn't sound like a normal person....
 
-The same goes for your skilset
+The same goes for your skill
 
 - https://www.youtube.com/watch?v=BML1YHZpx2o
 
 ![Screenshot 2024-11-26 171729](https://github.com/user-attachments/assets/3b56637b-cec4-4ea9-a08f-f1dfafb0a073)
 
-# Explanity issue vs patients with kids/Childrens
-## Explanity issue vs be patient with patient with kids/Childrens
-## Explanity issue vs be patient with kids/Childrens
+# "Explanity" issue vs patients with kids/Children
+## "Explanity" issue vs be patient with patient with kids/Children
+## "Explanity issue" vs be patient with kids/Children
 ### Language Art
 
 the whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy.....
 
-Explanity(that was a mathematical definition written down on mathoverflow)
+"Explanity"(that was a mathematical definition written down on mathoverflow)
 
 but with this bear in mind!
 
