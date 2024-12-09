@@ -1,4 +1,4 @@
-# NLP(Natural language processing) Note
+# NLP(Natural Language Processing) Note
 
 ========================================================================
 - https://www.icd10data.com/ICD10CM/Codes with Trie
