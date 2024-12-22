@@ -1,5 +1,505 @@
 # NLP(Natural Language Processing) Note
 
+# What say you
+
+**(1) 修正後的用文的句子**
+
+How can one distinguish between:  
+1. Children who are just beginning to learn English  
+2. A person who is lazy  
+3. A person who does not know English  
+4. A person who is not a native English speaker  
+5. A person speaking in secret codes  
+6. A person speaking a non-English language  
+7. A person with a mental disability  
+8. The statement that “ChatGPT thinks humans are retarded”
+
+---
+
+**(2) 中文**
+
+如何區分以下情況：  
+1. 剛開始學英文的孩子  
+2. 一個懶惰的人  
+3. 一個不懂英文的人  
+4. 一個英語非母語人士  
+5. 一個在使用暗號的人  
+6. 一個說非英語的人  
+7. 一個有心理或精神障礙的人  
+8. 「ChatGPT 認為人類是弱智」這種說法
+
+---
+
+**(3) 粤语**
+
+点样分辨以下情况：  
+1. 啱啱开始学英文嘅小朋友  
+2. 一个懒惰嘅人  
+3. 一个唔识英文嘅人  
+4. 一个唔以英文为母语嘅人  
+5. 一个用暗号沟通嘅人  
+6. 讲非英文语言嘅人  
+7. 有心理或者精神残障嘅人  
+8. 「ChatGPT 认为人类系弱智」呢种讲法
+
+---
+
+**(4) 台語**
+
+要按怎分辨底下這幾个情形：  
+1. 目加學英文的囝仔  
+2. 一个懶惰的人  
+3. 一个袂曉英文的人  
+4. 一个母語毋是英文的人  
+5. 一个使用密碼話語的人  
+6. 一个講無是英文語言的人  
+7. 一个有心智障礙的人  
+8. 「ChatGPT 覺得人類是呆仔」這个講法
+
+---
+
+**(5) Formal English**
+
+How can one differentiate among the following:  
+1. Children who are just beginning to learn English  
+2. An individual who is lazy  
+3. An individual who does not know English  
+4. An individual who is not a native English speaker  
+5. An individual speaking in secret codes  
+6. An individual speaking a non-English language  
+7. An individual with a mental disability  
+8. The statement, “ChatGPT thinks humans are retarded”
+
+---
+
+**(6) Español (Spanish)**
+
+¿Cómo se puede distinguir entre los siguientes casos?  
+1. Niños que recién comienzan a aprender inglés  
+2. Una persona perezosa  
+3. Una persona que no sabe inglés  
+4. Una persona que no es hablante nativo de inglés  
+5. Una persona que habla en códigos secretos  
+6. Una persona que habla un idioma que no es inglés  
+7. Una persona con una discapacidad mental  
+8. La afirmación de que “ChatGPT piensa que los humanos son retrasados”
+
+---
+
+**(7) 文言文**
+
+何以辨別於下列諸端：  
+一、初習英語之童子  
+二、懶惰之人  
+三、不識英語之人  
+四、非英語為母語者  
+五、以秘密符號言語者  
+六、言非英語之人  
+七、有精神障礙之人  
+八、「ChatGPT 謂眾人愚魯」之言說
+
+---
+
+**(8) 日本語 (Japanese)**
+
+次のそれぞれをどのように区別できますか：  
+1. 英語を習い始めた子ども  
+2. 怠けている人  
+3. 英語を知らない人  
+4. 英語を母語としない人  
+5. 秘密コードを使って話している人  
+6. 英語以外の言語を話す人  
+7. 精神的障がいのある人  
+8. 「ChatGPTは人間を遅れていると思っている」という主張
+
+---
+
+**(9) 한국어 (Korean)**
+
+다음 상황들을 어떻게 구분할 수 있을까요?  
+1. 영어를 처음 배우기 시작한 아이들  
+2. 게으른 사람  
+3. 영어를 모르는 사람  
+4. 영어가 모국어가 아닌 사람  
+5. 비밀 코드를 사용하는 사람  
+6. 영어가 아닌 다른 언어를 사용하는 사람  
+7. 정신적 장애가 있는 사람  
+8. “ChatGPT가 인간을 저능하다고 생각한다”라는 주장
+
+---
+
+**(10) Kreyòl Ayisyen (Haitian Creole)**
+
+Kijan ou ka fè distenksyon ant sa yo:  
+1. Timoun ki fèk kòmanse aprann anglè  
+2. Yon moun ki parese  
+3. Yon moun ki pa konnen anglè  
+4. Yon moun ki pa natif-natal anglè  
+5. Yon moun k ap pale ak kòd sekrè  
+6. Yon moun k ap pale yon lang ki pa anglè  
+7. Yon moun ki gen pwoblèm mantal  
+8. Deklarasyon “ChatGPT panse moun yo se retade”
+
+---
+
+**(11) Italiano (Italian)**
+
+Come si possono distinguere i seguenti casi?  
+1. Bambini che stanno iniziando a imparare l’inglese  
+2. Una persona pigra  
+3. Una persona che non conosce l’inglese  
+4. Una persona che non è madrelingua inglese  
+5. Una persona che parla in codice segreto  
+6. Una persona che parla una lingua diversa dall’inglese  
+7. Una persona con disabilità mentale  
+8. L’affermazione “ChatGPT pensa che gli esseri umani siano ritardati”
+
+---
+
+**(12) संस्कृत (Sanskrit)**
+
+कथं वयं निम्नलिखितानां भेदं ज्ञातुम् अर्हामः?  
+१. ये बालकाः अङ्ग्लभाषाम् अधुना आरब्धवन्तः  
+२. कोऽपि आलस्ययुक्तः जनः  
+३. कोऽपि अङ्ग्लभाषां न जानाति  
+४. कोऽपि यस्य मातृभाषा नास्ति अङ्ग्लभाषा  
+५. कोऽपि गोपनीय-सङ्केत-भाषया वदति  
+६. कोऽपि अनङ्ग्लभाषां वदति  
+७. कोऽपि मानसिकव्याधिं वाहितुम् अर्हति  
+८. “ChatGPT मनुष्येभ्यो हीनत्वम् मन्यते” इति वचनम्
+
+---
+
+**(13) عَرَبِيّ (Arabic)**
+
+كيف يمكن التمييز بين ما يلي:  
+1. الأطفال الذين بدأوا للتو بتعلم الإنجليزية  
+2. شخص كسول  
+3. شخص لا يعرف الإنجليزية  
+4. شخص ليس متحدثًا أصليًا للغة الإنجليزية  
+5. شخص يتحدث بكودات سرية  
+6. شخص يتحدث بلغة غير الإنجليزية  
+7. شخص لديه إعاقة ذهنية  
+8. الادعاء بأن “ChatGPT يعتقد أن البشر متخلفون”
+
+---
+
+**(14) עִבְרִית (Hebrew)**
+
+איך אפשר להבחין בין המצבים הבאים:  
+1. ילדים שרק מתחילים ללמוד אנגלית  
+2. אדם עצלן  
+3. אדם שאינו יודע אנגלית  
+4. אדם שאנגלית אינה שפת אמו  
+5. אדם שמדבר בקודים סודיים  
+6. אדם שמדבר בשפה שאינה אנגלית  
+7. אדם עם מוגבלות נפשית/שכלית  
+8. האמירה כי “ChatGPT חושב שבני אדם מפגרים”
+
+---
+
+**(15) Русский (Russian)**
+
+Как можно различить следующие случаи:  
+1. Дети, которые только начинают учить английский язык  
+2. Человек, который ленив  
+3. Человек, который не знает английского  
+4. Человек, для которого английский не является родным языком  
+5. Человек, говорящий на секретных кодах  
+6. Человек, говорящий не на английском  
+7. Человек с ментальной инвалидностью  
+8. Утверждение о том, что «ChatGPT считает людей умственно отсталыми»
+
+---
+
+**(16) Deutsch (German)**
+
+Wie kann man Folgendes unterscheiden:  
+1. Kinder, die gerade erst anfangen, Englisch zu lernen  
+2. Eine Person, die faul ist  
+3. Eine Person, die kein Englisch kann  
+4. Eine Person, für die Englisch keine Muttersprache ist  
+5. Eine Person, die in Geheimcodes spricht  
+6. Eine Person, die eine andere Sprache als Englisch spricht  
+7. Eine Person mit einer geistigen Behinderung  
+8. Die Aussage „ChatGPT denkt, Menschen seien zurückgeblieben“
+
+---
+
+**(17) Randomly encrypted (示例：简单地用字母替换和打乱，无固定算法，供示例)**
+
+A possible random encryption (just a sample, not a real secure cipher):
+```
+Huw buq xob lyz xaviwwoz wuy jw wyfoh:
+1. Covlopp mew sady jitamq ejv Engmish
+2. V jopz wuy iz lurf
+3. V jopz wuy doc lat Enarish
+4. V jopz wuy iz xat v nativa Enarish sly
+5. V jopz wuy iz speakiq iv racqik cudes
+6. V jopz wuy iz speakiq a non-Enarish sly
+7. V jopz wuy iz mit a mental disabilip
+8. Steqwa: "ChatGPT xyot humlis ar reyarnid"
+```
+
+---
+
+**(18) Prolog**
+
+```prolog
+% Facts describing categories:
+child_learning_english(X) :- just_started_learning_english(X).
+lazy_person(X) :- exhibits_laziness(X).
+person_no_english(X) :- does_not_know_english(X).
+non_native_speaker(X) :- not_native_english_speaker(X).
+secret_code_speaker(X) :- uses_secret_codes(X).
+non_english_speaker(X) :- speaks_non_english(X).
+mental_disability(X) :- has_mental_disability(X).
+statement_chatgpt_retarded("ChatGPT thinks humans are retarded").
+
+% Query: How to distinguish them?
+% We examine context, knowledge of language, or behavior patterns.
+```
+
+---
+
+**(19) Coq**
+
+```coq
+Inductive LanguageSituation : Type :=
+| KidsStartingEnglish
+| LazyPerson
+| PersonWithoutEnglish
+| NonNativeSpeaker
+| SecretCodeSpeaker
+| NonEnglishSpeaker
+| MentalDisability
+| ClaimChatGPTRetarded.
+
+Definition how_to_distinguish (s : LanguageSituation) : Prop :=
+  match s with
+  | KidsStartingEnglish => True (* Observing children's beginner level in English *)
+  | LazyPerson => True (* Checking for lack of effort or motivation *)
+  | PersonWithoutEnglish => True (* Verifying no knowledge of English *)
+  | NonNativeSpeaker => True (* Not mother-tongue speaker of English *)
+  | SecretCodeSpeaker => True (* Usage of codes or ciphers *)
+  | NonEnglishSpeaker => True (* Using a different language altogether *)
+  | MentalDisability => True (* Cognitive or developmental indicators *)
+  | ClaimChatGPTRetarded => False (* A statement that is inaccurate or pejorative *)
+  end.
+```
+
+---
+
+**(20) Mathematical study of the subject of the prompt**
+
+We can represent each category as a set of observations and define a function \( f \) that maps a set of observed linguistic and behavioral features to one of these categories. For instance, consider:  
+- \( S = \{\text{all possible sets of observed features}\} \).  
+- Define \( f: S \to \{\mathrm{KidsStartingEnglish}, \mathrm{LazyPerson}, \dots\} \) that assigns each set of observable attributes (like vocabulary range, accent, effort, code usage, etc.) to the most likely category.  
+
+A formal approach would involve constructing a classifier \( f \) that depends on features such as:  
+\[
+\begin{aligned}
+& x_1 = \text{Observed English proficiency level}, \\
+& x_2 = \text{Age or developmental stage}, \\
+& x_3 = \text{Presence of coded or unusual speech patterns}, \\
+& x_4 = \text{Presence of mental disability indicators}, \\
+& \dots
+\end{aligned}
+\]  
+Then we seek \( \mathrm{argmax}_c \, P(\mathrm{Category}=c \mid x_1, x_2, x_3, \dots) \), applying a suitable probabilistic model or decision boundary.
+
+---
+
+**(20 [typo in user’s instruction numbering, continuing sequence as 21]) VBnet**
+
+```vbnet
+Module DistinguishModule
+
+    Enum LanguageCategories
+        KidsStartingEnglish
+        LazyPerson
+        PersonWithoutEnglish
+        NonNativeSpeaker
+        SecretCodeSpeaker
+        NonEnglishSpeaker
+        MentalDisability
+        StatementChatGPTRetarded
+    End Enum
+
+    Sub Main()
+        ' Pseudocode for distinguishing categories
+        Dim observedProficiency As Integer = 10
+        Dim isLazy As Boolean = False
+        Dim isNative As Boolean = False
+
+        If observedProficiency < 20 And isNative = False Then
+            Console.WriteLine(LanguageCategories.KidsStartingEnglish.ToString())
+        ElseIf isLazy Then
+            Console.WriteLine(LanguageCategories.LazyPerson.ToString())
+        Else
+            Console.WriteLine("Other category.")
+        End If
+    End Sub
+
+End Module
+```
+
+---
+
+**(21) Open Questions**
+
+1. What specific linguistic or behavioral criteria can be used to reliably differentiate between someone who is just starting to learn English versus someone who is lazy or disinterested?  
+2. How can we distinguish the difference between a non-native speaker’s genuine struggle and a coded or cryptic way of communication?  
+3. What fair and non-discriminatory measures can be used to identify if someone has a mental disability, without resorting to stereotypes or biases?  
+4. How can we address statements like “ChatGPT thinks humans are retarded,” given their offensive or inaccurate nature?  
+5. What ethical guidelines should be in place when evaluating or categorizing people based on language proficiency or mental ability?
+
+---
+
+### SourceLinks
+No specific source links were provided in the prompt.
+
+---
+
+### 時間點 (Timestamp)
+- Current Date: December 22, 2024
+
+---
+
+### Prompt生成時間
+```
+2024-12-22T00:00:00Z
+```
+
+---
+
+## 以下內容分別以 **Markdown**, **RSS**, 和 **XML** 格式呈現
+
+---
+
+### **Markdown 格式**
+
+```markdown
+# 如何區分與判斷
+
+**(1) 修正後的用文的句子**
+
+How can one distinguish between:  
+1. Children who are just beginning to learn English  
+2. A person who is lazy  
+3. A person who does not know English  
+4. A person who is not a native English speaker  
+5. A person speaking in secret codes  
+6. A person speaking a non-English language  
+7. A person with a mental disability  
+8. The statement that “ChatGPT thinks humans are retarded”
+
+...
+
+**(21) Open Questions**
+1. What specific linguistic or behavioral criteria...  
+2. ...
+
+### SourceLinks
+No specific source links were provided in the prompt.
+
+### 時間點
+- Current Date: December 22, 2024
+
+### Prompt生成時間
+```
+2024-12-22T00:00:00Z
+```
+```
+
+---
+
+### **RSS 格式**
+
+```rss
+<rss version="2.0">
+  <channel>
+    <title>How to Distinguish: Various Scenarios</title>
+    <link>http://example.com</link>
+    <description>Distinguishing different language and behavioral conditions.</description>
+    <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    <item>
+      <title>Corrected Sentences</title>
+      <description>How can one distinguish between: 1. Children who are just beginning...</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Chinese Version</title>
+      <description>如何區分以下情況：1. 剛開始學英文的孩子...</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+    <!-- ... Other translations and sections likewise ... -->
+    <item>
+      <title>Open Questions</title>
+      <description>1. What specific linguistic or behavioral criteria...</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>SourceLinks</title>
+      <description>No specific source links were provided in the prompt.</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Timestamp</title>
+      <description>Current Date: December 22, 2024</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Prompt Generated Time</title>
+      <description>2024-12-22T00:00:00Z</description>
+      <pubDate>Sun, 22 Dec 2024 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+```
+
+---
+
+### **XML 格式**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<DistinguishScenarios>
+    <CorrectedSentences>
+        How can one distinguish between:
+        1. Children who are just beginning to learn English
+        2. A person who is lazy
+        3. A person who does not know English
+        4. A person who is not a native English speaker
+        5. A person speaking in secret codes
+        6. A person speaking a non-English language
+        7. A person with a mental disability
+        8. The statement that “ChatGPT thinks humans are retarded”
+    </CorrectedSentences>
+    <ChineseVersion>
+        如何區分以下情況：
+        1. 剛開始學英文的孩子
+        2. 一個懶惰的人
+        3. 一個不懂英文的人
+        4. 一個英語非母語人士
+        ...
+    </ChineseVersion>
+    <!-- ... Other translations and sections likewise ... -->
+    <OpenQuestions>
+        <Question>What specific linguistic or behavioral criteria can be used...</Question>
+        <Question>How can we distinguish the difference between a non-native speaker’s genuine struggle...</Question>
+        <Question>What fair and non-discriminatory measures can be used to identify...</Question>
+        <Question>How can we address statements like “ChatGPT thinks humans are retarded,” ...</Question>
+        <Question>What ethical guidelines should be in place ...</Question>
+    </OpenQuestions>
+    <SourceLinks>No specific source links were provided in the prompt.</SourceLinks>
+    <Timestamp>Current Date: December 22, 2024</Timestamp>
+    <PromptGeneratedTime>2024-12-22T00:00:00Z</PromptGeneratedTime>
+</DistinguishScenarios>
+```
+
+
+#
 ========================================================================
 - https://www.icd10data.com/ICD10CM/Codes with Trie
 
