@@ -1,5 +1,9 @@
 # NLP(Natural Language Processing) Note
 
+# Same old same old
+
+American Humor. We are just kidding.
+
 # What say you?
 
 Endonym and Exonym
