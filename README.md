@@ -15,6 +15,7 @@ How can one distinguish between:
 6. A person speaking a non-English language  
 7. A person with a mental disability  
 8. The statement that “ChatGPT thinks humans are retarded”
+9. A bot written by a hacker pretends to be international and acts like they are polyglot.
 
 ---
 
