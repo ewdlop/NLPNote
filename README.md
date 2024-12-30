@@ -1,6 +1,8 @@
 # NLP(Natural Language Processing) Note
 
-# What say you
+# What say you?
+
+Endonym and Exonym
 
 **(1) 修正後的用文的句子**
 
