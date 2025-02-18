@@ -20,6 +20,10 @@ How can one distinguish between:
 7. A person with a mental disability  
 8. The statement that “ChatGPT thinks humans are retarded”
 9. A bot written by a hacker pretends to be international and acts like they are polyglot.
+10. A person makes spellingmistakes, who makes spellingmistakes.
+11. A person typos.
+12. LLM 自動修正
+13. 越狱
 
 ---
 
