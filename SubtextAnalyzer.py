@@ -5,7 +5,24 @@ from nltk.corpus import wordnet
 from nltk.tag import pos_tag
 from collections import defaultdict
 import re
-import spacy
+
+# Try to import spacy, handle gracefully if not available
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    SPACY_AVAILABLE = False
+    spacy = None
+
+# Import the new human expression evaluation framework
+try:
+    from HumanExpressionEvaluator import HumanExpressionEvaluator, ExpressionContext
+    EXPRESSION_EVALUATOR_AVAILABLE = True
+except ImportError:
+    # Fallback if module not available
+    HumanExpressionEvaluator = None
+    ExpressionContext = None
+    EXPRESSION_EVALUATOR_AVAILABLE = False
 
 class SubtextAnalyzer:
     def __init__(self):
@@ -18,10 +35,21 @@ class SubtextAnalyzer:
             nltk.download('wordnet')
         
         # Load spaCy model for advanced NLP
-        try:
-            self.nlp = spacy.load('en_core_web_sm')
-        except:
-            print("Please install spaCy and the English model: python -m spacy download en_core_web_sm")
+        if SPACY_AVAILABLE:
+            try:
+                self.nlp = spacy.load('en_core_web_sm')
+            except:
+                print("spaCy model 'en_core_web_sm' not found. Some advanced features will be limited.")
+                self.nlp = None
+        else:
+            print("spaCy not available. Some advanced features will be limited.")
+            self.nlp = None
+        
+        # Initialize human expression evaluator if available
+        if EXPRESSION_EVALUATOR_AVAILABLE:
+            self.expression_evaluator = HumanExpressionEvaluator()
+        else:
+            self.expression_evaluator = None
     
     def calculate_lexical_density(self, text):
         """Calculate the lexical density (ratio of content words to total words)"""
@@ -48,7 +76,14 @@ class SubtextAnalyzer:
 
     def analyze_symbolism(self, text):
         """Analyze potential symbolic content"""
-        doc = self.nlp(text)
+        if self.nlp:
+            doc = self.nlp(text)
+            word_count = len(doc)
+        else:
+            # Fallback to simple tokenization
+            words = text.lower().split()
+            word_count = len(words)
+        
         symbolic_score = 0
         
         # Common symbolic elements
@@ -61,20 +96,31 @@ class SubtextAnalyzer:
         }
         
         # Count symbolic references
-        word_count = len(doc)
         symbol_count = 0
         
-        for token in doc:
-            word = token.text.lower()
-            for category in symbolic_categories.values():
-                if word in category:
-                    symbol_count += 1
+        if self.nlp:
+            for token in doc:
+                word = token.text.lower()
+                for category in symbolic_categories.values():
+                    if word in category:
+                        symbol_count += 1
+        else:
+            # Fallback approach
+            for word in text.lower().split():
+                for category in symbolic_categories.values():
+                    if word in category:
+                        symbol_count += 1
         
         return symbol_count / word_count if word_count else 0
 
     def analyze_emotion_depth(self, text):
         """Analyze emotional complexity and depth"""
-        doc = self.nlp(text)
+        if self.nlp:
+            doc = self.nlp(text)
+            total_words = len(doc)
+        else:
+            words = text.lower().split()
+            total_words = len(words)
         
         # Emotional indicators
         emotional_words = {
@@ -86,36 +132,58 @@ class SubtextAnalyzer:
         basic_count = 0
         complex_count = 0
         
-        for token in doc:
-            word = token.text.lower()
-            if word in emotional_words['basic']:
-                basic_count += 1
-            if word in emotional_words['complex']:
-                complex_count += 2  # Weight complex emotions more heavily
+        if self.nlp:
+            for token in doc:
+                word = token.text.lower()
+                if word in emotional_words['basic']:
+                    basic_count += 1
+                if word in emotional_words['complex']:
+                    complex_count += 2  # Weight complex emotions more heavily
+        else:
+            # Fallback approach
+            for word in text.lower().split():
+                if word in emotional_words['basic']:
+                    basic_count += 1
+                if word in emotional_words['complex']:
+                    complex_count += 2
         
-        total_words = len(doc)
         emotion_score = (basic_count + complex_count) / total_words if total_words else 0
         
         return emotion_score
 
     def analyze_metaphorical_content(self, text):
         """Analyze potential metaphorical content"""
-        doc = self.nlp(text)
+        if self.nlp:
+            doc = self.nlp(text)
+            sentences = list(doc.sents)
+        else:
+            # Fallback to simple sentence splitting
+            sentences = re.split(r'[.!?]', text)
+            sentences = [s.strip() for s in sentences if s.strip()]
         
         # Indicators of metaphorical language
         metaphor_markers = ['like', 'as', 'seems', 'appears', 'represents']
         abstract_concepts = ['love', 'time', 'life', 'death', 'freedom', 'hope', 'fear']
         
         metaphor_score = 0
-        sentences = list(doc.sents)
         
-        for sent in sentences:
-            # Check for metaphor markers
-            has_marker = any(token.text.lower() in metaphor_markers for token in sent)
-            has_abstract = any(token.text.lower() in abstract_concepts for token in sent)
-            
-            if has_marker and has_abstract:
-                metaphor_score += 1
+        if self.nlp and sentences:
+            for sent in sentences:
+                # Check for metaphor markers
+                has_marker = any(token.text.lower() in metaphor_markers for token in sent)
+                has_abstract = any(token.text.lower() in abstract_concepts for token in sent)
+                
+                if has_marker and has_abstract:
+                    metaphor_score += 1
+        else:
+            # Fallback approach
+            for sent in sentences:
+                sent_lower = sent.lower()
+                has_marker = any(marker in sent_lower for marker in metaphor_markers)
+                has_abstract = any(concept in sent_lower for concept in abstract_concepts)
+                
+                if has_marker and has_abstract:
+                    metaphor_score += 1
         
         return metaphor_score / len(sentences) if sentences else 0
 
@@ -160,6 +228,89 @@ class SubtextAnalyzer:
             }
         }
 
+    def analyze_expression_evaluation(self, text, context=None):
+        """
+        分析人類表達的評估過程 (Analyze human expression evaluation process)
+        整合新的人類表達評估框架 (Integrate the new human expression evaluation framework)
+        """
+        if not self.expression_evaluator:
+            return {
+                'error': 'Human Expression Evaluator not available',
+                'traditional_analysis': self.calculate_subtext_probability(text)
+            }
+        
+        # Create context if not provided
+        if context is None and ExpressionContext:
+            context = ExpressionContext(
+                situation='literary_analysis',
+                formality_level='neutral'
+            )
+        
+        # Get comprehensive evaluation
+        evaluation_results = self.expression_evaluator.comprehensive_evaluation(text, context)
+        
+        # Combine with traditional subtext analysis
+        traditional_analysis = self.calculate_subtext_probability(text)
+        
+        # Integrate results
+        integrated_analysis = {
+            'expression_evaluation': evaluation_results,
+            'subtext_analysis': traditional_analysis,
+            'comparison': self._compare_analyses(evaluation_results, traditional_analysis),
+            'interpretation': self._generate_integrated_interpretation(evaluation_results, traditional_analysis)
+        }
+        
+        return integrated_analysis
+    
+    def _compare_analyses(self, expression_eval, subtext_eval):
+        """比較兩種分析方法的結果 (Compare results from both analysis methods)"""
+        comparison = {}
+        
+        # Compare overall scores
+        expr_score = expression_eval['integrated']['overall_score']
+        subtext_score = subtext_eval['probability']
+        
+        comparison['score_correlation'] = abs(expr_score - subtext_score)
+        comparison['agreement_level'] = 'high' if comparison['score_correlation'] < 0.2 else 'medium' if comparison['score_correlation'] < 0.4 else 'low'
+        
+        # Compare specific dimensions
+        if 'formal_semantic' in expression_eval:
+            formal_score = expression_eval['formal_semantic'].score
+            comparison['semantic_vs_subtext'] = {
+                'formal_semantic': formal_score,
+                'subtext_probability': subtext_score,
+                'difference': abs(formal_score - subtext_score)
+            }
+        
+        return comparison
+    
+    def _generate_integrated_interpretation(self, expression_eval, subtext_eval):
+        """生成整合解釋 (Generate integrated interpretation)"""
+        interpretation = []
+        
+        # Expression evaluation insights
+        expr_score = expression_eval['integrated']['overall_score']
+        expr_characteristics = expression_eval['integrated']['characteristics']
+        
+        interpretation.append(f"表達評估分數: {expr_score:.2f}")
+        interpretation.append(f"表達特徵: {expr_characteristics}")
+        
+        # Subtext analysis insights
+        subtext_score = subtext_eval['probability']
+        subtext_components = subtext_eval['components']
+        
+        interpretation.append(f"潛文本分析分數: {subtext_score:.2f}")
+        interpretation.append(f"主要潛文本指標: 象徵性 {subtext_components['symbolism']:.2f}, 情感深度 {subtext_components['emotion_depth']:.2f}")
+        
+        # Combined insight
+        if expr_score > 0.7 and subtext_score > 0.7:
+            interpretation.append("這是一個高質量的表達，具有豐富的潛在含義和良好的表達形式。")
+        elif expr_score > 0.5 or subtext_score > 0.5:
+            interpretation.append("這個表達在某些維度表現較好，可能具有一定的深層含義。")
+        else:
+            interpretation.append("這是一個相對直接的表達，潛在含義較少。")
+        
+        return "\n".join(interpretation)
     def generate_analysis_report(self, text):
         """Generate a detailed analysis report"""
         analysis = self.calculate_subtext_probability(text)
@@ -183,6 +334,24 @@ class SubtextAnalyzer:
             report += "Moderate likelihood of deeper meaning. Some subtle layers present.\n"
         else:
             report += "Lower likelihood of deeper meaning. Text appears more straightforward.\n"
+        
+        # Add human expression evaluation if available
+        if self.expression_evaluator:
+            report += "\n" + "="*50 + "\n"
+            report += "HUMAN EXPRESSION EVALUATION ANALYSIS\n"
+            report += "="*50 + "\n"
+            
+            expr_analysis = self.analyze_expression_evaluation(text)
+            if 'error' not in expr_analysis:
+                report += "\n人類表達評估結果 (Human Expression Evaluation Results):\n"
+                report += "-" * 50 + "\n"
+                report += expr_analysis['interpretation']
+                
+                report += "\n\n分析方法比較 (Analysis Method Comparison):\n"
+                report += "-" * 50 + "\n"
+                comparison = expr_analysis['comparison']
+                report += f"分析一致性: {comparison['agreement_level']}\n"
+                report += f"分數差異: {comparison['score_correlation']:.2f}\n"
         
         return report
 
