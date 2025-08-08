@@ -215,6 +215,215 @@ L'interaction forte est la force fondamentale la plus puissante, médiée par le
 ### Deutsch
 Die starke Wechselwirkung ist die mächtigste Grundkraft, vermittelt durch Gluonen, verantwortlich für die Bindung von Quarks zu Protonen und Neutronen. Die schwache Wechselwirkung verursacht radioaktiven Zerfall und Neutrino-Wechselwirkungen, vermittelt durch W- und Z-Bosonen.
 
+## Energy-Momentum Tensors in QCD and Electroweak Theory
+
+### Introduction to Energy-Momentum Tensors
+
+The **energy-momentum tensor** (stress-energy tensor) T_μν is a fundamental quantity in field theory that describes the density and flux of energy and momentum in spacetime. It serves as the source term in Einstein's field equations and encodes the conservation of energy and momentum via Noether's theorem.
+
+### QCD Energy-Momentum Tensor
+
+**Complete QCD Stress-Energy Tensor**:
+```
+T^QCD_μν = T^quark_μν + T^gluon_μν + T^ghost_μν + T^gauge-fixing_μν
+```
+
+**Quark Contribution**:
+```
+T^quark_μν = (i/2) Σ_f [ψ̄_f γ_μ D_ν ψ_f + ψ̄_f γ_ν D_μ ψ_f - D_μ ψ̄_f γ_ν ψ_f - D_ν ψ̄_f γ_μ ψ_f] - g_μν ℒ_quark
+```
+
+**Gluon Field Contribution**:
+```
+T^gluon_μν = -F^a_μλ F^a_νλ + (1/4)g_μν F^a_λρ F^a_λρ
+```
+
+Where:
+- **F^a_μν** = gluon field strength tensor
+- **D_μ** = covariant derivative in QCD
+- **ψ_f** = quark field for flavor f
+- **a** = color index
+
+**Trace Anomaly in QCD**:
+```
+T^QCD_μμ = β(g_s)/(2g_s) F^a_μν F^a_μν + Σ_f m_f ψ̄_f ψ_f
+```
+
+Where β(g_s) is the QCD beta function:
+```
+β(g_s) = μ ∂g_s/∂μ = -b_0 g_s³ - b_1 g_s⁵ - b_2 g_s⁷ + ...
+```
+
+**QCD Beta Function Coefficients**:
+- **b_0 = (11N_c - 2N_f)/12π** (one-loop)
+- **b_1 = (17N_c² - 5N_c N_f - 3C_F N_f)/24π²** (two-loop)
+
+### Electroweak Energy-Momentum Tensor
+
+**Complete Electroweak Stress-Energy Tensor**:
+```
+T^EW_μν = T^gauge_μν + T^fermion_μν + T^Higgs_μν
+```
+
+**Gauge Field Contribution (W, Z, A)**:
+```
+T^gauge_μν = -W^i_μλ W^i_νλ - B_μλ B_νλ + g_μν [(1/4)W^i_λρ W^i_λρ + (1/4)B_λρ B^λρ]
+```
+
+**Fermion Contribution**:
+```
+T^fermion_μν = (i/2) Σ_fermions [ψ̄ γ_μ D_ν ψ + ψ̄ γ_ν D_μ ψ - D_μ ψ̄ γ_ν ψ - D_ν ψ̄ γ_μ ψ] - g_μν ℒ_fermion
+```
+
+**Higgs Field Contribution**:
+```
+T^Higgs_μν = (D_μ φ)†(D_ν φ) + (D_ν φ)†(D_μ φ) - g_μν [(D_λ φ)†(D^λ φ) - V(φ)]
+```
+
+Where:
+- **φ** = Higgs doublet field
+- **V(φ) = μ²|φ|² + λ|φ|⁴** = Higgs potential
+- **D_μ** = electroweak covariant derivative
+
+**Electroweak Trace Relations**:
+```
+T^EW_μμ = -4V(φ) + Σ_f m_f ψ̄_f ψ_f
+```
+
+### Conservation Laws and Ward Identities
+
+**Energy-Momentum Conservation**:
+```
+∂_μ T^μν = 0
+```
+
+This follows from translational invariance via Noether's theorem.
+
+**Improved Energy-Momentum Tensor**:
+For scale-invariant theories, the improved tensor satisfies:
+```
+∂_μ T^μν_improved = 0 (exactly)
+T^μμ_improved = 0 (at classical level)
+```
+
+**QCD Improvements**:
+```
+T^QCD_μν_improved = T^QCD_μν + ∂_λ ∂_μ (F^a_λρ F^a_νρ)/(2g_s²)
+```
+
+### Applications in Curved Spacetime
+
+**Einstein-Hilbert Action with Matter**:
+```
+S = (1/16πG) ∫ R √(-g) d⁴x + ∫ ℒ_matter √(-g) d⁴x
+```
+
+**Einstein Field Equations**:
+```
+R_μν - (1/2)g_μν R = 8πG T_μν
+```
+
+**QCD in Curved Spacetime**:
+The QCD Lagrangian in curved spacetime becomes:
+```
+ℒ_QCD = √(-g) [-1/4 g^μρ g^νσ F^a_μν F^a_ρσ + Σ_f ψ̄_f(iγ^μ D_μ - m_f)ψ_f]
+```
+
+### Cosmological Applications
+
+**QCD Vacuum Energy Density**:
+```
+ρ_QCD_vacuum = <0|T^00_QCD|0> ~ Λ_QCD⁴ ~ (200 MeV)⁴
+```
+
+**Electroweak Vacuum Energy**:
+```
+ρ_EW_vacuum = <0|T^00_EW|0> ~ v⁴ ~ (246 GeV)⁴
+```
+
+Where v is the Higgs vacuum expectation value.
+
+**QCD Contribution to Dark Energy Problem**:
+The mismatch between predicted and observed vacuum energy:
+```
+ρ_predicted/ρ_observed ~ 10^120 (cosmological constant problem)
+```
+
+### Thermodynamic Applications
+
+**QCD Equation of State**:
+At finite temperature T and chemical potential μ:
+```
+P = -(1/V) ∂F/∂V = <T^ii>/3 (pressure)
+ε = <T^00> (energy density)
+```
+
+**Stefan-Boltzmann Limit** (high T):
+```
+ε_QCD → (8π²/45)(N_c² - 1 + (7/8)N_c N_f) T⁴
+```
+
+**Electroweak Phase Transition**:
+At T ~ T_EW ≈ 160 GeV:
+```
+<T^μν> = T^μν_broken + T^μν_symmetric
+```
+
+### Holographic Applications
+
+**AdS/CFT Energy-Momentum Tensor**:
+In the holographic context:
+```
+<T_μν>_CFT = (N²/2π) lim[z→0] z^(-d) (K_μν - K g_μν + d g_μν/L)
+```
+
+Where K_μν is the extrinsic curvature of the boundary.
+
+**QCD Holographic Models**:
+- **Bottom-up**: Phenomenological AdS models
+- **Top-down**: String theory constructions (D4/D8 model)
+
+### Experimental Signatures
+
+**Deep Inelastic Scattering**:
+The QCD stress tensor manifests in:
+- **Structure functions**: F₁, F₂, F₃ measurements
+- **Parton distribution functions**: PDF evolution
+- **Jet production**: Energy-momentum flow
+
+**Electroweak Precision Tests**:
+- **W/Z boson production**: Cross-sections and distributions
+- **Higgs production**: Stress-energy coupling measurements
+- **Top quark**: Heavy fermion contributions
+
+### Lattice Calculations
+
+**Lattice QCD Stress Tensor**:
+```
+T_μν^lat = (2/√g) δS_QCD/δg^μν
+```
+
+**Non-perturbative Results**:
+- **Gluon condensate**: <F²> ≈ (0.5 GeV)⁴
+- **Quark condensate**: <ψ̄ψ> ≈ -(0.25 GeV)³
+- **Mixed condensate**: <ψ̄σ·Gψ> ≈ (0.8 GeV)⁵
+
+### Beyond Standard Model Extensions
+
+**Supersymmetric Energy-Momentum**:
+```
+T_μν^SUSY = T_μν^bosons + T_μν^fermions (with cancellations)
+```
+
+**Extra Dimensional Models**:
+- **Kaluza-Klein**: T_μν in (4+n) dimensions
+- **Warped extra dimensions**: AdS₅ stress tensor
+
+**Quantum Gravity Effects**:
+```
+T_μν^quantum = T_μν^classical + ℏ T_μν^1-loop + ℏ² T_μν^2-loop + ...
+```
+
 ## Advanced Topics
 
 ### QCD at Finite Temperature and Density
