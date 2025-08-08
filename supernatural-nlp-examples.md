@@ -14,10 +14,17 @@ super_nlp = SupernaturalNLP(dimension=100)
 text = "Love conquers all obstacles"
 results = super_nlp.supersymmetric_transform(text)
 
-# Find superpartners
+# Find superpartners (using particle physics-inspired naming)
 for word in results['original_words']:
     superpartner = super_nlp.find_superpartner(word)
-    print(f"{word} ↔ {superpartner}")
+    particle_type = super_nlp._classify_linguistic_particle_type(word.lower())
+    print(f"{word} ({particle_type}) ↔ {superpartner}")
+
+# Expected output:
+# love (fermion) ↔ slove  
+# conquers (boson) ↔ conquerino
+# all (fermion) ↔ sall
+# obstacles (boson) ↔ obstaclino
 ```
 
 ## Advanced Examples
@@ -77,7 +84,38 @@ for (word1, word2), strength in sorted_pairs:
 
 ## Theoretical Applications
 
-### 1. Word Superpartner Discovery
+### 1. Particle Physics-Inspired Superpartner Discovery
+
+The framework discovers linguistic superpartners using naming conventions inspired by particle physics supersymmetry:
+
+```python
+# Demonstrate particle physics-inspired superpartner pairs
+physics_examples = [
+    ("electron", "selectron"),  # Fermion → s-prefix  
+    ("photon", "photonino"),    # Boson → -ino suffix
+    ("English", "Senglish"),    # Language as fermion
+    ("create", "createino"),    # Verb as boson
+    ("quantum", "classical"),   # Gauge → complementary
+    ("beautiful", "sublime"),   # Adjective → related concept
+]
+
+print("Particle Physics-Inspired Superpartners:")
+print("=" * 50)
+
+for word, expected in physics_examples:
+    partner = super_nlp.find_superpartner(word)
+    particle_type = super_nlp._classify_linguistic_particle_type(word.lower())
+    entanglement = super_nlp.quantum_semantic_entanglement(word, partner)
+    
+    print(f"{word:12} ({particle_type:7}) → {partner:15} (entanglement: {entanglement:.3f})")
+
+print("\n🧬 Classification Rules:")
+print("   • Fermions (matter): nouns, pronouns → s-prefix")
+print("   • Bosons (forces): verbs, actions → -ino suffix") 
+print("   • Gauge (properties): adjectives → complementary concepts")
+```
+
+### 2. Traditional Word Superpartner Discovery
 
 The framework automatically discovers linguistic duality relationships:
 

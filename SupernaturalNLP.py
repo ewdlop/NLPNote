@@ -333,18 +333,164 @@ class SupernaturalNLP:
         return superpartner
     
     def _generate_superpartner(self, word: str) -> str:
-        """Generate superpartner using linguistic duality."""
-        # Simple rules for demonstration
+        """
+        Generate superpartner using particle physics-inspired linguistic duality.
         
-        # Noun/Verb duality
-        if word.endswith('ing'):
-            return word[:-3]  # Verb -> Noun
-        elif word.endswith('ed'):
-            return word[:-2] + 'er'  # Past -> Agent
-        elif word.endswith('ly'):
-            return word[:-2]  # Adverb -> Adjective
+        Following supersymmetry conventions from particle physics:
+        - Fermions (matter particles) get s-prefix: electron → selectron, quark → squark
+        - Bosons (force particles) get -ino suffix: photon → photino, gluon → gluino
+        
+        Linguistic analogy:
+        - Matter-like words (nouns, pronouns) → s-prefix transformations
+        - Force-like words (verbs, helping verbs) → -ino suffix transformations  
+        - Property words (adjectives, adverbs) → special transformations
+        """
+        word_lower = word.lower()
+        
+        # Classify word by linguistic "particle type"
+        particle_type = self._classify_linguistic_particle_type(word_lower)
+        
+        if particle_type == "fermion":  # Matter-like words (nouns, pronouns)
+            return self._generate_fermion_superpartner(word)
+        elif particle_type == "boson":  # Force-like words (verbs, helping verbs)
+            return self._generate_boson_superpartner(word)
+        elif particle_type == "gauge":  # Property words (adjectives, adverbs)
+            return self._generate_gauge_superpartner(word)
+        else:  # Unknown type - use default supersymmetric transformation
+            return self._generate_default_superpartner(word)
+    
+    def _classify_linguistic_particle_type(self, word: str) -> str:
+        """
+        Classify words by their linguistic 'particle type' analogous to physics.
+        
+        Fermions (matter): Nouns, pronouns, concrete entities
+        Bosons (forces): Verbs, action words, processes  
+        Gauge (properties): Adjectives, adverbs, descriptive words
+        """
+        # Known fermion-like words (matter/entities)
+        fermion_indicators = [
+            'person', 'people', 'man', 'woman', 'child', 'human', 'being',
+            'thing', 'object', 'item', 'entity', 'substance', 'matter',
+            'reality', 'truth', 'consciousness', 'mind', 'soul', 'spirit',
+            'language', 'english', 'word', 'text', 'meaning', 'concept',
+            'particle', 'electron', 'quark', 'atom', 'molecule', 'fermion'  # actual physics fermions
+        ]
+        
+        # Known boson-like words (actions/forces)
+        boson_indicators = [
+            'ing', 'ed', 'es', 's'  # verb endings
+        ]
+        boson_words = [
+            'create', 'destroy', 'think', 'feel', 'understand', 'know',
+            'transform', 'change', 'move', 'generate', 'process',
+            'entangle', 'connect', 'relate', 'interact', 'communicate',
+            'photon', 'gluon', 'graviton', 'boson', 'force'  # actual physics bosons
+        ]
+        
+        # Known gauge-like words (properties/qualities)  
+        gauge_indicators = ['ly', 'ful', 'less', 'ish', 'ous', 'al', 'ic']
+        gauge_words = [
+            'quantum', 'super', 'natural', 'supernatural', 'beautiful',
+            'strange', 'mysterious', 'deep', 'complex', 'simple',
+            'true', 'false', 'real', 'virtual', 'actual', 'possible'
+        ]
+        
+        # Check for fermion-like (matter/entities)
+        if word in fermion_indicators:
+            return "fermion"
+        
+        # Check for boson-like (actions/forces) 
+        if word in boson_words:
+            return "boson"
+        if any(word.endswith(suffix) for suffix in boson_indicators):
+            return "boson"
+            
+        # Check for gauge-like (properties)
+        if word in gauge_words:
+            return "gauge"
+        if any(word.endswith(suffix) for suffix in gauge_indicators):
+            return "gauge"
+            
+        # Default classification based on word characteristics
+        if word.endswith(('ness', 'ity', 'ism', 'ist', 'er', 'or')):
+            return "fermion"  # Abstract entities and agents
+        elif word.endswith(('ing', 'ed', 'ate', 'ify', 'ize')):
+            return "boson"   # Action words
         else:
-            return word + 'ing'  # Default: add action suffix
+            return "fermion"  # Default to matter-like
+    
+    def _generate_fermion_superpartner(self, word: str) -> str:
+        """Generate superpartner for fermion-like words using s-prefix convention."""
+        # Handle special cases first
+        if word.lower() == "english":
+            return "Senglish"  # S + English
+        elif word.lower() == "reality":
+            return "sreality"
+        elif word.lower() == "consciousness":
+            return "sconsciousness"
+        elif word.lower() == "language":
+            return "slanguage"
+        elif word.lower() == "particle":
+            return "sparticle"
+        elif word.lower().startswith("qu"):  # quark -> squark pattern
+            return "s" + word.lower()
+        elif word.lower().startswith("el"):  # electron -> selectron pattern  
+            return "s" + word.lower()
+        else:
+            # General s-prefix rule for fermions
+            return "s" + word.lower()
+    
+    def _generate_boson_superpartner(self, word: str) -> str:
+        """Generate superpartner for boson-like words using -ino suffix convention."""
+        # Remove common verb endings before adding -ino
+        if word.endswith('ing'):
+            base = word[:-3]
+        elif word.endswith('ed'):
+            base = word[:-2]
+        elif word.endswith('es'):
+            base = word[:-2] 
+        elif word.endswith('s') and len(word) > 2:
+            base = word[:-1]
+        else:
+            base = word
+            
+        return base + "ino"
+    
+    def _generate_gauge_superpartner(self, word: str) -> str:
+        """Generate superpartner for gauge-like words (adjectives/adverbs)."""
+        # For adjectives, create complementary opposites or intensified forms
+        opposites = {
+            'quantum': 'classical',
+            'classical': 'quantum', 
+            'natural': 'artificial',
+            'artificial': 'natural',
+            'super': 'sub',
+            'beautiful': 'sublime',
+            'strange': 'ordinary',
+            'mysterious': 'transparent',
+            'deep': 'surface',
+            'complex': 'simple',
+            'simple': 'complex',
+            'true': 'virtual',
+            'false': 'actual',
+            'real': 'imaginary',
+            'possible': 'necessary'
+        }
+        
+        word_lower = word.lower()
+        if word_lower in opposites:
+            return opposites[word_lower]
+        else:
+            # Default gauge transformation: add super- prefix or -tonic suffix
+            if word.startswith('super'):
+                return word[5:] + "tonic"  # super-X -> X-tonic
+            else:
+                return "super" + word.lower()
+    
+    def _generate_default_superpartner(self, word: str) -> str:
+        """Default superpartner generation for unclassified words."""
+        # Use the mathematical supersymmetry transformation
+        return "s" + word.lower()  # Default to fermion-like transformation
     
     def supersymmetric_transform(self, text: str) -> Dict[str, Any]:
         """
