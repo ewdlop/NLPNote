@@ -1,5 +1,35 @@
 # NLP(Natural Language Processing) Note
 
+## 🆕 New: Lie Bracket Computational Framework
+
+**Answering: "Computer lie bracket of Math and physics(physical mathematics - mathematical physics =?)"**
+
+This repository now includes a comprehensive Lie bracket computational framework that explores the relationship between physical mathematics and mathematical physics. The framework demonstrates that:
+
+**[Physical_Mathematics, Mathematical_Physics] ≠ 0**
+
+### Key Features:
+- **Mathematical Computation**: Matrix Lie brackets, vector field brackets, Poisson brackets
+- **NLP Integration**: Analyze mathematical expressions in natural language text
+- **Philosophical Insights**: Understand the complementary nature of physical vs mathematical approaches
+- **Complete Examples**: From quantum mechanics to differential geometry
+
+### Quick Start:
+```python
+# Simple demonstration
+python3 simple_lie_example.py
+
+# Full demonstration  
+python3 lie_bracket_demo.py
+
+# Run tests
+python3 test_lie_bracket.py
+```
+
+See [LieBracket_Documentation.md](LieBracket_Documentation.md) for complete details.
+
+---
+
 # Same old same old
 
 American Humor. We are just kidding.
