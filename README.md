@@ -1603,7 +1603,7 @@ No specific source links were provided in the prompt.
 
 ```rss
 <rss version="2.0">
-  <channel">
+  <channel>
     <title>English Examples of Parallel Constructions and Antimetabole</title>
     <link>http://example.com</link>
     <description>Illustrations of rhetorical devices.</description>
