@@ -120,6 +120,7 @@ Certainly! Here are some key topics in Natural Language Processing (NLP):
 - **NLP in Chemistry**
 - **NLP for Physics Texts**
   - [Charged Black Holes (Weak and Strong Field Cases)](./Charged-Blackhole.md)
+  - [Weak and Strong Interactions (Fundamental Forces)](./Fundamental-Forces.md)
 - **NLP in Mathematics**
 - **NLP for Engineering Texts**
 - **NLP in Architecture**
