@@ -119,6 +119,9 @@ Certainly! Here are some key topics in Natural Language Processing (NLP):
 - **NLP for Biomedical Texts**
 - **NLP in Chemistry**
 - **NLP for Physics Texts**
+- **High Energy Physics NLP**
+- **Physics Equation Detection**
+- **Scientific Literature Analysis**
 - **NLP in Mathematics**
 - **NLP for Engineering Texts**
 - **NLP in Architecture**
