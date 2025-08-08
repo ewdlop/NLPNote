@@ -13,6 +13,24 @@ from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 
+# Import the new cardinality handling system
+try:
+    from cardinality_types import (
+        Cardinality, Ratio, Probability, Score,
+        safe_cardinality_ratio,
+        cardinality_complexity_score,
+        cardinality_clarity_score,
+        validate_cardinality_operation
+    )
+    CARDINALITY_TYPES_AVAILABLE = True
+except ImportError:
+    # Fallback for compatibility
+    Cardinality = int
+    Ratio = float
+    Probability = float
+    Score = float
+    CARDINALITY_TYPES_AVAILABLE = False
+
 
 class EvaluationDimension(Enum):
     """評估維度 (Evaluation Dimensions)"""
@@ -91,21 +109,31 @@ class FormalSemanticEvaluator:
     
     def _analyze_logical_structure(self, expression: str) -> float:
         """分析邏輯結構 (Analyze logical structure)"""
-        logical_count = 0
+        # Count logical operators (integral cardinality)
+        logical_count = Cardinality(0)
         for operator in self.logical_operators:
             logical_count += expression.lower().count(operator.lower())
         
-        quantifier_count = 0
+        # Count quantifiers (integral cardinality)
+        quantifier_count = Cardinality(0)
         for quantifier in self.quantifiers:
             quantifier_count += expression.lower().count(quantifier.lower())
         
-        # 歸一化分數 (Normalize score)
-        total_words = len(expression.split())
-        if total_words == 0:
-            return 0.0
+        # Total words (integral cardinality)
+        total_words = Cardinality(len(expression.split()))
         
-        complexity = min((logical_count + quantifier_count) / total_words * 2, 1.0)
-        return complexity
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use improved cardinality-aware calculation
+            complexity_score = cardinality_complexity_score(
+                logical_count, quantifier_count, total_words
+            )
+            return float(complexity_score)
+        else:
+            # Fallback to original calculation
+            if total_words == 0:
+                return 0.0
+            complexity = min((logical_count + quantifier_count) / total_words * 2, 1.0)
+            return complexity
     
     def _analyze_truth_value_clarity(self, expression: str) -> float:
         """分析真值清晰度 (Analyze truth value clarity)"""
@@ -113,16 +141,22 @@ class FormalSemanticEvaluator:
         vague_terms = ['可能', '也許', '大概', 'maybe', 'perhaps', 'possibly']
         definite_terms = ['一定', '必須', '確實', 'definitely', 'certainly', 'must']
         
-        vague_count = sum(expression.lower().count(term) for term in vague_terms)
-        definite_count = sum(expression.lower().count(term) for term in definite_terms)
+        # Count terms (integral cardinalities)
+        vague_count = Cardinality(sum(expression.lower().count(term) for term in vague_terms))
+        definite_count = Cardinality(sum(expression.lower().count(term) for term in definite_terms))
+        total_words = Cardinality(len(expression.split()))
         
-        total_words = len(expression.split())
-        if total_words == 0:
-            return 0.5
-        
-        # 明確性分數 (Clarity score)
-        clarity = 0.5 + (definite_count - vague_count) / total_words
-        return max(0.0, min(1.0, clarity))
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use improved cardinality-aware calculation
+            clarity_score = cardinality_clarity_score(vague_count, definite_count, total_words)
+            return float(clarity_score)
+        else:
+            # Fallback to original calculation
+            if total_words == 0:
+                return 0.5
+            # 明確性分數 (Clarity score)
+            clarity = 0.5 + (definite_count - vague_count) / total_words
+            return max(0.0, min(1.0, clarity))
     
     def _analyze_compositional_semantics(self, expression: str) -> float:
         """分析組合語義 (Analyze compositional semantics)"""
@@ -282,15 +316,27 @@ class SocialEvaluator:
     
     def _assess_politeness(self, expression: str, context: ExpressionContext) -> float:
         """評估禮貌程度 (Assess politeness level)"""
-        positive_count = sum(expression.lower().count(marker) for marker in self.politeness_markers['positive'])
-        negative_count = sum(expression.lower().count(marker) for marker in self.politeness_markers['negative'])
+        # Count politeness markers (integral cardinalities)
+        positive_count = Cardinality(sum(expression.lower().count(marker) for marker in self.politeness_markers['positive']))
+        negative_count = Cardinality(sum(expression.lower().count(marker) for marker in self.politeness_markers['negative']))
+        total_words = Cardinality(len(expression.split()))
         
-        total_words = len(expression.split())
-        if total_words == 0:
-            return 0.5
-        
-        politeness_score = 0.5 + (positive_count - negative_count) / total_words
-        return max(0.0, min(1.0, politeness_score))
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use safe cardinality ratio calculation
+            if total_words == 0:
+                return 0.5
+            
+            positive_ratio = safe_cardinality_ratio(positive_count, total_words, default=0.0)
+            negative_ratio = safe_cardinality_ratio(negative_count, total_words, default=0.0)
+            
+            politeness_score = 0.5 + float(positive_ratio) - float(negative_ratio)
+            return max(0.0, min(1.0, politeness_score))
+        else:
+            # Fallback to original calculation
+            if total_words == 0:
+                return 0.5
+            politeness_score = 0.5 + (positive_count - negative_count) / total_words
+            return max(0.0, min(1.0, politeness_score))
     
     def _assess_appropriateness(self, expression: str, context: ExpressionContext) -> float:
         """評估適當性 (Assess appropriateness)"""
@@ -302,13 +348,28 @@ class SocialEvaluator:
     
     def _assess_power_dynamics(self, expression: str, context: ExpressionContext) -> float:
         """評估權力動態 (Assess power dynamics)"""
-        formal_count = sum(expression.count(marker) for marker in self.power_markers['formal'])
-        informal_count = sum(expression.count(marker) for marker in self.power_markers['informal'])
+        # Count power markers (integral cardinalities)
+        formal_count = Cardinality(sum(expression.count(marker) for marker in self.power_markers['formal']))
+        informal_count = Cardinality(sum(expression.count(marker) for marker in self.power_markers['informal']))
         
-        if context.power_relation == 'formal':
-            return min(formal_count / (formal_count + informal_count + 1), 1.0)
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use safe calculation to avoid division by zero
+            total_markers = formal_count + informal_count
+            if total_markers == 0:
+                return 0.5  # Neutral when no markers present
+            
+            if context.power_relation == 'formal':
+                formal_ratio = safe_cardinality_ratio(formal_count, total_markers, default=0.0)
+                return float(formal_ratio)
+            else:
+                informal_ratio = safe_cardinality_ratio(informal_count, total_markers, default=0.0)
+                return float(informal_ratio)
         else:
-            return min(informal_count / (formal_count + informal_count + 1), 1.0)
+            # Fallback to original calculation
+            if context.power_relation == 'formal':
+                return min(formal_count / (formal_count + informal_count + 1), 1.0)
+            else:
+                return min(informal_count / (formal_count + informal_count + 1), 1.0)
     
     def _assess_cultural_sensitivity(self, expression: str, context: ExpressionContext) -> float:
         """評估文化敏感性 (Assess cultural sensitivity)"""
@@ -323,15 +384,32 @@ class SocialEvaluator:
         formal_indicators = ['您', '敬請', '懇請', 'kindly', 'respectfully']
         informal_indicators = ['你', '咱們', 'hey', 'guys']
         
-        formal_count = sum(expression.count(indicator) for indicator in formal_indicators)
-        informal_count = sum(expression.count(indicator) for indicator in informal_indicators)
+        # Count indicators (integral cardinalities)
+        formal_count = Cardinality(sum(expression.count(indicator) for indicator in formal_indicators))
+        informal_count = Cardinality(sum(expression.count(indicator) for indicator in informal_indicators))
         
-        if formality_level == 'formal':
-            return min(formal_count / (formal_count + informal_count + 1) * 2, 1.0)
-        elif formality_level == 'informal':
-            return min(informal_count / (formal_count + informal_count + 1) * 2, 1.0)
-        else:  # neutral
-            return 0.7  # Default neutral score
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use safe calculation
+            total_indicators = formal_count + informal_count
+            if total_indicators == 0:
+                return 0.7  # Default neutral score when no indicators
+            
+            if formality_level == 'formal':
+                formal_ratio = safe_cardinality_ratio(formal_count, total_indicators, default=0.0)
+                return min(float(formal_ratio) * 2.0, 1.0)
+            elif formality_level == 'informal':
+                informal_ratio = safe_cardinality_ratio(informal_count, total_indicators, default=0.0)
+                return min(float(informal_ratio) * 2.0, 1.0)
+            else:  # neutral
+                return 0.7
+        else:
+            # Fallback to original calculation
+            if formality_level == 'formal':
+                return min(formal_count / (formal_count + informal_count + 1) * 2, 1.0)
+            elif formality_level == 'informal':
+                return min(informal_count / (formal_count + informal_count + 1) * 2, 1.0)
+            else:  # neutral
+                return 0.7  # Default neutral score
     
     def _check_situation_match(self, expression: str, situation: str) -> float:
         """檢查情境匹配 (Check situation match)"""

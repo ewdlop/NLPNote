@@ -14,6 +14,23 @@ except ImportError:
     SPACY_AVAILABLE = False
     spacy = None
 
+# Import the new cardinality handling system
+try:
+    from cardinality_types import (
+        Cardinality, Ratio, Probability, Score,
+        safe_cardinality_ratio,
+        cardinality_lexical_density,
+        validate_cardinality_operation
+    )
+    CARDINALITY_TYPES_AVAILABLE = True
+except ImportError:
+    # Fallback for compatibility
+    Cardinality = int
+    Ratio = float
+    Probability = float
+    Score = float
+    CARDINALITY_TYPES_AVAILABLE = False
+
 # Import the new human expression evaluation framework
 try:
     from HumanExpressionEvaluator import HumanExpressionEvaluator, ExpressionContext
@@ -56,10 +73,19 @@ class SubtextAnalyzer:
         tokens = word_tokenize(text.lower())
         pos_tags = pos_tag(tokens)
         
+        # Count content words (integral cardinality)
         content_words = [word for word, pos in pos_tags 
                         if pos.startswith(('NN', 'VB', 'JJ', 'RB'))]
+        content_word_count = Cardinality(len(content_words))
+        total_word_count = Cardinality(len(tokens))
         
-        return len(content_words) / len(tokens) if tokens else 0
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use cardinality-aware calculation
+            density = cardinality_lexical_density(content_word_count, total_word_count)
+            return float(density)
+        else:
+            # Fallback to original calculation
+            return content_word_count / total_word_count if total_word_count > 0 else 0
 
     def analyze_ambiguity(self, text):
         """Analyze word ambiguity using WordNet"""
@@ -78,11 +104,11 @@ class SubtextAnalyzer:
         """Analyze potential symbolic content"""
         if self.nlp:
             doc = self.nlp(text)
-            word_count = len(doc)
+            word_count = Cardinality(len(doc))
         else:
             # Fallback to simple tokenization
             words = text.lower().split()
-            word_count = len(words)
+            word_count = Cardinality(len(words))
         
         symbolic_score = 0
         
@@ -95,8 +121,8 @@ class SubtextAnalyzer:
             'time': ['dawn', 'dusk', 'night', 'day', 'twilight', 'sunrise', 'sunset']
         }
         
-        # Count symbolic references
-        symbol_count = 0
+        # Count symbolic references (integral cardinality)
+        symbol_count = Cardinality(0)
         
         if self.nlp:
             for token in doc:
@@ -111,16 +137,22 @@ class SubtextAnalyzer:
                     if word in category:
                         symbol_count += 1
         
-        return symbol_count / word_count if word_count else 0
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use safe cardinality ratio calculation
+            symbolism_ratio = safe_cardinality_ratio(symbol_count, word_count, default=0.0)
+            return float(symbolism_ratio)
+        else:
+            # Fallback to original calculation
+            return symbol_count / word_count if word_count > 0 else 0
 
     def analyze_emotion_depth(self, text):
         """Analyze emotional complexity and depth"""
         if self.nlp:
             doc = self.nlp(text)
-            total_words = len(doc)
+            total_words = Cardinality(len(doc))
         else:
             words = text.lower().split()
-            total_words = len(words)
+            total_words = Cardinality(len(words))
         
         # Emotional indicators
         emotional_words = {
@@ -129,8 +161,9 @@ class SubtextAnalyzer:
                        'bittersweet', 'wistful', 'yearning', 'transcendent']
         }
         
-        basic_count = 0
-        complex_count = 0
+        # Count emotional words (integral cardinalities)
+        basic_count = Cardinality(0)
+        complex_count = Cardinality(0)
         
         if self.nlp:
             for token in doc:
@@ -138,18 +171,30 @@ class SubtextAnalyzer:
                 if word in emotional_words['basic']:
                     basic_count += 1
                 if word in emotional_words['complex']:
-                    complex_count += 2  # Weight complex emotions more heavily
+                    complex_count += 1  # Don't double-weight here, handle in scoring
         else:
             # Fallback approach
             for word in text.lower().split():
                 if word in emotional_words['basic']:
                     basic_count += 1
                 if word in emotional_words['complex']:
-                    complex_count += 2
+                    complex_count += 1
         
-        emotion_score = (basic_count + complex_count) / total_words if total_words else 0
-        
-        return emotion_score
+        if CARDINALITY_TYPES_AVAILABLE:
+            # Use safe cardinality calculation with proper weighting
+            if total_words == 0:
+                return 0.0
+            
+            basic_ratio = safe_cardinality_ratio(basic_count, total_words, default=0.0)
+            complex_ratio = safe_cardinality_ratio(complex_count, total_words, default=0.0)
+            
+            # Weight complex emotions more heavily
+            emotion_score = float(basic_ratio) + float(complex_ratio) * 2.0
+            return emotion_score
+        else:
+            # Fallback to original calculation
+            emotion_score = (basic_count + complex_count * 2) / total_words if total_words > 0 else 0
+            return emotion_score
 
     def analyze_metaphorical_content(self, text):
         """Analyze potential metaphorical content"""
