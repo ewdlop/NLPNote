@@ -1,0 +1,10 @@
+# Core NLP dependencies
+nltk>=3.8
+
+# Optional dependencies for advanced features
+# spacy>=3.4  # Uncomment if you want to use advanced spaCy features
+# numpy>=1.20  # Only needed if you want to use more advanced numerical operations
+
+# Development dependencies (optional)
+# pytest>=6.0  # For running tests
+# black>=22.0  # For code formatting
