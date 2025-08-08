@@ -1,10 +1,18 @@
-import numpy as np
 import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import wordnet
 from nltk.tag import pos_tag
 from collections import defaultdict
 import re
+
+# Import mathematical utilities (replacement for numpy)
+try:
+    from math_utils import MathUtils, mean
+except ImportError:
+    # Fallback for basic mean function if math_utils is not available
+    def mean(values):
+        values_list = list(values)
+        return sum(values_list) / len(values_list) if values_list else 0.0
 
 # Try to import spacy, handle gracefully if not available
 try:
@@ -72,7 +80,7 @@ class SubtextAnalyzer:
                 # Score based on number of different meanings
                 ambiguity_scores.append(len(synsets))
         
-        return np.mean(ambiguity_scores) if ambiguity_scores else 0
+        return mean(ambiguity_scores) if ambiguity_scores else 0
 
     def analyze_symbolism(self, text):
         """Analyze potential symbolic content"""

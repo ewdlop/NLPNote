@@ -1,8 +1,18 @@
 import heapq
 import math
 import re
-import numpy as np
 from typing import List, Dict, Any, Tuple
+
+# Import mathematical utilities for potential future use
+try:
+    from math_utils import MathUtils
+except ImportError:
+    # Fallback - define a minimal MathUtils class
+    class MathUtils:
+        @staticmethod
+        def mean(values):
+            values_list = list(values)
+            return sum(values_list) / len(values_list) if values_list else 0.0
 
 class AStarNLP:
     """

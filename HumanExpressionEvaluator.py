@@ -8,10 +8,23 @@ the cognitive, social, and cultural dimensions unique to human communication.
 
 import re
 import math
-import numpy as np
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+# Import mathematical utilities (replacement for numpy)
+try:
+    from math_utils import MathUtils, mean
+except ImportError:
+    # Fallback for basic mean function if math_utils is not available
+    def mean(values):
+        values_list = list(values)
+        return sum(values_list) / len(values_list) if values_list else 0.0
+    
+    class MathUtils:
+        @staticmethod
+        def mean(values):
+            return mean(values)
 
 
 class EvaluationDimension(Enum):
@@ -133,7 +146,7 @@ class FormalSemanticEvaluator:
         if not sentences or sentences == ['']:
             return 0.0
         
-        avg_sentence_length = np.mean([len(s.split()) for s in sentences if s.strip()])
+        avg_sentence_length = mean([len(s.split()) for s in sentences if s.strip()])
         
         # 歸一化到0-1範圍 (Normalize to 0-1 range)
         complexity = min(avg_sentence_length / 20, 1.0)
