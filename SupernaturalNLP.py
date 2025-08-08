@@ -3,7 +3,16 @@ SuperNLP: Supersymmetric Natural Language Processing
 
 This module implements supersymmetric concepts for natural language processing,
 creating a framework for "Supernatural Language Processing" based on mathematical
-physics principles from superspace and supersymmetry.
+physics principles from super-manifolds and super Lie algebra theory.
+
+Mathematical Foundation:
+- Super-manifolds: https://ncatlab.org/nlab/show/super-manifold
+- Super Lie algebras: https://ncatlab.org/nlab/show/super+Lie+algebra
+- Supersymmetry: https://ncatlab.org/nlab/show/supersymmetry
+
+The framework models language on super-manifolds ℝᵐ|ⁿ with:
+- Bosonic coordinates (x^μ): Classical semantic dimensions
+- Fermionic coordinates (θ^α): Anti-commuting Grassmann variables for quantum-like linguistic properties
 
 Author: SuperNLP Framework Team
 License: MIT
@@ -20,15 +29,21 @@ import itertools
 @dataclass
 class SuperField:
     """
-    Represents a linguistic superfield with bosonic and fermionic components.
+    Represents a linguistic superfield on a super-manifold ℝᵐ|ⁿ.
+    
+    Based on super-manifold theory, this encodes functions Φ(x,θ) where:
+    - x^μ are bosonic (commuting) coordinates  
+    - θ^α are fermionic (anti-commuting) Grassmann coordinates
     
     Attributes:
-        bosonic: Classical semantic vector (commuting)
-        fermionic: Quantum linguistic properties (anti-commuting)
-        auxiliary: Pragmatic/contextual information
+        bosonic: Classical semantic vector (commuting coordinates x^μ)
+        fermionic: Quantum linguistic properties (anti-commuting coordinates θ^α)
+        auxiliary: Pragmatic/contextual information (auxiliary field components)
+    
+    Reference: https://ncatlab.org/nlab/show/super-manifold
     """
     bosonic: List[float]
-    fermionic: List[Tuple[str, float]]  # Anti-commuting variables
+    fermionic: List[Tuple[str, float]]  # Anti-commuting Grassmann variables
     auxiliary: Dict[str, Any]
     
     def __post_init__(self):
@@ -43,8 +58,15 @@ class SuperField:
 
 class GrassmannNumber:
     """
-    Implementation of Grassmann numbers for fermionic coordinates.
-    Anti-commuting numbers where θᵢθⱼ = -θⱼθᵢ and θᵢ² = 0.
+    Implementation of Grassmann numbers for fermionic coordinates on super-manifolds.
+    
+    Grassmann numbers satisfy the anti-commutation relations:
+    - θᵢθⱼ = -θⱼθᵢ (anti-commutativity)
+    - θᵢ² = 0 (nilpotency)
+    
+    These form the mathematical foundation for fermionic coordinates in super-manifold theory.
+    
+    Reference: https://ncatlab.org/nlab/show/super-manifold
     """
     
     def __init__(self, coefficients: Dict[Tuple[int, ...], float] = None):
@@ -101,7 +123,18 @@ class GrassmannNumber:
 
 class SupersymmetryGenerator:
     """
-    Implements supersymmetry transformations Q for linguistic structures.
+    Implements supersymmetry transformations Q forming a super Lie algebra.
+    
+    The generators satisfy the fundamental supersymmetry algebra:
+    {Q_α, Q_β} = 2γ^μ_αβ P_μ    (anti-commutator of odd elements)
+    [Q_α, P_μ] = 0              (commutator of odd and even elements)
+    [P_μ, P_ν] = 0              (commutator of even elements)
+    
+    This encodes the super Lie algebra structure g = g₀ ⊕ g₁ where:
+    - g₀: Even transformations (classical linguistic operations)
+    - g₁: Odd transformations (supersymmetric generators)
+    
+    Reference: https://ncatlab.org/nlab/show/super+Lie+algebra
     """
     
     def __init__(self, dimension: int = 4):
