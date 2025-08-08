@@ -1,7 +1,6 @@
 import heapq
 import math
 import re
-import numpy as np
 from typing import List, Dict, Any, Tuple
 
 class AStarNLP:
