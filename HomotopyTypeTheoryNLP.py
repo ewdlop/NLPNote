@@ -38,6 +38,7 @@ class HoTTPathType(Enum):
     HOMOTOPY = "homotopy"          # 同倫路徑 (Homotopy paths)
     TRANSPORT = "transport"        # 傳輸路徑 (Transport paths)
     INDUCTION = "induction"        # 歸納路徑 (Induction paths)
+    ETHICAL_ACTION = "ethical_action"  # 倫理行動路徑 (Ethical action paths)
 
 
 @dataclass
@@ -399,6 +400,176 @@ class HigherPathCalculator:
         return transported_element
 
 
+class EthicalActionCalculator:
+    """倫理行動計算器 (Ethical Action Calculator)"""
+    
+    def __init__(self):
+        """初始化倫理行動計算器"""
+        self.ethical_principles = {
+            "non_discrimination": 0.3,      # 非歧視原則
+            "respect_dignity": 0.25,        # 尊重人格尊嚴
+            "fairness": 0.2,               # 公平性
+            "cultural_sensitivity": 0.15,   # 文化敏感性
+            "linguistic_inclusivity": 0.1   # 語言包容性
+        }
+        
+        # 有害語言模式檢測
+        self.harmful_patterns = {
+            "discriminatory_language": [
+                "retarded", "stupid", "idiot", "weak", "inferior", 
+                "弱智", "智障", "低等", "劣等", "愚蠢"
+            ],
+            "cultural_stereotypes": [
+                "all chinese", "typical", "always", "never",
+                "所有中國人", "典型的", "總是", "從不"
+            ],
+            "linguistic_bias": [
+                "broken english", "bad grammar", "can't speak",
+                "英語不好", "語法錯誤", "不會說"
+            ]
+        }
+    
+    def evaluate_ethical_action(self, semantic_path: 'SemanticPath') -> Dict[str, float]:
+        """
+        評估語義路徑的倫理行動分數
+        返回各項倫理指標的評分
+        """
+        evaluation = {}
+        
+        # 評估非歧視性
+        evaluation["non_discrimination"] = self._assess_non_discrimination(semantic_path)
+        
+        # 評估人格尊嚴尊重
+        evaluation["respect_dignity"] = self._assess_dignity_respect(semantic_path)
+        
+        # 評估公平性
+        evaluation["fairness"] = self._assess_fairness(semantic_path)
+        
+        # 評估文化敏感性
+        evaluation["cultural_sensitivity"] = self._assess_cultural_sensitivity(semantic_path)
+        
+        # 評估語言包容性
+        evaluation["linguistic_inclusivity"] = self._assess_linguistic_inclusivity(semantic_path)
+        
+        # 計算總體倫理分數
+        total_score = sum(
+            evaluation[principle] * weight 
+            for principle, weight in self.ethical_principles.items()
+        )
+        
+        evaluation["total_ethical_score"] = total_score
+        evaluation["is_ethically_acceptable"] = total_score >= 0.8  # 提高倫理標準
+        
+        return evaluation
+    
+    def _assess_non_discrimination(self, path: 'SemanticPath') -> float:
+        """評估非歧視性"""
+        concepts = [path.source, path.target]
+        if hasattr(path, 'intermediate_concepts'):
+            concepts.extend(path.intermediate_concepts)
+        
+        discrimination_penalty = 0.0
+        for concept in concepts:
+            concept_lower = concept.lower()
+            for pattern in self.harmful_patterns["discriminatory_language"]:
+                if pattern in concept_lower:
+                    discrimination_penalty += 0.3
+        
+        return max(0.0, 1.0 - discrimination_penalty)
+    
+    def _assess_dignity_respect(self, path: 'SemanticPath') -> float:
+        """評估人格尊嚴尊重"""
+        concepts = [path.source, path.target]
+        if hasattr(path, 'intermediate_concepts'):
+            concepts.extend(path.intermediate_concepts)
+        
+        dignity_score = 1.0
+        for concept in concepts:
+            concept_lower = concept.lower()
+            # 檢查是否包含貶低人格的表達
+            if any(harmful in concept_lower for harmful in ["stupid", "idiot", "弱智", "智障", "很差"]):
+                dignity_score -= 0.5  # 增加懲罰力度
+            
+            # 檢查更多貶低性詞彙
+            if any(harmful in concept_lower for harmful in ["差", "錯", "像個"]):
+                dignity_score -= 0.3
+            
+            # 檢查是否使用尊重的語言
+            if any(respectful in concept_lower for respectful in ["learning", "different", "unique", "學習", "不同", "獨特"]):
+                dignity_score += 0.1
+        
+        return max(0.0, min(1.0, dignity_score))
+    
+    def _assess_fairness(self, path: 'SemanticPath') -> float:
+        """評估公平性"""
+        concepts = [path.source, path.target]
+        if hasattr(path, 'intermediate_concepts'):
+            concepts.extend(path.intermediate_concepts)
+        
+        fairness_score = 1.0
+        for concept in concepts:
+            # 檢查是否存在偏見性表述
+            if any(bias in concept.lower() for bias in ["always", "never", "all", "none", "總是", "從不", "所有", "沒有"]):
+                fairness_score -= 0.2
+        
+        return max(0.0, fairness_score)
+    
+    def _assess_cultural_sensitivity(self, path: 'SemanticPath') -> float:
+        """評估文化敏感性"""
+        concepts = [path.source, path.target]
+        if hasattr(path, 'intermediate_concepts'):
+            concepts.extend(path.intermediate_concepts)
+        
+        sensitivity_score = 1.0
+        for concept in concepts:
+            # 檢查文化刻板印象
+            for stereotype in self.harmful_patterns["cultural_stereotypes"]:
+                if stereotype in concept.lower():
+                    sensitivity_score -= 0.25
+        
+        return max(0.0, sensitivity_score)
+    
+    def _assess_linguistic_inclusivity(self, path: 'SemanticPath') -> float:
+        """評估語言包容性"""
+        concepts = [path.source, path.target]
+        if hasattr(path, 'intermediate_concepts'):
+            concepts.extend(path.intermediate_concepts)
+        
+        inclusivity_score = 1.0
+        for concept in concepts:
+            # 檢查語言偏見
+            for bias in self.harmful_patterns["linguistic_bias"]:
+                if bias in concept.lower():
+                    inclusivity_score -= 0.3
+            
+            # 獎勵包容性語言
+            if any(inclusive in concept.lower() for inclusive in ["learning", "developing", "improving", "學習中", "發展中", "改進中"]):
+                inclusivity_score += 0.1
+        
+        return max(0.0, min(1.0, inclusivity_score))
+    
+    def generate_ethical_recommendations(self, path: 'SemanticPath', evaluation: Dict[str, float]) -> List[str]:
+        """根據倫理評估生成改進建議"""
+        recommendations = []
+        
+        if evaluation["non_discrimination"] < 0.7:
+            recommendations.append("避免使用歧視性語言，使用更中性和尊重的表達方式")
+        
+        if evaluation["respect_dignity"] < 0.7:
+            recommendations.append("增強對人格尊嚴的尊重，避免貶低性詞彙")
+        
+        if evaluation["fairness"] < 0.7:
+            recommendations.append("避免絕對化表述，承認個體差異和多樣性")
+        
+        if evaluation["cultural_sensitivity"] < 0.7:
+            recommendations.append("提高文化敏感性，避免刻板印象")
+        
+        if evaluation["linguistic_inclusivity"] < 0.7:
+            recommendations.append("採用更包容的語言表達，承認語言學習的過程性")
+        
+        return recommendations
+
+
 class HomotopyTypeTheoryNLP:
     """
     同倫類型論自然語言處理器 (Homotopy Type Theory NLP Processor)
@@ -418,6 +589,7 @@ class HomotopyTypeTheoryNLP:
         self.univalence_calculator = UnivalenceCalculator()
         self.path_space_calculator = PathSpaceCalculator(tian_dao_integration=integrate_path_integral)
         self.higher_path_calculator = HigherPathCalculator()
+        self.ethical_action_calculator = EthicalActionCalculator()
         
         # 語義類型和路徑存儲
         self.semantic_types: Dict[str, SemanticType] = {}
@@ -907,6 +1079,104 @@ class HomotopyTypeTheoryNLP:
             'homotopy_complexity': homotopy_complexity,
             'overall_complexity': overall_complexity
         }
+    
+    def ethical_action_analysis(self, text: str) -> Dict[str, Any]:
+        """
+        執行倫理行動分析 (Ethical Action Analysis)
+        整合HoTT路徑分析與倫理評估
+        """
+        # 提取概念並構造語義路徑
+        concepts = self._extract_concepts(text)
+        
+        if len(concepts) < 2:
+            return {
+                'error': '文本過短，無法進行倫理分析',
+                'concepts': concepts
+            }
+        
+        # 構造主要語義路徑
+        primary_path = self.construct_semantic_path(
+            concepts[0], 
+            concepts[-1], 
+            HoTTPathType.ETHICAL_ACTION
+        )
+        
+        # 添加中間概念作為路徑的一部分
+        if hasattr(primary_path, 'intermediate_concepts'):
+            primary_path.intermediate_concepts = concepts[1:-1]
+        else:
+            # 如果路徑對象沒有 intermediate_concepts 屬性，動態添加
+            setattr(primary_path, 'intermediate_concepts', concepts[1:-1])
+        
+        # 執行倫理評估
+        ethical_evaluation = self.ethical_action_calculator.evaluate_ethical_action(primary_path)
+        
+        # 生成改進建議
+        recommendations = self.ethical_action_calculator.generate_ethical_recommendations(
+            primary_path, ethical_evaluation
+        )
+        
+        # 綜合HoTT分析
+        hott_analysis = self.comprehensive_hott_analysis(text)
+        
+        # 計算倫理-數學對齊分數
+        ethical_math_alignment = self._calculate_ethical_math_alignment(
+            ethical_evaluation, hott_analysis
+        )
+        
+        return {
+            'text': text,
+            'concepts': concepts,
+            'primary_path': {
+                'source': primary_path.source,
+                'target': primary_path.target,
+                'path_type': primary_path.path_type.value,
+                'intermediate_concepts': getattr(primary_path, 'intermediate_concepts', [])
+            },
+            'ethical_evaluation': ethical_evaluation,
+            'ethical_recommendations': recommendations,
+            'hott_analysis': hott_analysis,
+            'ethical_math_alignment': ethical_math_alignment,
+            'overall_assessment': self._generate_overall_ethical_assessment(
+                ethical_evaluation, ethical_math_alignment
+            )
+        }
+    
+    def _calculate_ethical_math_alignment(self, ethical_eval: Dict[str, float], 
+                                        hott_analysis: Dict[str, Any]) -> float:
+        """計算倫理評估與數學分析的對齊程度"""
+        ethical_score = ethical_eval.get('total_ethical_score', 0.0)
+        
+        # 從HoTT分析中提取數學複雜度
+        complexity_metrics = hott_analysis.get('hott_complexity_metrics', {})
+        math_complexity = complexity_metrics.get('overall_complexity', 0.0)
+        
+        # 高倫理分數應該與適中的數學複雜度對齊（不過於複雜也不過於簡單）
+        optimal_complexity = 0.5  # 最佳複雜度
+        complexity_deviation = abs(math_complexity - optimal_complexity)
+        complexity_alignment = max(0.0, 1.0 - complexity_deviation * 2)
+        
+        # 綜合對齊分數
+        alignment = (ethical_score * 0.7 + complexity_alignment * 0.3)
+        
+        return min(1.0, max(0.0, alignment))
+    
+    def _generate_overall_ethical_assessment(self, ethical_eval: Dict[str, float], 
+                                           alignment: float) -> str:
+        """生成總體倫理評估"""
+        ethical_score = ethical_eval.get('total_ethical_score', 0.0)
+        is_acceptable = ethical_eval.get('is_ethically_acceptable', False)
+        
+        if is_acceptable and alignment >= 0.8:
+            return "倫理表現優秀，數學結構合理，符合天道原則"
+        elif is_acceptable and alignment >= 0.6:
+            return "倫理表現良好，數學結構基本合理"
+        elif is_acceptable:
+            return "倫理可接受，但數學結構需要改進"
+        elif ethical_score >= 0.5:
+            return "倫理表現需要改進，建議優化語言表達"
+        else:
+            return "存在明顯倫理問題，需要重新審視和修正"
 
 
 def demonstrate_hott_nlp():

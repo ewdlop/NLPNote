@@ -478,6 +478,74 @@ def demonstrate_hott_concepts():
     return True
 
 
+def test_ethical_action_analysis():
+    """測試倫理行動分析"""
+    print("=" * 60)
+    print("倫理行動分析測試 (Ethical Action Analysis Test)")
+    print("=" * 60)
+    
+    if not HOTT_AVAILABLE:
+        print("HomotopyTypeTheoryNLP 不可用，跳過測試")
+        return False
+    
+    hott_nlp = HomotopyTypeTheoryNLP()
+    
+    print("\n1. 正面倫理語言測試")
+    print("-" * 30)
+    
+    positive_text = "學習英語是一個過程，每個人都有不同的起點和發展速度"
+    analysis = hott_nlp.ethical_action_analysis(positive_text)
+    
+    print(f"文本: {analysis['text']}")
+    print(f"概念: {analysis['concepts']}")
+    print(f"倫理評分: {analysis['ethical_evaluation']['total_ethical_score']:.3f}")
+    print(f"是否可接受: {analysis['ethical_evaluation']['is_ethically_acceptable']}")
+    print(f"總體評估: {analysis['overall_assessment']}")
+    
+    if analysis['ethical_recommendations']:
+        print(f"改進建議: {', '.join(analysis['ethical_recommendations'])}")
+    else:
+        print("✅ 無需改進，符合倫理標準")
+    
+    print("\n2. 問題語言檢測測試")
+    print("-" * 30)
+    
+    problematic_text = "他的英語很差，總是說錯話，像個弱智一樣"
+    analysis2 = hott_nlp.ethical_action_analysis(problematic_text)
+    
+    print(f"文本: {analysis2['text']}")
+    print(f"倫理評分: {analysis2['ethical_evaluation']['total_ethical_score']:.3f}")
+    print(f"是否可接受: {analysis2['ethical_evaluation']['is_ethically_acceptable']}")
+    print(f"總體評估: {analysis2['overall_assessment']}")
+    
+    if analysis2['ethical_recommendations']:
+        print("改進建議:")
+        for i, rec in enumerate(analysis2['ethical_recommendations'], 1):
+            print(f"   {i}. {rec}")
+    
+    print("\n3. 倫理-數學對齊測試")
+    print("-" * 30)
+    
+    complex_text = "語言學習涉及認知、情感、社會多個維度的協調發展"
+    analysis3 = hott_nlp.ethical_action_analysis(complex_text)
+    
+    print(f"文本: {analysis3['text']}")
+    print(f"倫理-數學對齊分數: {analysis3['ethical_math_alignment']:.3f}")
+    print(f"數學複雜度: {analysis3['hott_analysis']['hott_complexity_metrics']['overall_complexity']:.3f}")
+    print(f"總體評估: {analysis3['overall_assessment']}")
+    
+    # 驗證測試結果
+    success = (
+        analysis['ethical_evaluation']['is_ethically_acceptable'] and  # 正面語言應該可接受
+        not analysis2['ethical_evaluation']['is_ethically_acceptable'] and  # 問題語言應該不可接受
+        len(analysis2['ethical_recommendations']) > 0 and  # 問題語言應該有建議
+        analysis3['ethical_math_alignment'] > 0.0  # 對齊分數應該大於0
+    )
+    
+    print(f"\n✓ 倫理行動分析測試結果: {'通過' if success else '失敗'}")
+    return success
+
+
 def run_all_hott_tests():
     """運行所有HoTT測試"""
     print("🧮 同倫類型論自然語言處理 - 完整測試套件")
@@ -501,6 +569,7 @@ def run_all_hott_tests():
         test_results.append(("同倫分析", test_homotopy_analysis()))
         test_results.append(("綜合分析", test_comprehensive_analysis()))
         test_results.append(("路徑積分整合", test_integration_with_path_integral()))
+        test_results.append(("倫理行動分析", test_ethical_action_analysis()))
         test_results.append(("核心概念演示", demonstrate_hott_concepts()))
         
         print("\n" + "=" * 80)
@@ -535,6 +604,7 @@ def run_all_hott_tests():
             print("   ✓ 同倫分析檢測語義等價性")
             print("   ✓ 與天道路徑積分NLP完美整合")
             print("   ✓ 支持中英文混合語義分析")
+            print("   ✓ 倫理行動分析確保語言使用的道德性")
             print("   ✓ 提供完整的數學基礎框架")
             
         else:
