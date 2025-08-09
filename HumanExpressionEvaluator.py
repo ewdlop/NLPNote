@@ -8,10 +8,17 @@ the cognitive, social, and cultural dimensions unique to human communication.
 
 import re
 import math
-import numpy as np
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+# Handle numpy dependency gracefully
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
 
 
 class EvaluationDimension(Enum):
@@ -21,6 +28,7 @@ class EvaluationDimension(Enum):
     SOCIAL = "social"
     CULTURAL = "cultural"
     PRAGMATIC = "pragmatic"
+    PSYCHOLOGICAL = "psychological"  # 新增：博尔兹曼大脑心理分析维度
 
 
 @dataclass
@@ -133,7 +141,11 @@ class FormalSemanticEvaluator:
         if not sentences or sentences == ['']:
             return 0.0
         
-        avg_sentence_length = np.mean([len(s.split()) for s in sentences if s.strip()])
+        if NUMPY_AVAILABLE:
+            avg_sentence_length = np.mean([len(s.split()) for s in sentences if s.strip()])
+        else:
+            lengths = [len(s.split()) for s in sentences if s.strip()]
+            avg_sentence_length = sum(lengths) / len(lengths) if lengths else 0
         
         # 歸一化到0-1範圍 (Normalize to 0-1 range)
         complexity = min(avg_sentence_length / 20, 1.0)
@@ -363,6 +375,15 @@ class HumanExpressionEvaluator:
         self.formal_evaluator = FormalSemanticEvaluator()
         self.cognitive_evaluator = CognitiveEvaluator()
         self.social_evaluator = SocialEvaluator()
+        
+        # 尝试初始化博尔兹曼大脑心理分析器 (Try to initialize Boltzmann brain psychoanalyzer)
+        try:
+            from BoltzmannBrainPsychoAnalyzer import BoltzmannBrainPsychoAnalyzer
+            self.psychological_evaluator = BoltzmannBrainPsychoAnalyzer()
+            self.psychological_available = True
+        except ImportError:
+            self.psychological_evaluator = None
+            self.psychological_available = False
     
     def comprehensive_evaluation(self, expression: str, context: Optional[ExpressionContext] = None) -> Dict[str, Any]:
         """
@@ -391,6 +412,12 @@ class HumanExpressionEvaluator:
             expression, context.speaker, context
         )
         
+        # 心理分析評估 (Psychological analysis evaluation)
+        if self.psychological_available:
+            results['psychological'] = self.psychological_evaluator.comprehensive_evaluation(
+                expression, context
+            )
+        
         # 整合評估 (Integrated evaluation)
         results['integrated'] = self._integrate_evaluations(results)
         
@@ -401,11 +428,19 @@ class HumanExpressionEvaluator:
         整合各維度評估結果 (Integrate evaluation results from all dimensions)
         """
         # 權重設定 (Weight configuration)
-        weights = {
-            'formal_semantic': 0.25,
-            'cognitive': 0.35,
-            'social': 0.40
-        }
+        if self.psychological_available and 'psychological' in results:
+            weights = {
+                'formal_semantic': 0.20,
+                'cognitive': 0.30,
+                'social': 0.30,
+                'psychological': 0.20
+            }
+        else:
+            weights = {
+                'formal_semantic': 0.25,
+                'cognitive': 0.35,
+                'social': 0.40
+            }
         
         # 計算加權平均分 (Calculate weighted average score)
         total_score = 0
