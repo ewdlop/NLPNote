@@ -1,0 +1,27 @@
+# Requirements for Ego-Id-Superego Neural Network
+
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+numpy>=1.20.0
+
+# Optional dependencies for enhanced functionality
+# Uncomment if you want to use these features:
+
+# For advanced text processing
+# spacy>=3.4.0
+
+# For data manipulation and analysis
+# pandas>=1.3.0
+
+# For plotting and visualization  
+# matplotlib>=3.5.0
+# seaborn>=0.11.0
+
+# For scientific computing
+# scipy>=1.8.0
+
+# For development and testing
+# pytest>=7.0.0
+# jupyter>=1.0.0
