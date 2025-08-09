@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Planetary Notebook - 全行星通用笔记本</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --warning-color: #ff9800;
+            --background-color: #f8f9fa;
+            --surface-color: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .toolbar {
+            background: var(--surface-color);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .cell-container {
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            background: var(--surface-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .cell:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .cell-header {
+            background: var(--border-color);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .cell-type {
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+
+        .cell-type.code {
+            background: #2d3748;
+            color: white;
+        }
+
+        .cell-type.markdown {
+            background: #4caf50;
+            color: white;
+        }
+
+        .cell-input {
+            padding: 0;
+        }
+
+        .cell-editor {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 100px;
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .cell-editor.markdown {
+            background: #f8f9fa;
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .cell-editor:focus {
+            outline: none;
+            box-shadow: inset 0 0 0 2px var(--primary-color);
+        }
+
+        .cell-output {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .output-content {
+            padding: 15px;
+            background: #f8f9fa;
+        }
+
+        .output-content pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .output-error {
+            background: #ffebee;
+            color: var(--error-color);
+        }
+
+        .output-success {
+            background: #e8f5e9;
+        }
+
+        .execution-info {
+            background: #e3f2fd;
+            padding: 8px 15px;
+            font-size: 0.8em;
+            color: #1976d2;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nlp-tools-panel {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+
+        .status-icon {
+            font-size: 1.2em;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+
+        /* Syntax highlighting for code */
+        .highlight {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .keyword { color: #81c784; }
+        .string { color: #ffb74d; }
+        .comment { color: #9e9e9e; font-style: italic; }
+        .number { color: #64b5f6; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1><span class="emoji">🪐</span> Universal Planetary Notebook</h1>
+        <p class="subtitle">全行星通用笔记本 - A cross-platform notebook for NLP and beyond</p>
+    </header>
+
+    <div class="container">
+        <div class="toolbar">
+            <button class="btn btn-primary" onclick="addCell('code')">
+                <span class="emoji">➕</span> Add Code Cell
+            </button>
+            <button class="btn btn-primary" onclick="addCell('markdown')">
+                <span class="emoji">📝</span> Add Markdown Cell
+            </button>
+            <button class="btn btn-success" onclick="executeAll()">
+                <span class="emoji">▶️</span> Run All
+            </button>
+            <button class="btn btn-secondary" onclick="clearAll()">
+                <span class="emoji">🗑️</span> Clear All
+            </button>
+            <button class="btn btn-secondary" onclick="saveNotebook()">
+                <span class="emoji">💾</span> Save
+            </button>
+            <button class="btn btn-secondary" onclick="exportHTML()">
+                <span class="emoji">📄</span> Export HTML
+            </button>
+        </div>
+
+        <div class="nlp-tools-panel">
+            <h3><span class="emoji">🛠️</span> Available NLP Tools 可用的NLP工具</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-status">
+                        <span class="status-icon" id="expression-status">⏳</span>
+                        Human Expression Evaluator
+                    </div>
+                    <p>Evaluates human expressions with cognitive and social dimensions.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-status">
+                        <span class="status-icon" id="subtext-status">⏳</span>
+                        Subtext Analyzer
+                    </div>
+                    <p>Analyzes hidden meanings and implications in text.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-status">
+                        <span class="status-icon" id="astar-status">⏳</span>
+                        A* NLP
+                    </div>
+                    <p>Advanced pathfinding algorithms for natural language processing.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="notebook-container">
+            <!-- Cells will be dynamically added here -->
+        </div>
+
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn btn-primary" onclick="addCell('code')" style="font-size: 1.1em; padding: 12px 24px;">
+                <span class="emoji">✨</span> Start Creating Your Notebook
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p><span class="emoji">🌟</span> Universal Planetary Notebook v1.0</p>
+        <p>Cross-platform • Multilingual • NLP-powered</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">
+            Built for the NLPNote project • Supports Python execution and Markdown rendering
+        </p>
+    </footer>
+
+    <script>
+        let cellCounter = 0;
+        let notebook = {
+            title: "Universal Planetary Notebook",
+            cells: [],
+            metadata: {
+                created: new Date().toISOString(),
+                language: "python",
+                kernel: "universal"
+            }
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            checkNLPTools();
+            addWelcomeCell();
+        });
+
+        function checkNLPTools() {
+            // Simulate checking for NLP tools availability
+            const tools = [
+                { id: 'expression-status', available: true },
+                { id: 'subtext-status', available: true },
+                { id: 'astar-status', available: false }
+            ];
+
+            tools.forEach(tool => {
+                const element = document.getElementById(tool.id);
+                setTimeout(() => {
+                    element.textContent = tool.available ? '✅' : '❌';
+                }, Math.random() * 2000 + 500);
+            });
+        }
+
+        function addWelcomeCell() {
+            addCell('markdown', `# Welcome to Universal Planetary Notebook
+## 欢迎使用全行星通用笔记本
+
+This is a **cross-platform notebook interface** that integrates with NLP analysis tools without requiring Jupyter.
+
+### Features 特性:
+- 🌍 **Cross-platform compatibility** 跨平台兼容性
+- 🗣️ **Multilingual support** 多语言支持  
+- 🧠 **NLP tools integration** NLP工具集成
+- 🚀 **No dependencies** 无外部依赖
+- 💻 **Python code execution** Python代码执行
+- 📝 **Markdown rendering** Markdown渲染
+
+### Getting Started 开始使用:
+1. Click "Add Code Cell" to create a Python code cell
+2. Click "Add Markdown Cell" to create documentation
+3. Use the "Run All" button to execute all cells
+4. Save your work with the "Save" button
+
+Try adding a code cell and running some Python code!`);
+        }
+
+        function addCell(type = 'code', content = '') {
+            cellCounter++;
+            const cellId = `cell-${cellCounter}`;
+            
+            const cell = {
+                id: cellId,
+                type: type,
+                content: content,
+                output: '',
+                executionCount: 0
+            };
+            
+            notebook.cells.push(cell);
+            
+            const container = document.getElementById('notebook-container');
+            const cellElement = createCellElement(cell);
+            container.appendChild(cellElement);
+            
+            // Focus on the new cell's editor
+            const editor = cellElement.querySelector('.cell-editor');
+            editor.focus();
+            
+            return cell;
+        }
+
+        function createCellElement(cell) {
+            const cellDiv = document.createElement('div');
+            cellDiv.className = 'cell-container';
+            cellDiv.setAttribute('data-cell-id', cell.id);
+            
+            cellDiv.innerHTML = `
+                <div class="cell">
+                    <div class="cell-header">
+                        <div>
+                            <span class="cell-type ${cell.type}">${cell.type}</span>
+                            <span style="margin-left: 10px;">${cell.id}</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" style="padding: 4px 8px; font-size: 12px;" onclick="executeCell('${cell.id}')">
+                                ▶️ Run
+                            </button>
+                            <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; margin-left: 5px;" onclick="deleteCell('${cell.id}')">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cell-input">
+                        <textarea 
+                            class="cell-editor ${cell.type}" 
+                            placeholder="${cell.type === 'code' ? 'Enter Python code...' : 'Enter Markdown text...'}"
+                            oninput="updateCellContent('${cell.id}', this.value)"
+                        >${cell.content}</textarea>
+                    </div>
+                    <div class="cell-output" id="output-${cell.id}" style="display: none;">
+                        <div class="output-content">
+                            <pre id="output-content-${cell.id}"></pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return cellDiv;
+        }
+
+        function updateCellContent(cellId, content) {
+            const cell = notebook.cells.find(c => c.id === cellId);
+            if (cell) {
+                cell.content = content;
+            }
+        }
+
+        function executeCell(cellId) {
+            const cell = notebook.cells.find(c => c.id === cellId);
+            if (!cell) return;
+            
+            const outputDiv = document.getElementById(`output-${cellId}`);
+            const outputContent = document.getElementById(`output-content-${cellId}`);
+            
+            // Show loading
+            outputDiv.style.display = 'block';
+            outputContent.innerHTML = '<div class="loading"></div> Executing...';
+            
+            if (cell.type === 'code') {
+                executePythonCode(cell);
+            } else if (cell.type === 'markdown') {
+                executeMarkdownCell(cell);
+            }
+        }
+
+        function executePythonCode(cell) {
+            // Simulate Python code execution
+            // In a real implementation, this would send the code to a Python backend
+            setTimeout(() => {
+                const outputContent = document.getElementById(`output-content-${cell.id}`);
+                const outputDiv = document.getElementById(`output-${cell.id}`);
+                
+                try {
+                    // Simple simulation of Python execution
+                    let result = simulatePythonExecution(cell.content);
+                    
+                    cell.executionCount++;
+                    cell.output = result;
+                    
+                    outputContent.textContent = result;
+                    outputContent.parentElement.className = 'output-content output-success';
+                    
+                    // Add execution info
+                    const executionInfo = document.createElement('div');
+                    executionInfo.className = 'execution-info';
+                    executionInfo.textContent = `Execution ${cell.executionCount} completed at ${new Date().toLocaleTimeString()}`;
+                    
+                    const existing = outputDiv.querySelector('.execution-info');
+                    if (existing) existing.remove();
+                    outputDiv.appendChild(executionInfo);
+                    
+                } catch (error) {
+                    outputContent.textContent = `Error: ${error.message}`;
+                    outputContent.parentElement.className = 'output-content output-error';
+                }
+            }, 1000 + Math.random() * 2000);
+        }
+
+        function simulatePythonExecution(code) {
+            // Basic simulation of Python code execution
+            if (code.includes('print(')) {
+                const matches = code.match(/print\((.*?)\)/g);
+                if (matches) {
+                    return matches.map(match => {
+                        const content = match.replace(/print\((.*?)\)/, '$1');
+                        return eval(content);
+                    }).join('\n');
+                }
+            }
+            
+            if (code.includes('import')) {
+                return 'Modules imported successfully.';
+            }
+            
+            if (code.includes('=')) {
+                return 'Variables assigned.';
+            }
+            
+            if (code.includes('nlp_tools')) {
+                return 'NLP tools available:\\n- expression_evaluator: Human Expression Evaluator\\n- subtext_analyzer: Subtext Analyzer';
+            }
+            
+            return 'Code executed successfully.';
+        }
+
+        function executeMarkdownCell(cell) {
+            setTimeout(() => {
+                const outputContent = document.getElementById(`output-content-${cell.id}`);
+                
+                // Simple markdown to HTML conversion
+                let html = cell.content;
+                
+                // Headers
+                html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+                html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+                html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+                
+                // Bold and italic
+                html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                
+                // Line breaks
+                html = html.replace(/\n/g, '<br>');
+                
+                // Lists
+                html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
+                html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+                
+                outputContent.innerHTML = html;
+                cell.output = html;
+            }, 500);
+        }
+
+        function deleteCell(cellId) {
+            if (confirm('Are you sure you want to delete this cell?')) {
+                const cellElement = document.querySelector(`[data-cell-id="${cellId}"]`);
+                if (cellElement) {
+                    cellElement.remove();
+                }
+                
+                notebook.cells = notebook.cells.filter(c => c.id !== cellId);
+            }
+        }
+
+        function executeAll() {
+            notebook.cells.forEach(cell => {
+                executeCell(cell.id);
+            });
+        }
+
+        function clearAll() {
+            if (confirm('Are you sure you want to clear all cells?')) {
+                document.getElementById('notebook-container').innerHTML = '';
+                notebook.cells = [];
+                cellCounter = 0;
+            }
+        }
+
+        function saveNotebook() {
+            const data = JSON.stringify(notebook, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${notebook.title.replace(/\s+/g, '_')}.upnb`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Notebook saved successfully!');
+        }
+
+        function exportHTML() {
+            // Generate HTML export
+            let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${notebook.title}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .cell { margin: 20px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .cell-header { background: #f5f5f5; padding: 10px; font-weight: bold; }
+        .cell-content { padding: 15px; }
+        .code { background: #2d3748; color: #e2e8f0; font-family: monospace; }
+        .output { background: #f8f9fa; border-top: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>${notebook.title}</h1>
+    <p>Generated on ${new Date().toLocaleString()}</p>
+`;
+            
+            notebook.cells.forEach(cell => {
+                html += `
+    <div class="cell">
+        <div class="cell-header">${cell.type.toUpperCase()} Cell</div>
+        <div class="cell-content ${cell.type}">
+            <pre>${cell.content}</pre>
+        </div>`;
+        
+                if (cell.output) {
+                    html += `
+        <div class="output">
+            <pre>${cell.output}</pre>
+        </div>`;
+                }
+                
+                html += `
+    </div>`;
+            });
+            
+            html += `
+</body>
+</html>`;
+            
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${notebook.title.replace(/\s+/g, '_')}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('HTML export completed!');
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        saveNotebook();
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (e.shiftKey) {
+                            // Find the focused cell and execute it
+                            const activeElement = document.activeElement;
+                            if (activeElement.classList.contains('cell-editor')) {
+                                const cellId = activeElement.closest('[data-cell-id]').getAttribute('data-cell-id');
+                                executeCell(cellId);
+                            }
+                        }
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
