@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Planetary Notebook Demo - Universal Planetary Notebook</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .notebook-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .cell {
+            background: white;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .cell-input {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        .cell-output {
+            padding: 15px;
+        }
+        .code-cell .cell-input {
+            background: #2d3748;
+            color: #e2e8f0;
+        }
+        .markdown-cell .cell-input {
+            background: #e8f5e8;
+        }
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .execution-info {
+            font-size: 0.8em;
+            color: #666;
+            padding: 5px 15px;
+            background: #f1f3f4;
+        }
+        .nlp-tools-info {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="notebook-header">
+        <h1>Universal Planetary Notebook Demo</h1>
+        <p>全行星通用的 Notebook - Universal Planetary Notebook</p>
+        <p>Created: 2025-08-09T01:04:16.698919 | Language: python</p>
+    </div>
+    
+    <div class="nlp-tools-info">
+        <strong>Available NLP Tools 可用的NLP工具:</strong><br>
+        ❌ No NLP tools available
+    </div>
+    
+    
+    <div class="cell markdown-cell">
+        <div class="cell-input">
+            <pre># Welcome to Universal Planetary Notebook
+## 欢迎使用全行星通用笔记本
+
+This is a lightweight, cross-platform notebook interface that integrates with NLP analysis tools.
+
+### Features 特性:
+- **Cross-platform compatibility** 跨平台兼容性
+- **Multilingual support** 多语言支持
+- **NLP tools integration** NLP工具集成
+- **No Jupyter dependency** 无Jupyter依赖</pre>
+        </div>
+        
+        <div class="cell-output ">
+            <pre><h1>Welcome to Universal Planetary Notebook<br>## 欢迎使用全行星通用笔记本<br><br>This is a lightweight, cross-platform notebook interface that integrates with NLP analysis tools.<br><br>### Features 特性:<br>- <b>Cross-platform compatibility<b> 跨平台兼容性<br>- <b>Multilingual support<b> 多语言支持<br>- <b>NLP tools integration<b> NLP工具集成<br>- <b>No Jupyter dependency<b> 无Jupyter依赖</h1></pre>
+        </div>
+    </div>
+            
+    <div class="cell code-cell">
+        <div class="cell-input">
+            <pre># Basic Python execution
+print(&quot;Hello from Universal Notebook! 你好，来自全宇宙笔记本！&quot;)
+print(f&quot;Python version: {sys.version}&quot;)
+print(f&quot;Available NLP tools: {list(nlp_tools.keys())}&quot;)</pre>
+        </div>
+        <div class="execution-info">Execution 1 - 2025-08-09T01:04:16.699016</div>
+        <div class="cell-output error">
+            <pre>Error: NameError: name &#x27;sys&#x27; is not defined
+Traceback (most recent call last):
+  File &quot;/home/runner/work/NLPNote/NLPNote/universal_notebook.py&quot;, line 185, in _execute_code_cell
+    exec(cell.content, exec_globals)
+  File &quot;&lt;string&gt;&quot;, line 3, in &lt;module&gt;
+NameError: name &#x27;sys&#x27; is not defined. Did you forget to import &#x27;sys&#x27;
+</pre>
+        </div>
+    </div>
+            
+    <div class="cell code-cell">
+        <div class="cell-input">
+            <pre># NLP Analysis Example - Works with or without full dependencies
+print(&quot;Available NLP tools:&quot;, list(nlp_tools.keys()))
+print()
+
+# Test expression evaluation (simplified or full version)
+if &#x27;expression_evaluator&#x27; in nlp_tools:
+    evaluator = nlp_tools[&#x27;expression_evaluator&#x27;]
+    
+    # Test with Chinese text
+    result1 = evaluator.comprehensive_evaluation(&quot;这个笔记本很有趣！&quot;)
+    print(&quot;Expression Analysis for Chinese text &#x27;这个笔记本很有趣！&#x27;:&quot;)
+    for key, value in result1.items():
+        if isinstance(value, (int, float)):
+            print(f&quot;  {key}: {value:.3f}&quot;)
+        else:
+            print(f&quot;  {key}: {value}&quot;)
+    
+    print()
+    
+    # Test with English text
+    result2 = evaluator.comprehensive_evaluation(&quot;This Universal Notebook is awesome!&quot;)
+    print(&quot;Expression Analysis for English text &#x27;This Universal Notebook is awesome!&#x27;:&quot;)
+    for key, value in result2.items():
+        if isinstance(value, (int, float)):
+            print(f&quot;  {key}: {value:.3f}&quot;)
+        else:
+            print(f&quot;  {key}: {value}&quot;)
+
+print()
+
+# Test subtext analysis
+if &#x27;subtext_analyzer&#x27; in nlp_tools:
+    analyzer = nlp_tools[&#x27;subtext_analyzer&#x27;]
+    
+    texts = [
+        &quot;The sunset was beautiful tonight.&quot;,
+        &quot;Are you sure about that...?&quot;,
+        &quot;Everything is fine, absolutely fine.&quot;
+    ]
+    
+    print(&quot;Subtext Analysis Results:&quot;)
+    for text in texts:
+        analysis = analyzer.analyze_subtext(text)
+        print(f&quot;\nText: &#x27;{text}&#x27;&quot;)
+        for key, value in analysis.items():
+            if isinstance(value, (int, float)):
+                print(f&quot;  {key}: {value:.3f}&quot;)
+            else:
+                print(f&quot;  {key}: {value}&quot;)</pre>
+        </div>
+        <div class="execution-info">Execution 2 - 2025-08-09T01:04:16.701906</div>
+        <div class="cell-output ">
+            <pre>Available NLP tools: [&#x27;expression_evaluator&#x27;, &#x27;subtext_analyzer&#x27;]
+
+Expression Analysis for Chinese text &#x27;这个笔记本很有趣！&#x27;:
+  overall_score: 0.750
+  sentiment: neutral
+  complexity: 0.100
+  language: chinese
+
+Expression Analysis for English text &#x27;This Universal Notebook is awesome!&#x27;:
+  overall_score: 0.750
+  sentiment: positive
+  complexity: 0.500
+  language: english
+
+Subtext Analysis Results:
+
+Text: &#x27;The sunset was beautiful tonight.&#x27;
+  subtext_probability: 0.300
+  emotional_undertone: neutral
+  hidden_meaning_detected: 0.000
+
+Text: &#x27;Are you sure about that...?&#x27;
+  subtext_probability: 0.600
+  emotional_undertone: questioning
+  hidden_meaning_detected: 0.000
+
+Text: &#x27;Everything is fine, absolutely fine.&#x27;
+  subtext_probability: 0.300
+  emotional_undertone: neutral
+  hidden_meaning_detected: 0.000</pre>
+        </div>
+    </div>
+            
+    <div class="cell code-cell">
+        <div class="cell-input">
+            <pre># Mathematical operations and visualization
+import math
+import random
+
+# Generate some data
+data = [random.gauss(0, 1) for _ in range(20)]
+mean = sum(data) / len(data)
+variance = sum((x - mean) ** 2 for x in data) / len(data)
+
+print(f&quot;Sample data: {[round(x, 2) for x in data[:10]]}...&quot;)
+print(f&quot;Mean: {mean:.3f}&quot;)
+print(f&quot;Variance: {variance:.3f}&quot;)
+print(f&quot;Standard deviation: {math.sqrt(variance):.3f}&quot;)</pre>
+        </div>
+        <div class="execution-info">Execution 3 - 2025-08-09T01:04:16.702395</div>
+        <div class="cell-output ">
+            <pre>Sample data: [-1.37, -1.11, -0.13, -1.54, -0.44, 0.18, 0.86, 0.69, 0.05, 2.31]...
+Mean: 0.200
+Variance: 1.236
+Standard deviation: 1.112</pre>
+        </div>
+    </div>
+            
+    <div class="cell markdown-cell">
+        <div class="cell-input">
+            <pre>## How to Use 使用方法
+
+1. **Add cells** by modifying the notebook programmatically
+2. **Execute cells** to see results
+3. **Mix markdown and code** for documentation
+4. **Use NLP tools** for text analysis
+
+### Supported Cell Types 支持的单元格类型:
+- `code`: Python code execution
+- `markdown`: Documentation and formatting  
+- `text`: Plain text
+
+### Integration with Existing Tools 与现有工具的集成:
+This notebook integrates with the existing NLP tools in the repository.</pre>
+        </div>
+        
+        <div class="cell-output ">
+            <pre><h2>How to Use 使用方法<br><br>1. <b>Add cells<b> by modifying the notebook programmatically<br>2. <b>Execute cells<b> to see results<br>3. <b>Mix markdown and code<b> for documentation<br>4. <b>Use NLP tools<b> for text analysis<br><br>### Supported Cell Types 支持的单元格类型:<br>- `code`: Python code execution<br>- `markdown`: Documentation and formatting  <br>- `text`: Plain text<br><br>### Integration with Existing Tools 与现有工具的集成:<br>This notebook integrates with the existing NLP tools in the repository.</h2></pre>
+        </div>
+    </div>
+            
+</body>
+</html>
+        
