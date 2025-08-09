@@ -252,15 +252,104 @@ class SubtextAnalyzer:
         # Combine with traditional subtext analysis
         traditional_analysis = self.calculate_subtext_probability(text)
         
+        # Add neural firing analysis simulation for LLM-based text analysis
+        neural_firing_analysis = self._analyze_neural_firing_for_text(text)
+        
         # Integrate results
         integrated_analysis = {
             'expression_evaluation': evaluation_results,
             'subtext_analysis': traditional_analysis,
+            'neural_firing_analysis': neural_firing_analysis,
             'comparison': self._compare_analyses(evaluation_results, traditional_analysis),
-            'interpretation': self._generate_integrated_interpretation(evaluation_results, traditional_analysis)
+            'interpretation': self._generate_integrated_interpretation(evaluation_results, traditional_analysis, neural_firing_analysis)
         }
         
         return integrated_analysis
+    
+    def _analyze_neural_firing_for_text(self, text):
+        """
+        Simulate neural firing analysis for text processing
+        模擬文本處理的神經元激發分析
+        """
+        try:
+            from NeuralFiringAnalyzer import NeuralFiringAnalyzer
+            
+            # Create neural firing analyzer
+            firing_analyzer = NeuralFiringAnalyzer()
+            
+            # Simulate neural activations based on text characteristics
+            text_length = len(text.split())
+            text_complexity = len(set(text.lower().split())) / len(text.split()) if text.split() else 0
+            
+            # Create simulated activation patterns based on text properties
+            # This simulates how an LLM might process this text
+            activation_patterns = []
+            
+            # Simulate different processing stages
+            for stage in ['tokenization', 'embedding', 'attention', 'processing', 'output']:
+                if stage == 'tokenization':
+                    # High activation for complex texts
+                    activation = np.random.normal(0.8, 0.2, (text_length, 64))
+                elif stage == 'embedding':
+                    # Activation based on vocabulary diversity
+                    activation = np.random.normal(text_complexity, 0.1, (text_length, 128))
+                elif stage == 'attention':
+                    # Simulate attention patterns - some missing firing for long texts
+                    base_activation = 0.7 if text_length < 50 else 0.4
+                    activation = np.random.normal(base_activation, 0.3, (text_length, 256))
+                    # Simulate missing firing in attention heads
+                    if text_length > 100:
+                        missing_mask = np.random.random(activation.shape) < 0.3
+                        activation[missing_mask] = 0
+                elif stage == 'processing':
+                    # Middle layer processing - potential vanishing gradients
+                    activation = np.random.normal(0.5, 0.4, (text_length, 512))
+                    if text_complexity < 0.3:  # Simple texts might cause weak firing
+                        activation *= 0.1
+                elif stage == 'output':
+                    # Output layer - final decision making
+                    activation = np.random.normal(0.6, 0.2, (text_length, 64))
+                
+                # Apply tanh activation function
+                activation = np.tanh(activation)
+                
+                # Analyze this stage
+                stage_analysis = firing_analyzer.analyze_activation_tensor(activation, f"text_{stage}")
+                activation_patterns.append({
+                    'stage': stage,
+                    'analysis': stage_analysis
+                })
+            
+            # Calculate overall neural firing health for text processing
+            overall_firing_rate = np.mean([pattern['analysis'].activation_rate for pattern in activation_patterns])
+            total_issues = sum(len(pattern['analysis'].issues) for pattern in activation_patterns)
+            
+            neural_health_score = max(0.0, 1.0 - (total_issues * 0.1))
+            
+            return {
+                'overall_firing_rate': overall_firing_rate,
+                'neural_health_score': neural_health_score,
+                'total_issues': total_issues,
+                'stage_analyses': activation_patterns,
+                'interpretation': self._interpret_neural_firing_for_text(overall_firing_rate, neural_health_score, total_issues)
+            }
+            
+        except ImportError:
+            return {
+                'error': 'Neural Firing Analyzer not available',
+                'interpretation': 'Neural firing analysis requires NeuralFiringAnalyzer module'
+            }
+    
+    def _interpret_neural_firing_for_text(self, firing_rate, health_score, total_issues):
+        """Interpret neural firing results for text processing"""
+        if health_score > 0.8 and firing_rate > 0.7:
+            return "文本處理的神經激發模式良好，LLM應能有效處理此文本 (Good neural firing patterns for text processing, LLM should handle this text effectively)"
+        elif health_score > 0.6 and firing_rate > 0.5:
+            return "文本處理存在一些神經激發問題，可能影響LLM性能 (Some neural firing issues in text processing, may affect LLM performance)"
+        elif total_issues > 10:
+            return "檢測到嚴重的神經激發問題，LLM可能難以正確處理此文本 (Serious neural firing issues detected, LLM may struggle to process this text correctly)"
+        else:
+            return "神經激發模式需要改善以獲得更好的文本處理效果 (Neural firing patterns need improvement for better text processing)"
     
     def _compare_analyses(self, expression_eval, subtext_eval):
         """比較兩種分析方法的結果 (Compare results from both analysis methods)"""
@@ -284,7 +373,7 @@ class SubtextAnalyzer:
         
         return comparison
     
-    def _generate_integrated_interpretation(self, expression_eval, subtext_eval):
+    def _generate_integrated_interpretation(self, expression_eval, subtext_eval, neural_firing_eval=None):
         """生成整合解釋 (Generate integrated interpretation)"""
         interpretation = []
         
@@ -302,6 +391,14 @@ class SubtextAnalyzer:
         interpretation.append(f"潛文本分析分數: {subtext_score:.2f}")
         interpretation.append(f"主要潛文本指標: 象徵性 {subtext_components['symbolism']:.2f}, 情感深度 {subtext_components['emotion_depth']:.2f}")
         
+        # Neural firing analysis insights (if available)
+        if neural_firing_eval and 'error' not in neural_firing_eval:
+            neural_score = neural_firing_eval['neural_health_score']
+            firing_rate = neural_firing_eval['overall_firing_rate']
+            interpretation.append(f"神經激發健康分數: {neural_score:.2f}")
+            interpretation.append(f"整體激發率: {firing_rate:.2f}")
+            interpretation.append(f"神經激發分析: {neural_firing_eval['interpretation']}")
+        
         # Combined insight
         if expr_score > 0.7 and subtext_score > 0.7:
             interpretation.append("這是一個高質量的表達，具有豐富的潛在含義和良好的表達形式。")
@@ -309,6 +406,14 @@ class SubtextAnalyzer:
             interpretation.append("這個表達在某些維度表現較好，可能具有一定的深層含義。")
         else:
             interpretation.append("這是一個相對直接的表達，潛在含義較少。")
+        
+        # Add neural firing insights to overall interpretation
+        if neural_firing_eval and 'neural_health_score' in neural_firing_eval:
+            neural_score = neural_firing_eval['neural_health_score']
+            if neural_score < 0.5:
+                interpretation.append("警告: 檢測到神經激發問題，可能影響LLM對此文本的處理能力。")
+            elif neural_score > 0.8:
+                interpretation.append("神經激發模式良好，LLM應能有效處理此文本。")
         
         return "\n".join(interpretation)
     def generate_analysis_report(self, text):
