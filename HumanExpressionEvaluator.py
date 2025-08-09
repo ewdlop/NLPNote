@@ -8,10 +8,24 @@ the cognitive, social, and cultural dimensions unique to human communication.
 
 import re
 import math
-import numpy as np
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+# Handle optional dependencies gracefully
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
+
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    SPACY_AVAILABLE = False
+    spacy = None
 
 
 class EvaluationDimension(Enum):
