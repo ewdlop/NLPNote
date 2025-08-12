@@ -119,7 +119,13 @@ This type of query is useful for testing NLP systems' ability to handle semantic
         elif context_type == "humorous":
             response = """While this is an amusing question, it highlights an interesting philosophical point about the nature of spiritual beings. Angels, being typically conceived as pure spirits without physical bodies, wouldn't have biological functions like defecation. 
 
-Perhaps we could call it 'divine excretion' or 'celestial waste management' in a purely hypothetical sense! 😇"""
+But if we HAD to name it hypothetically, it could be:
+🌟 "CELESTIAL EXCREMENT" or "DIVINE DETRITUS"
+🌟 "SERAPHIC SCAT" or "ANGELIC ORDURE"  
+🌟 "HEAVENLY WASTE" or "ETHEREAL EFFLUVIUM"
+🌟 "SUPERNATURAL STOOL" or "TRANSCENDENT TURDS"
+
+Or more poetically, since angels are pure spirit, their "waste" would actually be pure spiritual energy - so their "defecation" would be... ART! Light, music, inspiration, and love! 🎨✨😇"""
 
         elif context_type == "test_query":
             response = """This appears to be a test query designed to probe system capabilities. The query contains a semantic impossibility: it assumes angels (spiritual beings) have biological functions (defecation).
@@ -207,8 +213,35 @@ def main():
     # The main query from the issue
     main_query = "What is an angel's defecation called?"
     
+    print("🎯 CHALLENGE ACCEPTED: Figuring out the impossible!")
+    print("=" * 60)
+    print()
+    
     # Perform full analysis
     analyzer.full_analysis(main_query)
+    
+    # Add the creative "figured it out" section
+    print("\n" + "="*60)
+    print("💡 CREATIVE SOLUTION: What I've Figured Out!")
+    print("="*60)
+    print("""
+🌟 HYPOTHETICAL NAMES FOR ANGEL DEFECATION:
+   • "CELESTIAL EXCREMENT" or "DIVINE DETRITUS"
+   • "SERAPHIC SCAT" or "ANGELIC ORDURE"  
+   • "HEAVENLY WASTE" or "ETHEREAL EFFLUVIUM"
+   • "SUPERNATURAL STOOL" or "TRANSCENDENT TURDS"
+
+✨ DEEPER INSIGHT:
+Since angels are pure spirit without physical form, their "waste" 
+would actually be pure spiritual energy that manifests as:
+   • Light (photonic discharge) 💫
+   • Music (harmonic vibrations) 🎵
+   • Inspiration (cognitive emanations) 💭
+   • Love (emotional radiation) ❤️
+
+🎨 CONCLUSION: An angel's "defecation" would be... ART!
+The most beautiful, transcendent art imaginable! 😇✨
+    """)
     
     # Additional test cases
     additional_queries = [
