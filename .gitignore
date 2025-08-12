@@ -396,3 +396,20 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Cross-platform specific ignores
+dist/
+out/
+
+# Android specific
+*.apk
+*.aar
+local.properties
+
+# HarmonyOS specific
+*.hap
+*.happ
+
+# Platform-specific temporary files
+temp/
+tmp/
