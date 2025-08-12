@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 人類表達評估器 (Human Expression Evaluator)
 
@@ -8,10 +10,41 @@ the cognitive, social, and cultural dimensions unique to human communication.
 
 import re
 import math
-import numpy as np
+import unicodedata
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
+
+# Graceful handling of optional dependencies
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    # Fallback implementation for basic numpy functions
+    class NumpyFallback:
+        @staticmethod
+        def mean(values):
+            return sum(values) / len(values) if values else 0.0
+        
+        @staticmethod
+        def std(values):
+            if not values:
+                return 0.0
+            mean_val = sum(values) / len(values)
+            variance = sum((x - mean_val) ** 2 for x in values) / len(values)
+            return math.sqrt(variance)
+        
+        @staticmethod
+        def array(values):
+            return list(values)
+            
+        @staticmethod
+        def random():
+            import random
+            return random
+    
+    np = NumpyFallback()
 
 
 class EvaluationDimension(Enum):
