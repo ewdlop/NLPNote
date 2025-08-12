@@ -1,0 +1,140 @@
+# Marketing/Promotional Language Stopwords
+# Based on GOV.UK, ONS, Microsoft Style Guide, and Nielsen Norman Group research
+# 
+# Usage: Filter these terms to improve content clarity and objectivity
+# Replace with specific, measurable claims instead of vague promotional language
+
+# Ranking/Superiority Terms
+best
+best in class
+best-in-class
+number one
+#1
+no. 1
+no 1
+first
+leading
+market leading
+market-leading
+industry leading
+industry-leading
+top
+top rated
+top-rated
+premier
+premium
+ultimate
+unmatched
+unparalleled
+unrivaled
+unsurpassed
+flagship
+award winning
+award-winning
+
+# Speed Claims  
+fast
+faster
+fastest
+quick
+quicker
+quickest
+rapid
+instant
+instantaneous
+blazing
+lightning fast
+lightning-fast
+high performance
+high-performance
+
+# Technology/Quality Hype
+world class
+world-class
+cutting edge
+cutting-edge
+state of the art
+state-of-the-art
+next generation
+next-generation
+revolutionary
+groundbreaking
+innovative
+optimal
+optimized
+optimize
+superior
+
+# Ease/Simplicity Claims
+easy
+easily
+simplest
+simple
+seamless
+frictionless
+user friendly
+user-friendly
+intuitive
+effortless
+hassle free
+hassle-free
+
+# Trust/Quality Claims
+trusted
+proven
+guaranteed
+guarantee
+certified
+reliable
+robust
+scalable
+flexible
+powerful
+secure
+effective
+efficient
+
+# Comprehensiveness Claims
+end to end
+end-to-end
+turnkey
+holistic
+comprehensive
+all in one
+all-in-one
+full service
+full-service
+one stop shop
+one-stop shop
+360 degree
+360-degree
+
+# Vague Business Jargon
+deliver
+deploy
+enable
+empower
+facilitate
+leverage
+drive
+transform
+revolutionize
+optimize
+maximize
+accelerate
+streamline
+synergy
+synergize
+key
+
+# Industry Buzzwords
+mission critical
+market leading
+industry standard
+industry-standard
+game changing
+game-changing
+bleeding edge
+bleeding-edge
+best of breed
+best-of-breed
