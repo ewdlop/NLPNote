@@ -21,6 +21,7 @@ class EvaluationDimension(Enum):
     SOCIAL = "social"
     CULTURAL = "cultural"
     PRAGMATIC = "pragmatic"
+    VIBE = "vibe"
 
 
 @dataclass
@@ -347,6 +348,278 @@ class SocialEvaluator:
         return situation_scores.get(situation, 0.5)
 
 
+class VibeEvaluator:
+    """氛圍評估器 (Vibe Evaluator)
+    
+    Evaluates the subjective, emotional, and aesthetic qualities of expressions
+    that contribute to their overall "vibe" or feeling.
+    """
+    
+    def __init__(self):
+        # 正面情感詞 (Positive emotion words)
+        self.positive_vibe_words = {
+            'awesome', 'amazing', 'cool', 'great', 'fantastic', 'wonderful', 'brilliant',
+            'lovely', 'beautiful', 'gorgeous', 'stunning', 'incredible', 'marvelous',
+            'excellent', 'perfect', 'outstanding', 'fabulous', 'spectacular', 'divine',
+            '棒', '好', '讚', '酷', '美', '漂亮', '完美', '優秀', '精彩', '絕佳', '太棒了',
+            '很棒', '不錯', '很好', '超讚', '厲害', '驚人', '令人驚艷'
+        }
+        
+        # 負面情感詞 (Negative emotion words)
+        self.negative_vibe_words = {
+            'awful', 'terrible', 'horrible', 'disgusting', 'annoying', 'boring', 'dull',
+            'ugly', 'gross', 'nasty', 'bad', 'worse', 'worst', 'hate', 'sucks',
+            '糟', '爛', '討厭', '噁心', '無聊', '醜', '差', '壞', '恨', '煩'
+        }
+        
+        # 活力詞彙 (Energy words)
+        self.energy_words = {
+            'vibrant', 'dynamic', 'energetic', 'lively', 'exciting', 'thrilling',
+            'pumped', 'fired up', 'intense', 'passionate', 'electric', 'explosive',
+            '有活力', '充滿活力', '激動', '興奮', '熱情', '火熱', '電力十足'
+        }
+        
+        # 舒緩詞彙 (Chill words)
+        self.chill_words = {
+            'relaxed', 'calm', 'peaceful', 'serene', 'tranquil', 'mellow', 'zen',
+            'chill', 'laid-back', 'easy-going', 'gentle', 'soft', 'smooth',
+            '放鬆', '平靜', '安詳', '寧靜', '悠閒', '輕鬆', '溫和', '柔和'
+        }
+        
+        # 創意詞彙 (Creative words)
+        self.creative_words = {
+            'creative', 'artistic', 'innovative', 'unique', 'original', 'inspiring',
+            'imaginative', 'genius', 'brilliant', 'inventive', 'visionary',
+            '創意', '藝術', '創新', '獨特', '原創', '有創意', '天才', '靈感'
+        }
+        
+        # 文化氛圍詞彙 (Cultural vibe words)
+        self.cultural_vibe_words = {
+            'hip', 'trendy', 'cool', 'stylish', 'fashionable', 'modern', 'contemporary',
+            'classic', 'vintage', 'retro', 'traditional', 'authentic', 'genuine',
+            '時尚', '潮流', '經典', '復古', '傳統', '真實', '地道'
+        }
+    
+    def evaluate_vibe(self, expression: str, context: Optional[ExpressionContext] = None) -> EvaluationResult:
+        """
+        評估表達的整體氛圍 (Evaluate overall vibe of expression)
+        
+        Args:
+            expression: 要評估的表達 (Expression to evaluate)
+            context: 表達語境 (Expression context)
+        
+        Returns:
+            氛圍評估結果 (Vibe evaluation result)
+        """
+        if context is None:
+            context = ExpressionContext()
+        
+        # 計算各個氛圍維度 (Calculate various vibe dimensions)
+        emotional_resonance = self._assess_emotional_resonance(expression)
+        aesthetic_appeal = self._assess_aesthetic_appeal(expression)
+        energy_level = self._assess_energy_level(expression)
+        cultural_vibe = self._assess_cultural_vibe(expression, context)
+        authenticity = self._assess_authenticity(expression)
+        creativity_factor = self._assess_creativity(expression)
+        
+        # 計算總體氛圍分數 (Calculate overall vibe score)
+        vibe_score = (emotional_resonance + aesthetic_appeal + energy_level + 
+                     cultural_vibe + authenticity + creativity_factor) / 6
+        
+        # 評估信心度 (Assess confidence)
+        confidence = self._calculate_vibe_confidence(expression, {
+            'emotional_resonance': emotional_resonance,
+            'aesthetic_appeal': aesthetic_appeal,
+            'energy_level': energy_level,
+            'cultural_vibe': cultural_vibe,
+            'authenticity': authenticity,
+            'creativity_factor': creativity_factor
+        })
+        
+        return EvaluationResult(
+            dimension=EvaluationDimension.VIBE,
+            score=vibe_score,
+            confidence=confidence,
+            explanation=f"情感共鳴: {emotional_resonance:.2f}, 美感吸引力: {aesthetic_appeal:.2f}, "
+                       f"能量水平: {energy_level:.2f}, 文化氛圍: {cultural_vibe:.2f}, "
+                       f"真實性: {authenticity:.2f}, 創意因子: {creativity_factor:.2f}",
+            sub_scores={
+                'emotional_resonance': emotional_resonance,
+                'aesthetic_appeal': aesthetic_appeal,
+                'energy_level': energy_level,
+                'cultural_vibe': cultural_vibe,
+                'authenticity': authenticity,
+                'creativity_factor': creativity_factor
+            }
+        )
+    
+    def _assess_emotional_resonance(self, expression: str) -> float:
+        """評估情感共鳴度 (Assess emotional resonance)"""
+        expression_lower = expression.lower()
+        
+        positive_count = sum(1 for word in self.positive_vibe_words 
+                           if word in expression_lower)
+        negative_count = sum(1 for word in self.negative_vibe_words 
+                           if word in expression_lower)
+        
+        # 計算情感極性 (Calculate emotional polarity)
+        total_emotional_words = positive_count + negative_count
+        if total_emotional_words == 0:
+            return 0.5  # Neutral baseline
+        
+        positive_ratio = positive_count / total_emotional_words
+        
+        # 有情感表達總是比沒有情感表達的氛圍好 (Emotional expression is better than no emotion)
+        emotional_intensity = min(total_emotional_words * 0.2, 1.0)
+        
+        return (positive_ratio * 0.7 + emotional_intensity * 0.3)
+    
+    def _assess_aesthetic_appeal(self, expression: str) -> float:
+        """評估美感吸引力 (Assess aesthetic appeal)"""
+        # 檢查韻律和節奏 (Check rhythm and flow)
+        words = expression.split()
+        if len(words) == 0:
+            return 0.3
+        
+        # 詞彙多樣性 (Vocabulary diversity)
+        unique_words = len(set(word.lower() for word in words))
+        diversity_score = min(unique_words / len(words), 1.0)
+        
+        # 長度平衡 (Length balance) - not too short, not too long
+        length_score = 1.0 - abs(len(words) - 8) / 20.0  # Optimal around 8 words
+        length_score = max(0.0, min(1.0, length_score))
+        
+        # 語音美感 (Phonetic beauty) - simplified check for repeated sounds
+        vowels = 'aeiouAEIOU'
+        vowel_density = sum(1 for char in expression if char in vowels) / len(expression)
+        phonetic_score = min(vowel_density * 2, 1.0)
+        
+        return (diversity_score * 0.4 + length_score * 0.3 + phonetic_score * 0.3)
+    
+    def _assess_energy_level(self, expression: str) -> float:
+        """評估能量水平 (Assess energy level)"""
+        expression_lower = expression.lower()
+        
+        # 高能量詞彙 (High energy words)
+        energy_count = sum(1 for word in self.energy_words 
+                          if word in expression_lower)
+        
+        # 舒緩詞彙 (Chill words)
+        chill_count = sum(1 for word in self.chill_words 
+                         if word in expression_lower)
+        
+        # 標點符號能量 (Punctuation energy)
+        exclamation_count = expression.count('!')
+        question_count = expression.count('?')
+        caps_count = sum(1 for char in expression if char.isupper())
+        
+        punctuation_energy = (exclamation_count * 0.3 + question_count * 0.1 + 
+                            caps_count * 0.05)
+        
+        # 平衡能量評分 (Balanced energy scoring)
+        if energy_count > chill_count:
+            energy_score = 0.7 + min(energy_count * 0.1, 0.3)
+        elif chill_count > energy_count:
+            energy_score = 0.4 + min(chill_count * 0.1, 0.3)
+        else:
+            energy_score = 0.5  # Balanced
+        
+        # 加入標點符號能量 (Add punctuation energy)
+        final_score = energy_score + min(punctuation_energy, 0.3)
+        
+        return min(final_score, 1.0)
+    
+    def _assess_cultural_vibe(self, expression: str, context: ExpressionContext) -> float:
+        """評估文化氛圍 (Assess cultural vibe)"""
+        expression_lower = expression.lower()
+        
+        # 文化氛圍詞彙計數 (Cultural vibe word count)
+        cultural_count = sum(1 for word in self.cultural_vibe_words 
+                           if word in expression_lower)
+        
+        # 根據文化背景調整 (Adjust based on cultural background)
+        cultural_adjustment = 1.0
+        if context.cultural_background == 'chinese':
+            # 檢查中文文化元素 (Check Chinese cultural elements)
+            chinese_markers = ['師父', '老師', '前輩', '禮貌', '謙虛']
+            chinese_count = sum(1 for marker in chinese_markers 
+                              if marker in expression)
+            cultural_adjustment = 1.0 + min(chinese_count * 0.1, 0.2)
+        
+        base_score = 0.5 + min(cultural_count * 0.1, 0.3)
+        return min(base_score * cultural_adjustment, 1.0)
+    
+    def _assess_authenticity(self, expression: str) -> float:
+        """評估真實性 (Assess authenticity)"""
+        # 檢查過度誇張 (Check for excessive exaggeration)
+        exaggeration_markers = ['!!!', '???', 'very very', 'super super', 
+                               '非常非常', '超級超級']
+        exaggeration_count = sum(expression.count(marker) for marker in exaggeration_markers)
+        
+        # 檢查真實性標記 (Check authenticity markers)
+        authenticity_markers = ['honestly', 'really', 'truly', 'genuinely', 
+                               '真的', '確實', '老實說']
+        authenticity_count = sum(1 for marker in authenticity_markers 
+                                if marker.lower() in expression.lower())
+        
+        # 計算真實性分數 (Calculate authenticity score)
+        base_authenticity = 0.7
+        exaggeration_penalty = min(exaggeration_count * 0.2, 0.4)
+        authenticity_bonus = min(authenticity_count * 0.1, 0.2)
+        
+        return max(0.1, base_authenticity - exaggeration_penalty + authenticity_bonus)
+    
+    def _assess_creativity(self, expression: str) -> float:
+        """評估創意度 (Assess creativity)"""
+        expression_lower = expression.lower()
+        
+        # 創意詞彙計數 (Creative word count)
+        creative_count = sum(1 for word in self.creative_words 
+                           if word in expression_lower)
+        
+        # 比喻和隱喻標記 (Metaphor and simile markers)
+        figurative_markers = ['like', 'as', 'metaphor', 'symbolizes', 
+                             '像', '如同', '彷彿', '好比']
+        figurative_count = sum(1 for marker in figurative_markers 
+                              if marker in expression_lower)
+        
+        # 詞彙創新性 (Vocabulary innovation) - unusual word combinations
+        words = expression_lower.split()
+        unusual_combinations = 0
+        common_words = {'the', 'is', 'a', 'to', 'and', 'of', 'in', 'it', 'you', 'that',
+                       '的', '是', '在', '有', '和', '了', '我', '你', '他', '她'}
+        
+        for i in range(len(words) - 1):
+            if words[i] not in common_words and words[i+1] not in common_words:
+                unusual_combinations += 1
+        
+        creativity_score = (creative_count * 0.3 + figurative_count * 0.4 + 
+                          min(unusual_combinations * 0.1, 0.3))
+        
+        return min(creativity_score + 0.3, 1.0)  # Base creativity score
+    
+    def _calculate_vibe_confidence(self, expression: str, sub_scores: Dict[str, float]) -> float:
+        """計算氛圍評估的信心度 (Calculate confidence in vibe assessment)"""
+        # 基於表達長度和複雜性 (Based on expression length and complexity)
+        words = expression.split()
+        if len(words) < 3:
+            length_confidence = 0.3  # Too short for reliable vibe assessment
+        elif len(words) > 30:
+            length_confidence = 0.7  # Might be too complex
+        else:
+            length_confidence = 0.8  # Good length for assessment
+        
+        # 基於評分分布 (Based on score distribution)
+        scores = list(sub_scores.values())
+        score_variance = np.var(scores) if scores else 0
+        if score_variance < 0.1:
+            distribution_confidence = 0.6  # Scores too similar, might be uncertain
+        else:
+            distribution_confidence = 0.9  # Good score distribution
+        
+        return (length_confidence * 0.6 + distribution_confidence * 0.4)
+
+
 class HumanExpressionEvaluator:
     """
     人類表達綜合評估器 (Comprehensive Human Expression Evaluator)
@@ -363,6 +636,7 @@ class HumanExpressionEvaluator:
         self.formal_evaluator = FormalSemanticEvaluator()
         self.cognitive_evaluator = CognitiveEvaluator()
         self.social_evaluator = SocialEvaluator()
+        self.vibe_evaluator = VibeEvaluator()
     
     def comprehensive_evaluation(self, expression: str, context: Optional[ExpressionContext] = None) -> Dict[str, Any]:
         """
@@ -391,6 +665,9 @@ class HumanExpressionEvaluator:
             expression, context.speaker, context
         )
         
+        # 氛圍評估 (Vibe evaluation)
+        results['vibe'] = self.vibe_evaluator.evaluate_vibe(expression, context)
+        
         # 整合評估 (Integrated evaluation)
         results['integrated'] = self._integrate_evaluations(results)
         
@@ -402,9 +679,10 @@ class HumanExpressionEvaluator:
         """
         # 權重設定 (Weight configuration)
         weights = {
-            'formal_semantic': 0.25,
-            'cognitive': 0.35,
-            'social': 0.40
+            'formal_semantic': 0.20,
+            'cognitive': 0.25,
+            'social': 0.30,
+            'vibe': 0.25
         }
         
         # 計算加權平均分 (Calculate weighted average score)
@@ -457,6 +735,17 @@ class HumanExpressionEvaluator:
                 characteristics['social_appropriateness'] = 'medium'
             else:
                 characteristics['social_appropriateness'] = 'low'
+        
+        if 'vibe' in results:
+            vibe_score = results['vibe'].score
+            if vibe_score > 0.8:
+                characteristics['vibe_quality'] = 'excellent'
+            elif vibe_score > 0.6:
+                characteristics['vibe_quality'] = 'good'
+            elif vibe_score > 0.4:
+                characteristics['vibe_quality'] = 'neutral'
+            else:
+                characteristics['vibe_quality'] = 'poor'
         
         return characteristics
     
