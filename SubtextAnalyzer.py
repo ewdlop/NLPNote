@@ -1,8 +1,18 @@
-import numpy as np
-import nltk
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.corpus import wordnet
-from nltk.tag import pos_tag
+# Try to import nltk, handle gracefully if not available
+try:
+    import nltk
+    from nltk.tokenize import word_tokenize, sent_tokenize
+    from nltk.corpus import wordnet
+    from nltk.tag import pos_tag
+    NLTK_AVAILABLE = True
+except ImportError:
+    NLTK_AVAILABLE = False
+    nltk = None
+    word_tokenize = None
+    sent_tokenize = None
+    wordnet = None
+    pos_tag = None
+
 from collections import defaultdict
 import re
 
@@ -26,13 +36,17 @@ except ImportError:
 
 class SubtextAnalyzer:
     def __init__(self):
-        # Download required NLTK data
-        try:
-            nltk.data.find('tokenizers/punkt')
-        except LookupError:
-            nltk.download('punkt')
-            nltk.download('averaged_perceptron_tagger')
-            nltk.download('wordnet')
+        # Initialize NLTK data if available
+        if NLTK_AVAILABLE:
+            try:
+                nltk.data.find('tokenizers/punkt')
+            except LookupError:
+                print("Downloading required NLTK data...")
+                nltk.download('punkt')
+                nltk.download('averaged_perceptron_tagger')
+                nltk.download('wordnet')
+        else:
+            print("NLTK not available. Some NLP features will be limited.")
         
         # Load spaCy model for advanced NLP
         if SPACY_AVAILABLE:
@@ -53,6 +67,14 @@ class SubtextAnalyzer:
     
     def calculate_lexical_density(self, text):
         """Calculate the lexical density (ratio of content words to total words)"""
+        if not NLTK_AVAILABLE:
+            # Fallback: simple approximation based on word length and patterns
+            words = text.lower().split()
+            # Approximate content words as longer words and those not in common function words
+            function_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'this', 'that', 'these', 'those'}
+            content_words = [word for word in words if word not in function_words and len(word) > 2]
+            return len(content_words) / len(words) if words else 0
+        
         tokens = word_tokenize(text.lower())
         pos_tags = pos_tag(tokens)
         
@@ -63,6 +85,18 @@ class SubtextAnalyzer:
 
     def analyze_ambiguity(self, text):
         """Analyze word ambiguity using WordNet"""
+        if not NLTK_AVAILABLE:
+            # Fallback: simple approximation based on word frequency and length
+            words = text.lower().split()
+            # Words that are shorter and more common tend to be more ambiguous
+            ambiguity_scores = []
+            for word in words:
+                if len(word) > 2:  # Skip very short words
+                    # Simple heuristic: shorter words tend to be more ambiguous
+                    ambiguity = max(1, 8 - len(word))  # Score from 1-7 based on length
+                    ambiguity_scores.append(ambiguity)
+            return sum(ambiguity_scores) / len(ambiguity_scores) if ambiguity_scores else 0
+        
         tokens = word_tokenize(text.lower())
         ambiguity_scores = []
         
@@ -72,7 +106,7 @@ class SubtextAnalyzer:
                 # Score based on number of different meanings
                 ambiguity_scores.append(len(synsets))
         
-        return np.mean(ambiguity_scores) if ambiguity_scores else 0
+        return sum(ambiguity_scores) / len(ambiguity_scores) if ambiguity_scores else 0
 
     def analyze_symbolism(self, text):
         """Analyze potential symbolic content"""

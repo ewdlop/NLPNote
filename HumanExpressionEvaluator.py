@@ -8,7 +8,6 @@ the cognitive, social, and cultural dimensions unique to human communication.
 
 import re
 import math
-import numpy as np
 from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
@@ -133,7 +132,8 @@ class FormalSemanticEvaluator:
         if not sentences or sentences == ['']:
             return 0.0
         
-        avg_sentence_length = np.mean([len(s.split()) for s in sentences if s.strip()])
+        sentence_lengths = [len(s.split()) for s in sentences if s.strip()]
+        avg_sentence_length = sum(sentence_lengths) / len(sentence_lengths) if sentence_lengths else 0
         
         # 歸一化到0-1範圍 (Normalize to 0-1 range)
         complexity = min(avg_sentence_length / 20, 1.0)
