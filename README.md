@@ -1,5 +1,19 @@
 # NLP(Natural Language Processing) Note
 
+## 🎭 一本正經地「胡說八道」生成器 (Serious Nonsense Generator)
+
+**NEW!** Generate sophisticated academic-sounding text that is completely meaningless - perfect embodiment of "seriously talking nonsense" (一本正經地「胡說八道」).
+
+```python
+from SeriousNonsenseGenerator import SeriousNonsenseGenerator
+generator = SeriousNonsenseGenerator()
+nonsense = generator.generate_nonsense()
+```
+
+See [`SeriousNonsenseGenerator_README.md`](./SeriousNonsenseGenerator_README.md) for detailed documentation.
+
+---
+
 # Same old same old
 
 American Humor. We are just kidding.
