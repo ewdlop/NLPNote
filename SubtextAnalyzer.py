@@ -4,6 +4,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import wordnet
 from nltk.tag import pos_tag
 from collections import defaultdict
+from typing import Dict, List, Any  # Add typing imports
 import re
 
 # Try to import spacy, handle gracefully if not available
@@ -14,7 +15,7 @@ except ImportError:
     SPACY_AVAILABLE = False
     spacy = None
 
-# Import the new human expression evaluation framework
+# Import the enhanced human expression evaluation framework
 try:
     from HumanExpressionEvaluator import HumanExpressionEvaluator, ExpressionContext
     EXPRESSION_EVALUATOR_AVAILABLE = True
@@ -23,6 +24,15 @@ except ImportError:
     HumanExpressionEvaluator = None
     ExpressionContext = None
     EXPRESSION_EVALUATOR_AVAILABLE = False
+
+# Import the new crackpot evaluation capabilities
+try:
+    from CrackpotEvaluator import CrackpotEvaluator, CrackpotGenerator
+    CRACKPOT_AVAILABLE = True
+except ImportError:
+    CrackpotEvaluator = None
+    CrackpotGenerator = None
+    CRACKPOT_AVAILABLE = False
 
 class SubtextAnalyzer:
     def __init__(self):
@@ -50,6 +60,14 @@ class SubtextAnalyzer:
             self.expression_evaluator = HumanExpressionEvaluator()
         else:
             self.expression_evaluator = None
+        
+        # Initialize crackpot evaluator if available
+        if CRACKPOT_AVAILABLE:
+            self.crackpot_evaluator = CrackpotEvaluator()
+            self.crackpot_generator = CrackpotGenerator()
+        else:
+            self.crackpot_evaluator = None
+            self.crackpot_generator = None
     
     def calculate_lexical_density(self, text):
         """Calculate the lexical density (ratio of content words to total words)"""
@@ -311,6 +329,94 @@ class SubtextAnalyzer:
             interpretation.append("這是一個相對直接的表達，潛在含義較少。")
         
         return "\n".join(interpretation)
+    
+    def make_text_more_crackpot(self, text: str, intensity: float = 0.6) -> Dict[str, Any]:
+        """
+        讓文本更加crackpot (Make text more crackpot)
+        Enhanced subtext analysis with crackpot transformation
+        """
+        if not self.crackpot_generator:
+            return {
+                'error': 'Crackpot generator not available',
+                'suggestion': 'Install CrackpotEvaluator for enhanced creativity features'
+            }
+        
+        # Original analysis
+        original_analysis = self.calculate_subtext_probability(text)
+        
+        # Crackpot enhancement
+        enhanced_text = self.crackpot_generator.enhance_text_crackpotness(text, intensity)
+        
+        # Enhanced analysis
+        enhanced_analysis = self.calculate_subtext_probability(enhanced_text)
+        
+        # Crackpot evaluation
+        crackpot_results = self.crackpot_evaluator.evaluate_crackpot_level(enhanced_text)
+        avg_crackpot_score = sum(result.score for result in crackpot_results.values()) / len(crackpot_results)
+        
+        return {
+            'original_text': text,
+            'enhanced_text': enhanced_text,
+            'original_subtext_score': original_analysis['probability'],
+            'enhanced_subtext_score': enhanced_analysis['probability'],
+            'crackpot_score': avg_crackpot_score,
+            'enhancement_intensity': intensity,
+            'improvement_factor': enhanced_analysis['probability'] / max(original_analysis['probability'], 0.01),
+            'analysis': {
+                'original': original_analysis,
+                'enhanced': enhanced_analysis,
+                'crackpot_breakdown': crackpot_results
+            },
+            'recommendation': self._get_crackpot_recommendation(avg_crackpot_score)
+        }
+    
+    def _get_crackpot_recommendation(self, score: float) -> str:
+        """Get recommendation based on crackpot score"""
+        if score > 0.7:
+            return "🎉 Excellent! Your text is now beautifully unconventional and creative!"
+        elif score > 0.4:
+            return "🌟 Good progress! Consider adding more wild concepts or conspiracy elements."
+        elif score > 0.2:
+            return "💡 Getting there! Try including more pseudoscientific terms or extreme language."
+        else:
+            return "⚡ Still quite conventional. Consider dramatic enhancement with quantum mysticism!"
+    
+    def generate_crackpot_interpretation(self, text: str) -> str:
+        """
+        生成text的crackpot解釋 (Generate crackpot interpretation of text)
+        """
+        if not self.crackpot_generator:
+            return "Crackpot interpretation requires CrackpotEvaluator installation."
+        
+        # Generate multiple wild interpretations
+        interpretations = []
+        
+        # Extract key words from the text
+        words = text.lower().split()
+        key_words = [word for word in words if len(word) > 4][:3]  # Get up to 3 meaningful words
+        
+        for word in key_words:
+            associations = self.crackpot_generator.generate_random_associations(word, 2)
+            interpretations.extend(associations)
+        
+        # Generate a wild theory about the text's "true meaning"
+        wild_theory = self.crackpot_generator.generate_crackpot_theory("this text")
+        
+        interpretation = f"""
+🔮 CRACKPOT INTERPRETATION 🔮
+=============================
+
+The text appears normal on the surface, but deeper analysis reveals:
+
+🌟 Hidden Meanings:
+{chr(10).join(f"  • {interp}" for interp in interpretations[:4])}
+
+🚀 Ultimate Truth:
+{wild_theory}
+
+⚡ Conclusion: This text operates on multiple dimensional frequencies that most conventional analysis cannot detect!
+"""
+        return interpretation
     def generate_analysis_report(self, text):
         """Generate a detailed analysis report"""
         analysis = self.calculate_subtext_probability(text)
@@ -358,21 +464,54 @@ class SubtextAnalyzer:
 def main():
     analyzer = SubtextAnalyzer()
     
-    # Example texts
+    # Example texts - Enhanced with crackpot demonstrations!
     texts = [
         """The old man watched the sunset, his weathered hands gripping the wooden rail. 
         Golden light stretched across the water like molten dreams, each wave carrying 
         memories of youth and forgotten promises.""",
         
         """The store closes at 5 PM. Please make sure to complete your shopping before then. 
-        The parking lot will be locked afterward."""
+        The parking lot will be locked afterward.""",
+        
+        """Artificial intelligence is transforming how we work and communicate."""
     ]
     
+    print("🌟 ENHANCED SUBTEXT ANALYZER 🌟")
+    print("Now with Crackpot Enhancement Capabilities!")
+    print("=" * 60)
+    
     for i, text in enumerate(texts, 1):
-        print(f"\nAnalyzing Text {i}:")
+        print(f"\n🔍 Analyzing Text {i}:")
         print("-" * 50)
         print(text)
         print("\n" + analyzer.generate_analysis_report(text))
+        
+        # NEW: Crackpot enhancement demo
+        if analyzer.crackpot_generator:
+            print("\n" + "🚀 CRACKPOT ENHANCEMENT DEMO:")
+            print("-" * 30)
+            
+            crackpot_result = analyzer.make_text_more_crackpot(text, 0.7)
+            if 'error' not in crackpot_result:
+                print(f"Original: {crackpot_result['original_text']}")
+                print(f"Enhanced: {crackpot_result['enhanced_text']}")
+                print(f"Subtext Score: {crackpot_result['original_subtext_score']:.2f} → {crackpot_result['enhanced_subtext_score']:.2f}")
+                print(f"Crackpot Score: {crackpot_result['crackpot_score']:.2f}")
+                print(f"Improvement Factor: {crackpot_result['improvement_factor']:.1f}x")
+                print(f"Recommendation: {crackpot_result['recommendation']}")
+            
+            # Generate wild interpretation
+            print(f"\n{analyzer.generate_crackpot_interpretation(text)}")
+        
+        print("\n" + "="*60)
+    
+    # Bonus: Pure crackpot generation
+    if analyzer.crackpot_generator:
+        print("\n🎉 BONUS: PURE CRACKPOT THEORY GENERATION 🎉")
+        topics = ["natural language processing", "text analysis", "machine learning"]
+        for topic in topics:
+            theory = analyzer.crackpot_generator.generate_crackpot_theory(topic)
+            print(f"💫 {topic.title()}: {theory}")
 
 if __name__ == "__main__":
     main()

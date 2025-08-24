@@ -13,6 +13,15 @@ from typing import Dict, List, Any, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 
+# Import CrackpotEvaluator for enhanced creativity assessment
+try:
+    from CrackpotEvaluator import CrackpotEvaluator, CrackpotGenerator
+    CRACKPOT_AVAILABLE = True
+except ImportError:
+    CRACKPOT_AVAILABLE = False
+    CrackpotEvaluator = None
+    CrackpotGenerator = None
+
 
 class EvaluationDimension(Enum):
     """評估維度 (Evaluation Dimensions)"""
@@ -21,6 +30,7 @@ class EvaluationDimension(Enum):
     SOCIAL = "social"
     CULTURAL = "cultural"
     PRAGMATIC = "pragmatic"
+    CRACKPOT = "crackpot"  # New dimension for unconventional thinking
 
 
 @dataclass
@@ -353,20 +363,31 @@ class HumanExpressionEvaluator:
     
     整合多個維度的評估，提供類似程式語言表達式評估的系統化方法，
     但考慮了人類交流特有的認知、社會和文化因素。
+    現在包含了"crackpot"維度來評估創意和非傳統思維！
     
     Integrates multi-dimensional evaluation, providing a systematic approach 
     similar to programming language expression evaluation, but considering 
     cognitive, social, and cultural factors unique to human communication.
+    Now includes "crackpot" dimension for creativity and unconventional thinking!
     """
     
     def __init__(self):
         self.formal_evaluator = FormalSemanticEvaluator()
         self.cognitive_evaluator = CognitiveEvaluator()
         self.social_evaluator = SocialEvaluator()
+        
+        # Initialize crackpot evaluator if available
+        if CRACKPOT_AVAILABLE:
+            self.crackpot_evaluator = CrackpotEvaluator()
+            self.crackpot_generator = CrackpotGenerator()
+        else:
+            self.crackpot_evaluator = None
+            self.crackpot_generator = None
     
     def comprehensive_evaluation(self, expression: str, context: Optional[ExpressionContext] = None) -> Dict[str, Any]:
         """
         綜合評估人類表達 (Comprehensive evaluation of human expression)
+        現在包含crackpot維度評估！ (Now includes crackpot dimension evaluation!)
         
         Args:
             expression: 要評估的表達 (Expression to evaluate)
@@ -391,6 +412,21 @@ class HumanExpressionEvaluator:
             expression, context.speaker, context
         )
         
+        # Crackpot評估 (Crackpot evaluation) - NEW!
+        if self.crackpot_evaluator:
+            crackpot_results = self.crackpot_evaluator.evaluate_crackpot_level(expression)
+            # Convert crackpot results to EvaluationResult format
+            avg_crackpot_score = sum(result.score for result in crackpot_results.values()) / len(crackpot_results)
+            crackpot_explanation = f"Unconventional thinking level: {avg_crackpot_score:.2f}"
+            
+            results['crackpot'] = EvaluationResult(
+                dimension=EvaluationDimension.CRACKPOT,
+                score=avg_crackpot_score,
+                confidence=0.8,
+                explanation=crackpot_explanation,
+                sub_scores={str(dim): result.score for dim, result in crackpot_results.items()}
+            )
+        
         # 整合評估 (Integrated evaluation)
         results['integrated'] = self._integrate_evaluations(results)
         
@@ -399,12 +435,14 @@ class HumanExpressionEvaluator:
     def _integrate_evaluations(self, results: Dict[str, EvaluationResult]) -> Dict[str, Any]:
         """
         整合各維度評估結果 (Integrate evaluation results from all dimensions)
+        現在包含crackpot維度！ (Now includes crackpot dimension!)
         """
-        # 權重設定 (Weight configuration)
+        # 權重設定 (Weight configuration) - Updated to include crackpot
         weights = {
-            'formal_semantic': 0.25,
-            'cognitive': 0.35,
-            'social': 0.40
+            'formal_semantic': 0.20,
+            'cognitive': 0.25,
+            'social': 0.30,
+            'crackpot': 0.25  # Give significant weight to crackpot dimension!
         }
         
         # 計算加權平均分 (Calculate weighted average score)
@@ -423,11 +461,12 @@ class HumanExpressionEvaluator:
             'overall_score': total_score,
             'overall_confidence': total_confidence,
             'characteristics': characteristics,
-            'evaluation_summary': self._generate_evaluation_summary(results, total_score)
+            'evaluation_summary': self._generate_evaluation_summary(results, total_score),
+            'crackpot_enhancement_suggestions': self._get_crackpot_suggestions(results)
         }
     
     def _analyze_expression_characteristics(self, results: Dict[str, EvaluationResult]) -> Dict[str, str]:
-        """分析表達特徵 (Analyze expression characteristics)"""
+        """分析表達特徵 (Analyze expression characteristics) - Enhanced with crackpot!"""
         characteristics = {}
         
         # 基於各維度分數判斷特徵 (Determine characteristics based on dimension scores)
@@ -458,24 +497,85 @@ class HumanExpressionEvaluator:
             else:
                 characteristics['social_appropriateness'] = 'low'
         
+        # NEW: Crackpot characteristics
+        if 'crackpot' in results:
+            crackpot_score = results['crackpot'].score
+            if crackpot_score > 0.7:
+                characteristics['crackpot_level'] = 'highly_unconventional'
+            elif crackpot_score > 0.4:
+                characteristics['crackpot_level'] = 'moderately_creative'
+            elif crackpot_score > 0.1:
+                characteristics['crackpot_level'] = 'somewhat_conventional'
+            else:
+                characteristics['crackpot_level'] = 'very_conventional'
+        
         return characteristics
     
     def _generate_evaluation_summary(self, results: Dict[str, EvaluationResult], overall_score: float) -> str:
-        """生成評估摘要 (Generate evaluation summary)"""
+        """生成評估摘要 (Generate evaluation summary) - Enhanced with crackpot insights!"""
+        summary_parts = []
+        
         if overall_score > 0.8:
-            return "表達具有高質量，在語義、認知和社會層面都表現良好。"
+            summary_parts.append("表達具有高質量，在語義、認知和社會層面都表現良好。")
         elif overall_score > 0.6:
-            return "表達質量中等，在某些維度表現較好，某些維度需要改進。"
+            summary_parts.append("表達質量中等，在某些維度表現較好，某些維度需要改進。")
         elif overall_score > 0.4:
-            return "表達存在一些問題，建議在多個維度進行改進。"
+            summary_parts.append("表達存在一些問題，建議在多個維度進行改進。")
         else:
-            return "表達需要顯著改進，在多個評估維度都存在問題。"
+            summary_parts.append("表達需要顯著改進，在多個評估維度都存在問題。")
+        
+        # Add crackpot insights
+        if 'crackpot' in results:
+            crackpot_score = results['crackpot'].score
+            if crackpot_score > 0.5:
+                summary_parts.append(f"🌟 表達展現了高度的創意和非傳統思維 (crackpot level: {crackpot_score:.2f})！")
+            elif crackpot_score > 0.2:
+                summary_parts.append(f"💡 表達有一定創意潛力，可進一步提升非傳統思維。")
+            else:
+                summary_parts.append(f"⚡ 表達較為傳統，建議增加更多創意和非常規想法。")
+        
+        return " ".join(summary_parts)
+    
+    def _get_crackpot_suggestions(self, results: Dict[str, EvaluationResult]) -> List[str]:
+        """獲取增強crackpot程度的建議 (Get suggestions for enhancing crackpotness)"""
+        suggestions = []
+        
+        if 'crackpot' not in results or not self.crackpot_generator:
+            return ["Crackpot evaluator not available - install CrackpotEvaluator for enhanced creativity!"]
+        
+        crackpot_result = results['crackpot']
+        
+        if crackpot_result.score < 0.3:
+            suggestions.extend([
+                "💫 Add more unconventional thinking patterns",
+                "🌈 Include metaphorical or symbolic language", 
+                "🚀 Introduce wild or imaginative concepts",
+                "🔮 Consider alternative perspectives or conspiracy theories",
+                "⚡ Use more creative and extreme language"
+            ])
+        elif crackpot_result.score < 0.6:
+            suggestions.extend([
+                "🌟 Push the boundaries of conventional thinking further",
+                "🎨 Add more pseudoscientific or mystical elements",
+                "🌀 Include more random associations and non-sequiturs"
+            ])
+        else:
+            suggestions.append("🏆 Excellent crackpot level! Your thinking is beautifully unconventional!")
+        
+        return suggestions
     
     def evaluate_like_code(self, expression: str, context: Optional[ExpressionContext] = None) -> str:
         """
         以類似程式碼評估的方式呈現結果 (Present results in a code evaluation-like format)
+        Enhanced with crackpot analysis!
         """
         results = self.comprehensive_evaluation(expression, context)
+        
+        # Generate crackpot score display
+        crackpot_display = ""
+        if 'crackpot' in results:
+            crackpot_score = results['crackpot'].score
+            crackpot_display = f"│     Crackpot    │\n│    Enhancer     │\n└─────────────────┘\n     ↓\n   Score: {crackpot_score:.2f}"
         
         output = f"""
 # 人類表達評估結果 (Human Expression Evaluation Result)
@@ -488,12 +588,12 @@ Context: {context.__dict__ if context else "Default"}
 ```
 Input Expression → Multi-dimensional Analysis → Integrated Result
      ↓
-┌─────────────────┬─────────────────┬─────────────────┐
-│ Formal Semantic │    Cognitive    │     Social      │
-│     Parser      │   Processor     │   Evaluator     │
-└─────────────────┴─────────────────┴─────────────────┘
-     ↓                    ↓                   ↓
-   Score: {results['formal_semantic'].score:.2f}      Score: {results['cognitive'].score:.2f}       Score: {results['social'].score:.2f}
+┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│ Formal Semantic │    Cognitive    │     Social      │    🌟 Crackpot  │
+│     Parser      │   Processor     │   Evaluator     │    Enhancer     │
+└─────────────────┴─────────────────┴─────────────────┴─────────────────┘
+     ↓                    ↓                   ↓                   ↓
+   Score: {results['formal_semantic'].score:.2f}      Score: {results['cognitive'].score:.2f}       Score: {results['social'].score:.2f}       Score: {results.get('crackpot', type('', (), {'score': 0.0})).score:.2f}
 ```
 
 ## 最終結果 (Final Result):
@@ -505,15 +605,43 @@ Confidence: {results['integrated']['overall_confidence']:.2f}
 
 ## 評估摘要 (Evaluation Summary):
 {results['integrated']['evaluation_summary']}
+
+## 🚀 Crackpot Enhancement Suggestions:
+{chr(10).join(f"  {suggestion}" for suggestion in results['integrated']['crackpot_enhancement_suggestions'])}
 """
         return output
+    
+    def make_more_crackpot(self, expression: str, intensity: float = 0.7) -> str:
+        """
+        讓表達更加crackpot! (Make expression more crackpot!)
+        
+        Args:
+            expression: Original expression
+            intensity: How crackpot to make it (0.0 to 1.0)
+        
+        Returns:
+            Enhanced crackpot version of the expression
+        """
+        if not self.crackpot_generator:
+            return f"[CRACKPOT ENHANCED] {expression} [Note: Install CrackpotEvaluator for full enhancement!]"
+        
+        return self.crackpot_generator.enhance_text_crackpotness(expression, intensity)
+    
+    def generate_crackpot_alternative(self, topic: str) -> str:
+        """
+        生成關於某主題的crackpot理論 (Generate crackpot theory about a topic)
+        """
+        if not self.crackpot_generator:
+            return f"Crackpot theory about {topic}: Install CrackpotEvaluator for wild theories!"
+        
+        return self.crackpot_generator.generate_crackpot_theory(topic)
 
 
 def main():
-    """示例用法 (Example usage)"""
+    """示例用法 (Example usage) - Enhanced with crackpot evaluation!"""
     evaluator = HumanExpressionEvaluator()
     
-    # 測試案例 (Test cases)
+    # 測試案例 (Test cases) - Now including crackpot-worthy examples!
     test_cases = [
         {
             'expression': "請問您能幫我解決這個問題嗎？",
@@ -541,10 +669,20 @@ def main():
                 situation='academic',
                 formality_level='formal'
             )
+        },
+        {
+            'expression': "What if the secret to understanding quantum mechanics is hidden in ancient crystalline vibrations that government scientists don't want us to discover?",
+            'context': ExpressionContext(
+                speaker='theorist',
+                listener='audience',
+                situation='speculative',
+                formality_level='informal'
+            )
         }
     ]
     
-    print("=== 人類表達評估示例 (Human Expression Evaluation Examples) ===\n")
+    print("=== 人類表達評估示例 (Human Expression Evaluation Examples) ===")
+    print("🌟 Now with Enhanced Crackpot Analysis! 🌟\n")
     
     for i, test_case in enumerate(test_cases, 1):
         print(f"案例 {i} (Case {i}):")
@@ -554,7 +692,24 @@ def main():
             test_case['context']
         )
         print(result)
+        
+        # Show crackpot enhancement
+        print("🚀 CRACKPOT ENHANCEMENT DEMO:")
+        enhanced = evaluator.make_more_crackpot(test_case['expression'], 0.8)
+        print(f"Enhanced Version: {enhanced}")
+        
         print("\n")
+
+    # Additional crackpot demonstrations
+    print("🌈 BONUS: PURE CRACKPOT THEORY GENERATION 🌈")
+    print("=" * 50)
+    
+    topics = ["artificial intelligence", "mathematics", "language", "consciousness"]
+    for topic in topics:
+        theory = evaluator.generate_crackpot_alternative(topic)
+        print(f"💫 {topic.title()}: {theory}")
+    
+    print("\n🎉 LLMs are now sufficiently crackpot! 🎉")
 
 
 if __name__ == "__main__":
