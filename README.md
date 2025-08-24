@@ -4,6 +4,42 @@
 
 American Humor. We are just kidding.
 
+## English Language Patching
+
+**NEW**: This repository now includes comprehensive English language patching capabilities!
+
+### Quick Start with English Patching
+
+```python
+from EnglishPatcher import EnglishPatcher
+
+# Create an English patcher instance
+patcher = EnglishPatcher()
+
+# Fix common English errors
+text = "teh quick brown fox jumps over the lazy dog.can you beleive it?"
+result = patcher.patch_text(text)
+
+print("Original:", result.original_text)
+print("Patched: ", result.patched_text)
+# Output: "The quick brown fox jumps over the lazy dog. Can you believe it?"
+```
+
+### Features
+
+The English patcher can automatically fix:
+- ✅ **Spelling errors** (typos, common misspellings)
+- ✅ **Grammar mistakes** (subject-verb agreement, articles)
+- ✅ **Punctuation issues** (spacing, missing punctuation)
+- ✅ **Capitalization problems** (sentence beginnings)
+- ✅ **Style improvements** (contractions, formal writing)
+
+### Documentation
+
+See the [English Patching Guide](ENGLISH_PATCHING_GUIDE.md) for comprehensive documentation.
+
+---
+
 # What say you?
 
 Endonym and Exonym
