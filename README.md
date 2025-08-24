@@ -1,5 +1,30 @@
 # NLP(Natural Language Processing) Note
 
+## Latest Addition: Boltzmann Brain's Superego-Ego-Id Analysis 🧠
+
+**NEW**: This repository now includes a groundbreaking psychoanalytic NLP module that combines Freudian psychology with Boltzmann brain theory for advanced consciousness analysis in text.
+
+**新增**: 本仓库现在包含一个突破性的心理分析NLP模块，结合弗洛伊德心理学和博尔兹曼大脑理论，用于文本中的高级意识分析。
+
+### Key Features / 主要功能:
+- **Psychodynamic Analysis**: Id, Ego, Superego detection in text (心理动力学分析：文本中的本我、自我、超我检测)
+- **Consciousness Coherence**: Boltzmann brain-inspired randomness vs structure analysis (意识连贯性：博尔兹曼大脑启发的随机性vs结构分析)
+- **Multilingual Support**: English and Chinese psychological lexicons (多语言支持：英文和中文心理词汇库)
+- **Integration**: Seamless integration with existing HumanExpressionEvaluator framework (集成：与现有人类表达评估器框架无缝集成)
+
+### Quick Start / 快速开始:
+```python
+from BoltzmannBrainPsychoAnalyzer import BoltzmannBrainPsychoAnalyzer
+
+analyzer = BoltzmannBrainPsychoAnalyzer()
+profile = analyzer.analyze_psychodynamics("I want it now but I should think rationally!")
+print(f"Dominant component: {profile.dominant_component.value}")
+```
+
+See: [`boltzmann-brain-superego-ego-id.md`](boltzmann-brain-superego-ego-id.md) for complete documentation.
+
+---
+
 # Same old same old
 
 American Humor. We are just kidding.
