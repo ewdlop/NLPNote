@@ -53,6 +53,7 @@ Certainly! Here are some key topics in Natural Language Processing (NLP):
 - **NLP in Healthcare**
 - **Legal NLP Applications**
 - **Financial Text Analysis**
+- **Mathematical Finance for Risk Management** (see [mathematical-finance-risk-management.md](mathematical-finance-risk-management.md))
 - **NLP for Low-resource Languages**
 - **Speech Synthesis**
 - **Optical Character Recognition (OCR)**
