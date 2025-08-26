@@ -645,3 +645,10 @@ If a narcissist is being helpful, always ask:
 ➡ **“Is this truly about me, or is it about control?”**  
 
 If the answer isn’t clear, **proceed with caution**—because their help **always comes at a cost.**
+
+
+---
+
+### **相關閱讀 / Related Reading**
+- [人脈、洗禮與假象：教會連結與NPD如何掩蓋真正的品格](./人脈、洗禮與假象：教會連結與NPD如何掩蓋真正的品格.md) - 深入探討NPD如何在宗教和社交網絡中操控他人
+- [自戀者常見語錄及其內涵解讀](./自戀者常見語錄及其內涵解讀.md) - NPD個體的典型語言模式分析
