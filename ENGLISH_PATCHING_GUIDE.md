@@ -11,6 +11,7 @@ The English Language Patcher is a comprehensive tool that can automatically dete
 - **Punctuation issues** (spacing, missing punctuation)
 - **Capitalization problems** (sentence beginnings, proper nouns)
 - **Style improvements** (contractions, formal writing)
+- **Text simplification** (complex vocabulary, sentence structure)
 
 ## Quick Start
 
@@ -33,6 +34,23 @@ print("Applied", len(result.patches), "patches")
 # Get detailed information about patches
 summary = patcher.get_patch_summary(result)
 print(summary)
+```
+
+### Text Simplification (NEW!)
+
+Make complex English text easier to read and understand:
+
+```python
+# Simplify complex text
+complex_text = "Subsequently, we must utilize comprehensive methodology to facilitate the optimization process"
+simplified = patcher.simplify_text(complex_text)
+
+print("Complex:    ", simplified.original_text)
+print("Simplified: ", simplified.patched_text)
+# Output: "Later, we must use comprehensive method to help the optimization process"
+
+# Or use with patch_text
+result = patcher.patch_text(text, simplify=True)
 ```
 
 ### Using the C# ApplyAscentMark Tool
@@ -120,6 +138,27 @@ In aggressive mode, provides style improvements:
 "don't" → "do not"
 ```
 
+### 6. Text Simplification
+
+Makes complex English easier to read and understand:
+
+```python
+# Simplify academic vocabulary
+"utilize" → "use"
+"facilitate" → "help"
+"subsequently" → "later"
+"demonstrate" → "show"
+
+# Simplify business language
+"commence" → "begin"
+"obtain" → "get"
+"sufficient" → "enough"
+"accomplish" → "do"
+
+# Sentence structure improvements
+"The report was completed by the team" → "The team completed the report"
+```
+
 ## Usage Modes
 
 ### Conservative Mode (Default)
@@ -138,15 +177,40 @@ Applies additional style improvements and lower-confidence corrections:
 result = patcher.patch_text(text, aggressive=True)
 ```
 
+### Simplification Mode
+
+Makes text easier to read by simplifying complex vocabulary and structure:
+
+```python
+result = patcher.patch_text(text, simplify=True)
+# or use the convenience method
+result = patcher.simplify_text(text)
+```
+
+### Combined Modes
+
+You can combine different modes for comprehensive text improvement:
+
+```python
+# Fix errors and simplify
+result = patcher.patch_text(text, aggressive=True, simplify=True)
+```
+
 ## API Reference
 
 ### EnglishPatcher Class
 
 #### Methods
 
-- `patch_text(text: str, aggressive: bool = False) -> PatchResult`
+- `patch_text(text: str, aggressive: bool = False, simplify: bool = False) -> PatchResult`
   - Main method to patch English text
+  - `aggressive`: Apply more aggressive style corrections
+  - `simplify`: Apply text simplification for easier reading
   - Returns a PatchResult with original text, patched text, and applied patches
+
+- `simplify_text(text: str) -> PatchResult`
+  - Convenience method for text simplification
+  - Equivalent to `patch_text(text, simplify=True)`
 
 - `get_patch_summary(result: PatchResult) -> str`
   - Generates a human-readable summary of applied patches

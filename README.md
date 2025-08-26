@@ -37,6 +37,12 @@ result = patcher.patch_text(text)
 print("Original:", result.original_text)
 print("Patched: ", result.patched_text)
 # Output: "The quick brown fox jumps over the lazy dog. Can you believe it?"
+
+# Make complex text simpler
+complex_text = "Subsequently, we must utilize comprehensive methodology"
+simplified = patcher.simplify_text(complex_text)
+print("Simplified:", simplified.patched_text)
+# Output: "Later, we must use comprehensive method"
 ```
 
 ### Features
@@ -47,6 +53,7 @@ The English patcher can automatically fix:
 - ✅ **Punctuation issues** (spacing, missing punctuation)
 - ✅ **Capitalization problems** (sentence beginnings)
 - ✅ **Style improvements** (contractions, formal writing)
+- 🆕 **Text simplification** (complex vocabulary, sentence structure)
 
 ### Documentation
 
