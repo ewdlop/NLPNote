@@ -84,6 +84,18 @@ def main():
                 formality_level='formal'
             ),
             'description': '學術討論中的複雜邏輯表達 (Complex logical expression in academic discussion)'
+        },
+        {
+            'name': '不可能查詢 (Impossible Query)',
+            'expression': 'What is an angel\'s defecation called?',
+            'context': ExpressionContext(
+                speaker='questioner',
+                listener='system',
+                situation='testing',
+                formality_level='neutral',
+                cultural_background='mixed'
+            ),
+            'description': '測試語義不可能性的查詢 (Query testing semantic impossibility)'
         }
     ]
     
