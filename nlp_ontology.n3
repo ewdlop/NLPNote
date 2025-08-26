@@ -1,0 +1,187 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix nlp: <http://example.org/nlp/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+nlp:Clause a owl:Class ;
+    rdfs:label "Clause" ;
+    rdfs:comment "Group of words containing subject and predicate" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:NamedEntity a owl:Class ;
+    rdfs:label "NamedEntity" ;
+    rdfs:comment "A real-world object denoted by a proper name" .
+
+nlp:PartOfSpeech a owl:Class ;
+    rdfs:label "PartOfSpeech" ;
+    rdfs:comment "Grammatical category of a word" .
+
+nlp:Phrase a owl:Class ;
+    rdfs:label "Phrase" ;
+    rdfs:comment "Group of words functioning as a unit" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:Sentence a owl:Class ;
+    rdfs:label "Sentence" ;
+    rdfs:comment "A grammatical unit of text",
+        "Complete thought in language" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:Text a owl:Class ;
+    rdfs:label "Text" ;
+    rdfs:comment "A piece of written or spoken text" .
+
+nlp:Token a owl:Class ;
+    rdfs:label "Token" ;
+    rdfs:comment "A linguistic unit such as a word or punctuation" .
+
+nlp:consistsOf a owl:ObjectProperty ;
+    rdfs:label "consistsOf" ;
+    rdfs:comment "General composition relation" ;
+    rdfs:domain nlp:LinguisticUnit ;
+    rdfs:range nlp:LinguisticUnit .
+
+nlp:document_doc1 a nlp:Document ;
+    nlp:hasContent "Natural language processing is fascinating." ;
+    nlp:inLanguage nlp:language_en ;
+    dcterms:creator "AI Researcher" ;
+    dcterms:identifier "doc1" ;
+    dcterms:title "NLP Introduction" .
+
+nlp:document_doc2 a nlp:Document ;
+    nlp:hasContent "自然语言处理很有趣。" ;
+    nlp:inLanguage nlp:language_zh ;
+    dcterms:creator "AI 研究员" ;
+    dcterms:identifier "doc2" ;
+    dcterms:title "NLP 介绍" .
+
+nlp:hasMorpheme a owl:ObjectProperty ;
+    rdfs:label "hasMorpheme" ;
+    rdfs:comment "Associates a word with its morphemes" ;
+    rdfs:domain nlp:Word ;
+    rdfs:range nlp:Morpheme .
+
+nlp:hasPhoneme a owl:ObjectProperty ;
+    rdfs:label "hasPhoneme" ;
+    rdfs:comment "Associates a word with its phonemes" ;
+    rdfs:domain nlp:Word ;
+    rdfs:range nlp:Phoneme .
+
+nlp:language_ar a nlp:Language ;
+    rdfs:label "Arabic" ;
+    nlp:belongsToFamily nlp:family_Afro-Asiatic ;
+    nlp:languageCode "ar" .
+
+nlp:language_es a nlp:Language ;
+    rdfs:label "Spanish" ;
+    nlp:belongsToFamily nlp:family_Indo-European ;
+    nlp:languageCode "es" .
+
+nlp:ontology a owl:Ontology ;
+    rdfs:label "NLP Semantic Knowledge Base" ;
+    rdfs:comment "A semantic knowledge base for natural language processing applications" .
+
+nlp:precedes a owl:ObjectProperty ;
+    rdfs:label "precedes" ;
+    rdfs:comment "Temporal ordering relation" ;
+    rdfs:domain nlp:LinguisticUnit ;
+    rdfs:range nlp:LinguisticUnit .
+
+nlp:Morpheme a owl:Class ;
+    rdfs:label "Morpheme" ;
+    rdfs:comment "Smallest unit of meaning" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:Phoneme a owl:Class ;
+    rdfs:label "Phoneme" ;
+    rdfs:comment "Smallest unit of sound" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:concept_artificial_intelligence a nlp:Concept ;
+    rdfs:label "artificial intelligence" ;
+    nlp:subsumes nlp:concept_natural_language_processing .
+
+nlp:concept_linguistics a nlp:Concept ;
+    rdfs:label "linguistics" ;
+    nlp:relatedTo nlp:concept_natural_language_processing .
+
+nlp:concept_machine_learning a nlp:Concept ;
+    rdfs:label "machine learning" ;
+    nlp:relatedTo nlp:concept_natural_language_processing .
+
+nlp:family_Afro-Asiatic a nlp:LanguageFamily ;
+    rdfs:label "Afro-Asiatic" .
+
+nlp:family_Sino-Tibetan a nlp:LanguageFamily ;
+    rdfs:label "Sino-Tibetan" .
+
+nlp:language_en a nlp:Language ;
+    rdfs:label "English" ;
+    nlp:belongsToFamily nlp:family_Indo-European ;
+    nlp:languageCode "en" .
+
+nlp:language_zh a nlp:Language ;
+    rdfs:label "Chinese" ;
+    nlp:belongsToFamily nlp:family_Sino-Tibetan ;
+    nlp:languageCode "zh" .
+
+nlp:Document a owl:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "A collection of text with semantic meaning" .
+
+nlp:Word a owl:Class ;
+    rdfs:label "Word" ;
+    rdfs:comment "Basic unit of language" ;
+    rdfs:subClassOf nlp:LinguisticUnit .
+
+nlp:concept_NLP a nlp:Concept ;
+    rdfs:label "NLP" .
+
+nlp:family_Indo-European a nlp:LanguageFamily ;
+    rdfs:label "Indo-European" .
+
+nlp:Language a owl:Class ;
+    rdfs:label "Language" ;
+    rdfs:comment "A natural or artificial language" .
+
+nlp:SemanticRelation a owl:Class ;
+    rdfs:label "SemanticRelation" ;
+    rdfs:comment "A relationship between concepts or entities" .
+
+nlp:Concept a owl:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "An abstract or concrete idea represented in text" .
+
+nlp:concept_natural_language_processing a nlp:Concept ;
+    rdfs:label "natural language processing" ;
+    nlp:synonymOf nlp:concept_NLP .
+
+nlp:LinguisticUnit a owl:Class ;
+    rdfs:label "LinguisticUnit" ;
+    rdfs:comment "Any unit of linguistic analysis" .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_natural_language_processing ;
+    nlp:hasSubject nlp:concept_linguistics ;
+    nlp:relationType nlp:relatedTo .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 8e-01 ;
+    nlp:hasObject nlp:concept_natural_language_processing ;
+    nlp:hasSubject nlp:concept_machine_learning ;
+    nlp:relationType nlp:relatedTo .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9.5e-01 ;
+    nlp:hasObject nlp:concept_NLP ;
+    nlp:hasSubject nlp:concept_natural_language_processing ;
+    nlp:relationType nlp:synonymOf .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_natural_language_processing ;
+    nlp:hasSubject nlp:concept_artificial_intelligence ;
+    nlp:relationType nlp:subsumes .
+
