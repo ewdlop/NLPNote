@@ -79,6 +79,14 @@ except ImportError:
     ExpressionContext = None
     EXPRESSION_EVALUATOR_AVAILABLE = False
 
+# Import marketing stopwords filter
+try:
+    from marketing_stopwords import MarketingStopwords
+    MARKETING_FILTER_AVAILABLE = True
+except ImportError:
+    MarketingStopwords = None
+    MARKETING_FILTER_AVAILABLE = False
+
 class SubtextAnalyzer:
     def __init__(self):
         # Download required NLTK data only if NLTK is available
@@ -111,6 +119,12 @@ class SubtextAnalyzer:
             self.expression_evaluator = HumanExpressionEvaluator()
         else:
             self.expression_evaluator = None
+        
+        # Initialize marketing stopwords filter if available
+        if MARKETING_FILTER_AVAILABLE:
+            self.marketing_filter = MarketingStopwords()
+        else:
+            self.marketing_filter = None
     
     def calculate_lexical_density(self, text):
         """Calculate the lexical density (ratio of content words to total words)"""
@@ -413,6 +427,87 @@ class SubtextAnalyzer:
                 comparison = expr_analysis['comparison']
                 report += f"分析一致性: {comparison['agreement_level']}\n"
                 report += f"分數差異: {comparison['score_correlation']:.2f}\n"
+        
+        return report
+    
+    def analyze_marketing_language(self, text):
+        """
+        Analyze promotional/marketing language in text.
+        
+        Returns analysis of marketing terms and filtered version of text.
+        """
+        if not MARKETING_FILTER_AVAILABLE or not self.marketing_filter:
+            return {
+                'error': 'Marketing filter not available',
+                'marketing_terms': [],
+                'marketing_density': 0.0,
+                'filtered_text': text,
+                'recommendation': 'Install marketing_stopwords module for analysis'
+            }
+        
+        # Find marketing terms
+        marketing_terms = self.marketing_filter.get_marketing_terms_in_text(text)
+        
+        # Calculate marketing density (ratio of marketing words to total words)
+        total_words = len(text.split())
+        marketing_word_count = len(marketing_terms)
+        marketing_density = marketing_word_count / total_words if total_words > 0 else 0.0
+        
+        # Get filtered version
+        filtered_text = self.marketing_filter.filter_text(text)
+        
+        # Generate recommendations
+        recommendation = ""
+        if marketing_density > 0.3:
+            recommendation = "High promotional language density. Consider replacing with specific, measurable claims."
+        elif marketing_density > 0.15:
+            recommendation = "Moderate promotional language. Some terms could be more specific."
+        elif marketing_density > 0.05:
+            recommendation = "Low promotional language. Text is mostly objective."
+        else:
+            recommendation = "Minimal promotional language detected. Text appears objective."
+        
+        return {
+            'marketing_terms': [(term, start, end) for term, start, end in marketing_terms],
+            'marketing_density': marketing_density,
+            'filtered_text': filtered_text,
+            'recommendation': recommendation,
+            'term_count': marketing_word_count,
+            'total_words': total_words
+        }
+    
+    def generate_marketing_analysis_report(self, text):
+        """Generate a comprehensive marketing language analysis report."""
+        analysis = self.analyze_marketing_language(text)
+        
+        if 'error' in analysis:
+            return f"Marketing Analysis Error: {analysis['error']}"
+        
+        report = "MARKETING LANGUAGE ANALYSIS\n"
+        report += "=" * 50 + "\n\n"
+        
+        report += f"Original Text:\n{text}\n\n"
+        
+        report += f"Marketing Term Density: {analysis['marketing_density']:.1%}\n"
+        report += f"Marketing Terms Found: {analysis['term_count']}\n"
+        report += f"Total Words: {analysis['total_words']}\n\n"
+        
+        if analysis['marketing_terms']:
+            report += "Marketing Terms Detected:\n"
+            for term, start, end in analysis['marketing_terms']:
+                report += f"  - '{term}' (position {start}-{end})\n"
+            report += "\n"
+        
+        report += f"Recommendation: {analysis['recommendation']}\n\n"
+        
+        report += f"Filtered Text:\n{analysis['filtered_text']}\n\n"
+        
+        # Add comparison
+        original_length = len(text.split())
+        filtered_length = len(analysis['filtered_text'].split())
+        reduction_pct = ((original_length - filtered_length) / original_length * 100) if original_length > 0 else 0
+        
+        report += f"Text Reduction: {reduction_pct:.1f}% of words removed\n"
         
         return report
 
