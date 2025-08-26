@@ -32,6 +32,7 @@ class PatchType(Enum):
     STYLE = "style"
     TYPO = "typo"
     SIMPLIFICATION = "simplification"
+    PARADOX = "paradox"
 
 
 @dataclass
@@ -104,6 +105,10 @@ class EnglishPatcher:
         if simplify:
             current_text, simplification_patches = self._apply_simplification_patches(current_text)
             all_patches.extend(simplification_patches)
+        
+        # Always check for paradoxes/contradictions as they don't modify text but provide analysis
+        paradox_patches = self._detect_paradoxes(current_text)
+        all_patches.extend(paradox_patches)
         
         success_rate = len(all_patches) / max(1, len(text.split()))
         
@@ -632,6 +637,110 @@ class EnglishPatcher:
                                 corrected_text[match.end():])
         
         return corrected_text, patches
+    
+    def _detect_paradoxes(self, text: str) -> List[Patch]:
+        """Detect paradoxical or contradictory expressions in text"""
+        patches = []
+        
+        # Define opposing concept pairs that create paradoxes
+        opposing_pairs = [
+            ('comfort', 'pain'),
+            ('love', 'hate'),
+            ('peace', 'war'),
+            ('hot', 'cold'),
+            ('light', 'dark'),
+            ('happy', 'sad'),
+            ('easy', 'difficult'),
+            ('good', 'bad'),
+            ('alive', 'dead'),
+            ('big', 'small'),
+            ('fast', 'slow'),
+            ('strong', 'weak'),
+            ('beautiful', 'ugly'),
+            ('rich', 'poor'),
+            ('success', 'failure'),
+            ('hope', 'despair'),
+            ('quiet', 'loud'),
+            ('clean', 'dirty'),
+            ('safe', 'dangerous'),
+            ('young', 'old')
+        ]
+        
+        # Analyze sentences for paradoxical structures
+        sentences = re.split(r'[.!?]+', text)
+        
+        for sentence_idx, sentence in enumerate(sentences):
+            if not sentence.strip():
+                continue
+                
+            sentence_lower = sentence.lower().strip()
+            words = sentence_lower.split()
+            
+            # Check for simple paradox patterns: "X is Y" where X and Y are opposites
+            for word1, word2 in opposing_pairs:
+                # Pattern: "comfort is a pain" or "comfort is pain"
+                patterns = [
+                    rf'\b{word1}\s+is\s+(?:a\s+|an\s+)?{word2}\b',
+                    rf'\b{word2}\s+is\s+(?:a\s+|an\s+)?{word1}\b',
+                ]
+                
+                for pattern in patterns:
+                    match = re.search(pattern, sentence_lower)
+                    if match:
+                        patches.append(Patch(
+                            original=match.group(0),
+                            corrected=match.group(0),  # Don't change the text, just flag it
+                            position=match.start(),
+                            patch_type=PatchType.PARADOX,
+                            confidence=0.8,
+                            explanation=f"Detected paradox: '{word1}' and '{word2}' are opposing concepts"
+                        ))
+                        break
+            
+            # Check for adjacent opposites: "hot, cold", "big small", "easy and difficult", etc.
+            for word1, word2 in opposing_pairs:
+                # Pattern: "hot, cold" or "big small" or "easy and difficult"
+                adjacent_patterns = [
+                    rf'\b{word1}[,\s]+{word2}\b',
+                    rf'\b{word2}[,\s]+{word1}\b',
+                    rf'\b{word1}\s+and\s+{word2}\b',
+                    rf'\b{word2}\s+and\s+{word1}\b',
+                ]
+                
+                for pattern in adjacent_patterns:
+                    match = re.search(pattern, sentence_lower)
+                    if match:
+                        patches.append(Patch(
+                            original=match.group(0),
+                            corrected=match.group(0),  # Don't change the text, just flag it
+                            position=match.start(),
+                            patch_type=PatchType.PARADOX,
+                            confidence=0.7,
+                            explanation=f"Detected opposing concepts in close proximity: '{word1}' and '{word2}'"
+                        ))
+                        break
+            
+            # Check for more complex paradoxical expressions
+            paradox_indicators = [
+                (r'\b(\w+)\s+is\s+(?:a\s+|an\s+)?\1\b', "Redundant statement detected"),
+                (r'\bnever\s+always\b|\balways\s+never\b', "Contradiction between 'never' and 'always'"),
+                (r'\bimpossible\s+(?:to\s+be\s+)?possible\b|\bpossible\s+(?:to\s+be\s+)?impossible\b', "Contradiction between possible and impossible"),
+                (r'\beverything\s+(?:is\s+)?nothing\b|\bnothing\s+(?:is\s+)?everything\b', "Contradiction between everything and nothing")
+            ]
+            
+            for pattern, explanation in paradox_indicators:
+                match = re.search(pattern, sentence_lower)
+                if match:
+                    patches.append(Patch(
+                        original=match.group(0),
+                        corrected=match.group(0),  # Don't change the text, just flag it
+                        position=match.start(),
+                        patch_type=PatchType.PARADOX,
+                        confidence=0.7,
+                        explanation=explanation
+                    ))
+        
+        return patches
 
 
 def main():
