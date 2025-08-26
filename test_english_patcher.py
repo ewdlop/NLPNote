@@ -140,6 +140,54 @@ class TestEnglishPatcher(unittest.TestCase):
         # Test with mixed case
         result = self.patcher._preserve_formatting("Teh", "the")
         self.assertEqual(result, "The")
+    
+    def test_text_simplification(self):
+        """Test text simplification functionality"""
+        test_cases = [
+            ("I need to utilize this tool", "I need to use this tool"),
+            ("We must commence the project", "We must begin the project"),
+            ("Please facilitate the process", "Please help the process"),
+            ("The results demonstrate success", "The results show success"),
+        ]
+        
+        for original, expected in test_cases:
+            with self.subTest(original=original):
+                result = self.patcher.simplify_text(original)
+                self.assertEqual(result.patched_text, expected)
+                self.assertTrue(any(patch.patch_type == PatchType.SIMPLIFICATION for patch in result.patches))
+    
+    def test_simplification_with_patch_text(self):
+        """Test simplification using patch_text with simplify=True"""
+        text = "Subsequently, we will utilize advanced methodology to facilitate the process"
+        result = self.patcher.patch_text(text, simplify=True)
+        
+        # Check that simplifications were applied
+        self.assertTrue(any(patch.patch_type == PatchType.SIMPLIFICATION for patch in result.patches))
+        self.assertNotEqual(result.original_text, result.patched_text)
+        
+        # Check specific simplifications
+        simplified = result.patched_text.lower()
+        self.assertIn("later", simplified)  # subsequently → later
+        self.assertIn("use", simplified)    # utilize → use
+        self.assertIn("method", simplified) # methodology → method
+        self.assertIn("help", simplified)   # facilitate → help
+    
+    def test_capitalization_preservation_in_simplification(self):
+        """Test that capitalization is preserved during simplification"""
+        test_cases = [
+            ("UTILIZE this tool", "USE this tool"),
+            ("Utilize this tool", "Use this tool"),
+            # Note: lowercase at sentence start gets capitalized by capitalization rules first
+        ]
+        
+        for original, expected in test_cases:
+            with self.subTest(original=original):
+                result = self.patcher.patch_text(original, simplify=True)
+                self.assertEqual(result.patched_text, expected)
+        
+        # Test lowercase in middle of sentence (won't be auto-capitalized)
+        result = self.patcher.patch_text("I will utilize this tool", simplify=True)
+        self.assertEqual(result.patched_text, "I will use this tool")
 
 
 class TestEnglishPatcherIntegration(unittest.TestCase):

@@ -31,6 +31,7 @@ class PatchType(Enum):
     SPACING = "spacing"
     STYLE = "style"
     TYPO = "typo"
+    SIMPLIFICATION = "simplification"
 
 
 @dataclass
@@ -63,14 +64,16 @@ class EnglishPatcher:
         self.punctuation_rules = self._load_punctuation_rules()
         self.capitalization_rules = self._load_capitalization_rules()
         self.spacing_rules = self._load_spacing_rules()
+        self.simplification_dict = self._load_simplification_dict()
     
-    def patch_text(self, text: str, aggressive: bool = False) -> PatchResult:
+    def patch_text(self, text: str, aggressive: bool = False, simplify: bool = False) -> PatchResult:
         """
         Apply comprehensive patches to English text
         
         Args:
             text: Input text to patch
             aggressive: If True, applies more aggressive corrections
+            simplify: If True, applies text simplification for easier reading
             
         Returns:
             PatchResult with original, patched text, and applied patches
@@ -98,6 +101,10 @@ class EnglishPatcher:
             current_text, style_patches = self._apply_style_patches(current_text)
             all_patches.extend(style_patches)
         
+        if simplify:
+            current_text, simplification_patches = self._apply_simplification_patches(current_text)
+            all_patches.extend(simplification_patches)
+        
         success_rate = len(all_patches) / max(1, len(text.split()))
         
         return PatchResult(
@@ -106,6 +113,18 @@ class EnglishPatcher:
             patches=all_patches,
             success_rate=min(1.0, success_rate)
         )
+    
+    def simplify_text(self, text: str) -> PatchResult:
+        """
+        Simplify text to make it easier to read and understand
+        
+        Args:
+            text: Input text to simplify
+            
+        Returns:
+            PatchResult with original, simplified text, and applied simplifications
+        """
+        return self.patch_text(text, aggressive=False, simplify=True)
     
     def _apply_spelling_patches(self, text: str) -> Tuple[str, List[Patch]]:
         """Apply spelling corrections"""
@@ -456,6 +475,163 @@ class EnglishPatcher:
                 summary += f"  • ... and {len(patches) - 3} more\n"
         
         return summary
+    
+    def _load_simplification_dict(self) -> Dict[str, str]:
+        """Load dictionary of complex words to simpler alternatives"""
+        return {
+            # Complex academic words to simple alternatives
+            "utilize": "use",
+            "facilitate": "help",
+            "demonstrate": "show",
+            "commence": "begin",
+            "terminate": "end",
+            "subsequent": "next",
+            "prior": "before",
+            "sufficient": "enough",
+            "approximately": "about",
+            "numerous": "many",
+            "acquire": "get",
+            "purchase": "buy",
+            "construct": "build",
+            "assistance": "help",
+            "maximum": "most",
+            "minimum": "least",
+            "optimum": "best",
+            "fundamental": "basic",
+            "essential": "needed",
+            "substantial": "large",
+            "accomplish": "do",
+            "establish": "set up",
+            "investigate": "study",
+            "determine": "find out",
+            "indicate": "show",
+            "require": "need",
+            "provide": "give",
+            "contains": "has",
+            "maintain": "keep",
+            "obtain": "get",
+            "alternative": "choice",
+            "participate": "take part",
+            "communicate": "talk",
+            "opportunity": "chance",
+            "significant": "important",
+            "additional": "more",
+            "appropriate": "right",
+            "implement": "do",
+            "methodology": "method",
+            "consequently": "so",
+            "furthermore": "also",
+            "nevertheless": "but",
+            "therefore": "so",
+            "however": "but",
+            "moreover": "also",
+            "accordingly": "so",
+            "specifically": "exactly",
+            "particularly": "especially",
+            "currently": "now",
+            "previously": "before",
+            "subsequently": "later",
+            "immediately": "right away",
+            "unfortunately": "sadly",
+            "obviously": "clearly",
+            "ultimately": "finally",
+        }
+    
+    def _apply_simplification_patches(self, text: str) -> Tuple[str, List[Patch]]:
+        """Apply text simplification patches"""
+        patches = []
+        corrected_text = text
+        
+        # 1. Replace complex words with simpler alternatives
+        for complex_word, simple_word in self.simplification_dict.items():
+            pattern = r'\b' + re.escape(complex_word) + r'\b'
+            matches = list(re.finditer(pattern, corrected_text, re.IGNORECASE))
+            
+            for match in reversed(matches):
+                original = match.group(0)
+                # Preserve capitalization
+                if original.isupper():
+                    replacement = simple_word.upper()
+                elif original[0].isupper():
+                    replacement = simple_word.capitalize()
+                else:
+                    replacement = simple_word
+                
+                patches.append(Patch(
+                    original=original,
+                    corrected=replacement,
+                    position=match.start(),
+                    patch_type=PatchType.SIMPLIFICATION,
+                    confidence=0.8,
+                    explanation=f"Simplified vocabulary: '{original}' → '{replacement}'"
+                ))
+                
+                corrected_text = (corrected_text[:match.start()] + 
+                                replacement + 
+                                corrected_text[match.end():])
+        
+        # 2. Break down complex sentences (simple approach: split long sentences)
+        sentences = re.split(r'([.!?]+)', corrected_text)
+        simplified_sentences = []
+        
+        for i, part in enumerate(sentences):
+            if part and not re.match(r'^[.!?]+$', part):
+                # Check if sentence is too long (>25 words) and contains conjunctions
+                words = part.strip().split()
+                if len(words) > 25 and any(conj in part.lower() for conj in [' and ', ' but ', ' however ', ' because ']):
+                    # Simple sentence splitting on common conjunctions
+                    for conj in [' and ', ' but ', ' however ', ' because ']:
+                        if conj in part.lower():
+                            parts = part.split(conj, 1)
+                            if len(parts) == 2:
+                                new_part = parts[0].strip() + '. ' + parts[1].strip().capitalize()
+                                patches.append(Patch(
+                                    original=part.strip(),
+                                    corrected=new_part,
+                                    position=0,  # Approximate position
+                                    patch_type=PatchType.SIMPLIFICATION,
+                                    confidence=0.6,
+                                    explanation=f"Simplified sentence structure by breaking long sentence"
+                                ))
+                                simplified_sentences.append(new_part)
+                                break
+                    else:
+                        simplified_sentences.append(part)
+                else:
+                    simplified_sentences.append(part)
+            else:
+                simplified_sentences.append(part)
+        
+        if any(patch.patch_type == PatchType.SIMPLIFICATION and "sentence structure" in patch.explanation for patch in patches):
+            corrected_text = ''.join(simplified_sentences)
+        
+        # 3. Replace passive voice with active voice (simple cases)
+        passive_patterns = [
+            (r'\bis\s+(\w+ed)\s+by\s+(\w+)', r'\2 \1s', "Changed passive to active voice"),
+            (r'\bwas\s+(\w+ed)\s+by\s+(\w+)', r'\2 \1ed', "Changed passive to active voice"),
+            (r'\bare\s+(\w+ed)\s+by\s+(\w+)', r'\2 \1', "Changed passive to active voice"),
+        ]
+        
+        for pattern, replacement, explanation in passive_patterns:
+            matches = list(re.finditer(pattern, corrected_text, re.IGNORECASE))
+            for match in reversed(matches):
+                original = match.group(0)
+                new_text = re.sub(pattern, replacement, original, flags=re.IGNORECASE)
+                
+                patches.append(Patch(
+                    original=original,
+                    corrected=new_text,
+                    position=match.start(),
+                    patch_type=PatchType.SIMPLIFICATION,
+                    confidence=0.7,
+                    explanation=explanation
+                ))
+                
+                corrected_text = (corrected_text[:match.start()] + 
+                                new_text + 
+                                corrected_text[match.end():])
+        
+        return corrected_text, patches
 
 
 def main():
