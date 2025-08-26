@@ -1,10 +1,65 @@
-import numpy as np
-import nltk
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.corpus import wordnet
-from nltk.tag import pos_tag
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+SubtextAnalyzer - Analysis of hidden meanings and implicit content in text
+潛文本分析器 - 文本中隱含意義和潛在內容的分析
+"""
+
+# Graceful handling of optional dependencies
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    # Fallback implementation
+    class NumpyFallback:
+        @staticmethod
+        def mean(values):
+            return sum(values) / len(values) if values else 0.0
+        
+        @staticmethod
+        def array(values):
+            return list(values)
+        
+        @staticmethod
+        def random():
+            import random
+            return random
+    
+    np = NumpyFallback()
+
+try:
+    import nltk
+    from nltk.tokenize import word_tokenize, sent_tokenize
+    from nltk.corpus import wordnet
+    from nltk.tag import pos_tag
+    NLTK_AVAILABLE = True
+except ImportError:
+    NLTK_AVAILABLE = False
+    # Fallback implementations
+    def word_tokenize(text):
+        import re
+        return re.findall(r'\b\w+\b', text.lower())
+    
+    def sent_tokenize(text):
+        import re
+        sentences = re.split(r'[.!?]+', text)
+        return [s.strip() for s in sentences if s.strip()]
+    
+    def pos_tag(tokens):
+        # Simple fallback - all words as nouns
+        return [(token, 'NN') for token in tokens]
+    
+    class WordNetFallback:
+        @staticmethod
+        def synsets(word):
+            return []
+    
+    wordnet = WordNetFallback()
+
 from collections import defaultdict
 import re
+import unicodedata
 
 # Try to import spacy, handle gracefully if not available
 try:
@@ -26,13 +81,19 @@ except ImportError:
 
 class SubtextAnalyzer:
     def __init__(self):
-        # Download required NLTK data
-        try:
-            nltk.data.find('tokenizers/punkt')
-        except LookupError:
-            nltk.download('punkt')
-            nltk.download('averaged_perceptron_tagger')
-            nltk.download('wordnet')
+        # Download required NLTK data only if NLTK is available
+        if NLTK_AVAILABLE:
+            try:
+                nltk.data.find('tokenizers/punkt')
+            except LookupError:
+                try:
+                    nltk.download('punkt')
+                    nltk.download('averaged_perceptron_tagger')
+                    nltk.download('wordnet')
+                except Exception as e:
+                    print(f"Warning: Could not download NLTK data: {e}")
+        else:
+            print("NLTK not available. Using fallback tokenization methods.")
         
         # Load spaCy model for advanced NLP
         if SPACY_AVAILABLE:

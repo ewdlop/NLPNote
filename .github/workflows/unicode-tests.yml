@@ -1,0 +1,180 @@
+name: Unicode and Multilingual Support Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unicode-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10', 3.11, 3.12]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt || echo "Some dependencies may be optional"
+        
+    - name: Test Unicode file reading
+      run: |
+        python3 -c "
+        import os
+        import sys
+        
+        # Test reading Unicode files
+        unicode_files = ['發春.md', '施氏食狮史.md', '中文自然语言处理.md']
+        
+        for filename in unicode_files:
+            if os.path.exists(filename):
+                try:
+                    with open(filename, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        print(f'✓ Successfully read {filename} ({len(content)} chars)')
+                except Exception as e:
+                    print(f'✗ Error reading {filename}: {e}')
+                    sys.exit(1)
+            else:
+                print(f'⚠ File not found: {filename}')
+        "
+    
+    - name: Test Python Unicode imports
+      run: |
+        python3 -c "
+        try:
+            from HumanExpressionEvaluator import HumanExpressionEvaluator, ExpressionContext
+            from AStarNLP import AStarNLP
+            from SubtextAnalyzer import SubtextAnalyzer
+            print('✓ All Unicode-aware modules import successfully')
+        except Exception as e:
+            print(f'✗ Import error: {e}')
+            import sys
+            sys.exit(1)
+        "
+    
+    - name: Test Unicode processing
+      run: |
+        python3 -c "
+        from HumanExpressionEvaluator import HumanExpressionEvaluator, ExpressionContext
+        
+        evaluator = HumanExpressionEvaluator()
+        context = ExpressionContext(cultural_background='multicultural')
+        
+        test_expressions = [
+            '你好世界',      # Chinese
+            'こんにちは',     # Japanese
+            '안녕하세요',     # Korean
+            'مرحبا',        # Arabic
+            'Здравствуй',   # Russian
+            '🌍🌎🌏'        # Emojis
+        ]
+        
+        for expr in test_expressions:
+            try:
+                result = evaluator.comprehensive_evaluation(expr, context)
+                score = result['integrated']['overall_score']
+                print(f'✓ Evaluated \"{expr}\" -> {score:.3f}')
+            except Exception as e:
+                print(f'✗ Error evaluating \"{expr}\": {e}')
+                import sys
+                sys.exit(1)
+        "
+    
+    - name: Run Unicode validation
+      run: |
+        python3 unicode_validator.py
+    
+    - name: Test file encoding
+      run: |
+        # Check that all Python files are UTF-8 encoded
+        find . -name "*.py" -type f | while read file; do
+          if ! file -i "$file" | grep -q "utf-8"; then
+            echo "✗ File $file is not UTF-8 encoded"
+            exit 1
+          else
+            echo "✓ File $file is UTF-8 encoded"
+          fi
+        done
+    
+    - name: Test Unicode in filenames
+      run: |
+        python3 -c "
+        import os
+        import sys
+        
+        # Test that files with Unicode names are accessible
+        unicode_files = []
+        for root, dirs, files in os.walk('.'):
+            for file in files:
+                try:
+                    file.encode('ascii')
+                except UnicodeEncodeError:
+                    unicode_files.append(os.path.join(root, file))
+        
+        print(f'Found {len(unicode_files)} files with Unicode names')
+        
+        for file_path in unicode_files[:10]:  # Test first 10
+            if os.path.exists(file_path):
+                print(f'✓ Unicode file accessible: {os.path.basename(file_path)}')
+            else:
+                print(f'✗ Unicode file not accessible: {file_path}')
+                sys.exit(1)
+        "
+
+  cross-platform-unicode:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Test cross-platform Unicode handling
+      run: |
+        python3 -c "
+        import sys
+        import locale
+        import os
+        
+        print(f'Platform: {sys.platform}')
+        print(f'Default encoding: {sys.getdefaultencoding()}')
+        print(f'File system encoding: {sys.getfilesystemencoding()}')
+        print(f'Locale: {locale.getlocale()}')
+        
+        # Test Unicode string handling
+        test_string = '你好世界 Hello こんにちは 🌍'
+        print(f'Test string: {test_string}')
+        print(f'Length: {len(test_string)} characters')
+        print(f'UTF-8 bytes: {len(test_string.encode(\"utf-8\"))} bytes')
+        
+        # Test file operations
+        with open('unicode_test.txt', 'w', encoding='utf-8') as f:
+            f.write(test_string)
+        
+        with open('unicode_test.txt', 'r', encoding='utf-8') as f:
+            read_string = f.read()
+        
+        if test_string == read_string:
+            print('✓ Unicode file I/O works correctly')
+        else:
+            print('✗ Unicode file I/O failed')
+            sys.exit(1)
+        
+        os.remove('unicode_test.txt')
+        "

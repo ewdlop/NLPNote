@@ -1,0 +1,26 @@
+# Core dependencies for NLP and Unicode processing
+numpy>=1.20.0
+pandas>=1.3.0
+
+# Natural Language Processing
+nltk>=3.6
+spacy>=3.4.0
+
+# Optional: Advanced NLP models (uncomment if needed)
+# transformers>=4.0.0
+# torch>=1.9.0
+
+# Text processing and analysis
+scikit-learn>=1.0.0
+
+# Visualization (optional)
+matplotlib>=3.3.0
+seaborn>=0.11.0
+
+# Development and testing
+pytest>=6.0.0
+black>=21.0.0
+flake8>=3.9.0
+
+# Unicode and internationalization
+unicodedata2>=14.0.0

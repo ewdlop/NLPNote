@@ -1,8 +1,43 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+A* Algorithm Implementation for Natural Language Processing Tasks
+"""
+
 import heapq
 import math
 import re
-import numpy as np
+import unicodedata
 from typing import List, Dict, Any, Tuple
+
+# Graceful handling of optional dependencies
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    # Fallback implementation for basic numpy functions
+    class NumpyFallback:
+        @staticmethod
+        def mean(values):
+            return sum(values) / len(values) if values else 0.0
+        
+        @staticmethod
+        def array(values):
+            return list(values)
+        
+        @staticmethod
+        def zeros(shape):
+            if isinstance(shape, int):
+                return [0.0] * shape
+            elif isinstance(shape, tuple):
+                result = [0.0] * shape[0]
+                for i in range(1, len(shape)):
+                    result = [result[:] for _ in range(shape[i])]
+                return result
+            return []
+    
+    np = NumpyFallback()
 
 class AStarNLP:
     """

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 人類表達評估示例 (Human Expression Evaluation Examples)
 
