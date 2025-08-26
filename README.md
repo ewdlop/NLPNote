@@ -1,6 +1,21 @@
 # NLP(Natural Language Processing) Note
 
-## New Content: Mathematical Finance for Risk Management
+## New Content: Non-Neurotransmitter Based Reinforcement Learning
+
+🧠 **[Non-Neurotransmitter Reinforcement Learning](non-neurotransmitter-reinforcement-learning.md)** - Comprehensive exploration of RL approaches that don't rely on traditional neurotransmitter mechanisms.
+
+🐍 **[Python Implementations](non_neurotransmitter_rl_implementations.py)** - Practical implementations of biological and engineering non-neurotransmitter RL methods.
+
+🧪 **[Test Suite](test_non_neurotransmitter_rl.py)** - Comprehensive test cases validating all implementations.
+
+**Key Features:**
+- **Biological Mechanisms**: Stress-adaptive learning (cortisol), social learning (oxytocin), LTP-based learning
+- **Engineering Methods**: Free energy principle, maximum entropy RL, evolutionary strategies
+- **Comparative Analysis**: Statistical comparison framework with performance metrics
+- **Research Applications**: Biomedical modeling, optimization, multi-agent systems
+- **Theoretical Framework**: Information theory, Bayesian learning, dynamical systems perspectives
+
+## Mathematical Finance for Risk Management
 
 📊 **[Mathematical Finance Risk Management](mathematical-finance-risk-management.md)** - Learn how to apply mathematical finance techniques for non-monetary risk assessment and management.
 
