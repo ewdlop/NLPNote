@@ -1,0 +1,10 @@
+# Dependencies for the Numerical Euler-Lagrangian Solver
+# Install with: pip install -r requirements.txt
+
+numpy>=1.19.0
+scipy>=1.8.0
+matplotlib>=3.5.0
+
+# Optional dependencies for extended functionality
+# jupyter>=1.0.0        # For running examples in notebooks
+# sympy>=1.9.0          # For symbolic mathematics
