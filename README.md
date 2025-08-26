@@ -1,6 +1,24 @@
 # NLP(Natural Language Processing) Note
 
-## New Content: Mathematical Finance for Risk Management
+## New Content: Deadly Attractors in Social Dynamics
+
+🔥 **[Deadly Attractors Theory](deadly-attractors-social-dynamics.md)** - Comprehensive analysis of destructive stable states in social dynamical systems using nonlinear dynamics and chaos theory.
+
+⚡ **[Python Simulator](deadly_attractor_simulator.py)** - Advanced simulation engine for modeling hate spirals, echo chambers, prisoner's dilemma, and tragedy of commons scenarios.
+
+🎭 **[Interactive Demo](deadly_attractor_demo.py)** - Visual demonstrations of how social systems evolve toward deadly attractors with phase portraits and stability analysis.
+
+**Key Features:**
+- **Hate Spiral Model**: Mutual retaliation leading to complete trust breakdown
+- **Echo Chamber Model**: Opinion polarization with diversity collapse  
+- **Prisoner's Dilemma**: Evolution of cooperation vs. defection dynamics
+- **Tragedy of Commons**: Resource depletion through exploitation
+- Real-time phase portrait visualization and trajectory analysis
+- Stability analysis with eigenvalue computation
+- Basin of attraction mapping for deadly attractors
+- Early warning signal detection for critical transitions
+
+## Mathematical Finance for Risk Management
 
 📊 **[Mathematical Finance Risk Management](mathematical-finance-risk-management.md)** - Learn how to apply mathematical finance techniques for non-monetary risk assessment and management.
 
