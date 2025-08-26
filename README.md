@@ -1,51 +1,6 @@
 # NLP(Natural Language Processing) Note
 
-## 🆕 New: Semantic Web Knowledge Base (語義網知識庫)
-
-**NEW**: Advanced semantic web capabilities with RDF/OWL support and Protégé integration!
-
-🧠 **[Semantic Knowledge Base](SemanticKnowledgeBase.py)** - Complete semantic web implementation with RDF triples, OWL ontologies, and SPARQL querying.
-
-📖 **[Documentation (中英文)](semantic_web_knowledge_base.md)** - Comprehensive bilingual guide with examples and API reference.
-
-🚀 **[Quick Demo](semantic_demo.py)** - Interactive demonstration of all semantic web features.
-
-**Key Features:**
-- 🔗 **RDF/OWL Ontology Modeling** - Build complex knowledge graphs with semantic relationships
-- 🔍 **SPARQL Querying** - Powerful query language for semantic data retrieval
-- 🛠️ **Protégé Integration** - Export ontologies compatible with the popular Protégé editor
-- 🌍 **Multilingual Support** - Cross-lingual concept mapping and translation relationships
-- 🧪 **NLP Domain Focus** - Pre-built ontologies for linguistic concepts and text analysis
-
-### Quick Start with Semantic Web
-
-```python
-from SemanticKnowledgeBase import SemanticKnowledgeBase
-
-# Create a knowledge base
-kb = SemanticKnowledgeBase()
-
-# Add languages and concepts
-kb.add_language('en', 'English', 'Indo-European')
-kb.add_concept_relation('AI', 'synonymOf', 'artificial intelligence', 0.95)
-
-# SPARQL query
-results = kb.sparql_query("""
-    PREFIX nlp: <http://example.org/nlp/>
-    SELECT ?concept ?relation ?target WHERE {
-        ?concept ?relation ?target .
-    }
-""")
-
-# Export to Protégé
-kb.export_to_owl('my_ontology.owl')
-```
-
-Try it now: `python semantic_demo.py`
-
----
-
-## Mathematical Finance for Risk Management
+## New Content: Mathematical Finance for Risk Management
 
 📊 **[Mathematical Finance Risk Management](mathematical-finance-risk-management.md)** - Learn how to apply mathematical finance techniques for non-monetary risk assessment and management.
 
