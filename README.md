@@ -1,15 +1,5 @@
 # NLP(Natural Language Processing) Note
 
-## New Content: Mathematical Frameworks Comparison
-
-🧮 **[複數-Clifford代數-環論比較](數學/複數-Clifford代數-環論比較.md)** - Comprehensive comparison of Complex Numbers, Clifford Algebra, and Ring Theory applications in mathematics and physics.
-
-**Key Topics Covered:**
-- When to use Complex Numbers (2D phenomena, signal processing, quantum mechanics)
-- Clifford Algebra applications (higher-dimensional geometry, electromagnetics, computer graphics)
-- Ring Theory for abstract algebra (cryptography, number theory, algebraic geometry)
-- Practical decision framework for choosing the right mathematical tool
-
 ## New Content: Mathematical Finance for Risk Management
 
 📊 **[Mathematical Finance Risk Management](mathematical-finance-risk-management.md)** - Learn how to apply mathematical finance techniques for non-monetary risk assessment and management.
