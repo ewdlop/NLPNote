@@ -47,6 +47,46 @@ See the [English Patching Guide](ENGLISH_PATCHING_GUIDE.md) for comprehensive do
 
 ---
 
+## Dark NLP Analysis
+
+**NEW**: This repository now includes comprehensive Dark NLP analysis capabilities!
+
+### Quick Start with Dark NLP Analysis
+
+```python
+from DarkNLPAnalyzer import DarkNLPAnalyzer
+
+# Create a Dark NLP analyzer instance
+analyzer = DarkNLPAnalyzer()
+
+# Analyze potentially problematic text
+suspicious_text = "You must act now! Women are naturally worse at this task."
+result = analyzer.analyze_text(suspicious_text)
+
+print(f"Risk Score: {result.overall_risk_score:.2f}")
+print(f"Patterns Detected: {len(result.detected_patterns)}")
+
+# Generate detailed report
+report = analyzer.generate_report(result, "text")
+print(report)
+```
+
+### Dark Pattern Detection
+
+The Dark NLP analyzer can detect:
+- 🚨 **Bias and Discrimination** (gender, racial, age bias)
+- 🎯 **Manipulation Tactics** (urgency, social pressure, fear-based)
+- 🔒 **Privacy Violations** (personal data requests, tracking)
+- ⚔️ **Adversarial Attacks** (prompt injection, system override)
+- ☠️ **Harmful Content** (violence, self-harm promotion)
+- 🧠 **Psychological Exploitation** (addiction engineering, vulnerability targeting)
+
+### Documentation
+
+See [Dark NLP.md](Dark%20NLP.md) for comprehensive documentation on dark patterns and ethical AI considerations.
+
+---
+
 # What say you?
 
 Endonym and Exonym
