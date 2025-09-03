@@ -159,6 +159,23 @@ Makes complex English easier to read and understand:
 "The report was completed by the team" → "The team completed the report"
 ```
 
+### 7. Paradox Detection (NEW!)
+
+Detects paradoxical and contradictory expressions for analysis:
+
+```python
+# Detect opposing concepts
+"Comfort is a pain." → Flags paradox: 'comfort' and 'pain' are opposing concepts
+"Love is hate." → Flags paradox: 'love' and 'hate' are opposing concepts
+"This is easy and difficult." → Flags opposing concepts in close proximity
+
+# Detect logical contradictions
+"Never always do that." → Flags contradiction between 'never' and 'always'
+"It's impossible to be possible." → Flags contradiction between possible and impossible
+
+# Note: Paradox detection flags issues but doesn't modify the text
+```
+
 ## Usage Modes
 
 ### Conservative Mode (Default)
@@ -227,9 +244,11 @@ result = patcher.patch_text(text, aggressive=True, simplify=True)
 - `original: str` - The original text that was corrected
 - `corrected: str` - The corrected text
 - `position: int` - Position in the original text
-- `patch_type: PatchType` - Type of correction (SPELLING, GRAMMAR, etc.)
+- `patch_type: PatchType` - Type of correction (SPELLING, GRAMMAR, PUNCTUATION, CAPITALIZATION, SPACING, STYLE, TYPO, SIMPLIFICATION, PARADOX)
 - `confidence: float` - Confidence score (0.0 to 1.0)
 - `explanation: str` - Human-readable explanation of the correction
+
+**Note**: PARADOX patches flag contradictory expressions but don't modify the text
 
 ## Integration with Other Tools
 
@@ -285,12 +304,35 @@ for patch in result.patches:
     print(f"  Explanation: {patch.explanation}")
 ```
 
+### Paradox Detection Example
+
+```python
+# Detect contradictory expressions
+text = "Comfort is a pain."
+result = patcher.patch_text(text)
+
+print("Original:", result.original_text)
+print("Patched: ", result.patched_text)  # Text remains unchanged
+print("Paradoxes detected:", len([p for p in result.patches if p.patch_type.value == "paradox"]))
+
+# Output: 
+# Original: Comfort is a pain.
+# Patched:  Comfort is a pain.
+# Paradoxes detected: 1
+
+for patch in result.patches:
+    if patch.patch_type.value == "paradox":
+        print(f"Paradox: {patch.explanation}")
+        # Output: Paradox: Detected paradox: 'comfort' and 'pain' are opposing concepts
+```
+
 ### Real-world Use Cases
 
 1. **Educational Tools**: Help language learners identify and correct mistakes
-2. **Content Review**: Automatically improve draft documents
+2. **Content Review**: Automatically improve draft documents  
 3. **Chat Applications**: Clean up user input before processing
 4. **Data Preprocessing**: Normalize text data for NLP tasks
+5. **Content Analysis**: Detect contradictory or paradoxical statements in text
 
 ## Configuration
 

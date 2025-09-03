@@ -188,6 +188,75 @@ class TestEnglishPatcher(unittest.TestCase):
         # Test lowercase in middle of sentence (won't be auto-capitalized)
         result = self.patcher.patch_text("I will utilize this tool", simplify=True)
         self.assertEqual(result.patched_text, "I will use this tool")
+    
+    def test_paradox_detection(self):
+        """Test paradox and contradiction detection"""
+        test_cases = [
+            "Comfort is a pain.",
+            "Love is hate.",
+            "Peace is war.",
+            "This is easy and difficult.",
+            "Hot, cold weather today.",
+            "The big small car.",
+        ]
+        
+        for test_case in test_cases:
+            with self.subTest(test_case=test_case):
+                result = self.patcher.patch_text(test_case)
+                paradox_patches = [p for p in result.patches if p.patch_type == PatchType.PARADOX]
+                self.assertTrue(len(paradox_patches) > 0, f"Should detect paradox in: {test_case}")
+                self.assertEqual(result.original_text, result.patched_text, "Paradox detection should not modify text")
+    
+    def test_comfort_is_a_pain_specific(self):
+        """Test the specific phrase from the issue: 'Comfort is a pain.'"""
+        result = self.patcher.patch_text("Comfort is a pain.")
+        
+        # Should detect the paradox
+        paradox_patches = [p for p in result.patches if p.patch_type == PatchType.PARADOX]
+        self.assertEqual(len(paradox_patches), 1)
+        
+        # Should not modify the text (paradox detection is analytical only)
+        self.assertEqual(result.original_text, result.patched_text)
+        
+        # Check patch details
+        paradox_patch = paradox_patches[0]
+        self.assertIn("comfort", paradox_patch.explanation.lower())
+        self.assertIn("pain", paradox_patch.explanation.lower())
+        self.assertIn("opposing", paradox_patch.explanation.lower())
+        self.assertTrue(paradox_patch.confidence > 0.5)
+    
+    def test_no_false_paradox_detection(self):
+        """Test that non-paradoxical text doesn't trigger paradox detection"""
+        normal_texts = [
+            "The weather is nice today.",
+            "I love reading books.",
+            "This is a simple sentence.",
+            "Programming is challenging but rewarding.",
+            "The cat sat on the mat.",
+        ]
+        
+        for text in normal_texts:
+            with self.subTest(text=text):
+                result = self.patcher.patch_text(text)
+                paradox_patches = [p for p in result.patches if p.patch_type == PatchType.PARADOX]
+                self.assertEqual(len(paradox_patches), 0, f"Should not detect paradox in: {text}")
+    
+    def test_complex_paradox_patterns(self):
+        """Test detection of complex paradoxical patterns"""
+        complex_cases = [
+            ("Never always do that.", "Contradiction between 'never' and 'always'"),
+            ("It's impossible to be possible.", "Contradiction between possible and impossible"),
+            ("Everything is nothing.", "Contradiction between everything and nothing"),
+        ]
+        
+        for text, expected_explanation_keyword in complex_cases:
+            with self.subTest(text=text):
+                result = self.patcher.patch_text(text)
+                paradox_patches = [p for p in result.patches if p.patch_type == PatchType.PARADOX]
+                self.assertTrue(len(paradox_patches) > 0)
+                # Check that the explanation contains relevant keywords
+                explanation = paradox_patches[0].explanation.lower()
+                self.assertTrue(any(keyword in explanation for keyword in expected_explanation_keyword.lower().split()))
 
 
 class TestEnglishPatcherIntegration(unittest.TestCase):
