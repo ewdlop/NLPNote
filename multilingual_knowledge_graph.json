@@ -1,0 +1,37 @@
+{
+  "concepts": {
+    "AI": {
+      "Arabic": "الذكاء الاصطناعي",
+      "Chinese": "人工智能",
+      "English": "artificial intelligence",
+      "Japanese": "人工知能",
+      "Korean": "인공지능"
+    },
+    "ML": {
+      "Arabic": "تعلم الآلة",
+      "Chinese": "机器学习",
+      "English": "machine learning",
+      "Japanese": "機械学習",
+      "Korean": "기계학습"
+    },
+    "NLP": {
+      "Arabic": "معالجة اللغة الطبيعية",
+      "Chinese": "自然语言处理",
+      "English": "natural language processing",
+      "Japanese": "自然言語処理",
+      "Korean": "자연어처리"
+    }
+  },
+  "languages": [
+    "English",
+    "Chinese",
+    "Japanese",
+    "Korean",
+    "Arabic"
+  ],
+  "metadata": {
+    "total_concepts": 3,
+    "total_languages": 5,
+    "total_translations": 15
+  }
+}

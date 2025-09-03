@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:nlp="http://example.org/nlp/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:nodeID="Nc97216d2966f422aa92924c4c82f9563">
+    <rdf:type rdf:resource="http://example.org/nlp/SemanticRelation"/>
+    <nlp:hasSubject rdf:resource="http://example.org/nlp/concept_machine_learning"/>
+    <nlp:hasObject rdf:resource="http://example.org/nlp/concept_deep_learning"/>
+    <nlp:relationType rdf:resource="http://example.org/nlp/includes"/>
+    <nlp:confidence rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</nlp:confidence>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_natural_language_processing">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>natural language processing</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_AI">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>AI</rdfs:label>
+    <nlp:synonymOf rdf:resource="http://example.org/nlp/concept_artificial_intelligence"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_NLP">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>NLP</rdfs:label>
+    <nlp:synonymOf rdf:resource="http://example.org/nlp/concept_natural_language_processing"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N95ba3482d9e84c58af795b391daf26c7">
+    <rdf:type rdf:resource="http://example.org/nlp/SemanticRelation"/>
+    <nlp:hasSubject rdf:resource="http://example.org/nlp/concept_artificial_intelligence"/>
+    <nlp:hasObject rdf:resource="http://example.org/nlp/concept_natural_language_processing"/>
+    <nlp:relationType rdf:resource="http://example.org/nlp/includes"/>
+    <nlp:confidence rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</nlp:confidence>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/document_doc_en">
+    <rdf:type rdf:resource="http://example.org/nlp/Document"/>
+    <nlp:hasContent>Natural language processing enables machines to understand text.</nlp:hasContent>
+    <nlp:inLanguage rdf:resource="http://example.org/nlp/language_en"/>
+    <dcterms:identifier>doc_en</dcterms:identifier>
+    <nlp:topic>NLP</nlp:topic>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_machine_learning">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>machine learning</rdfs:label>
+    <nlp:includes rdf:resource="http://example.org/nlp/concept_deep_learning"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/NamedEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>NamedEntity</rdfs:label>
+    <rdfs:comment>A real-world object denoted by a proper name</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nd748893d3d3846fbb078857397861d82">
+    <rdf:type rdf:resource="http://example.org/nlp/SemanticRelation"/>
+    <nlp:hasSubject rdf:resource="http://example.org/nlp/concept_AI"/>
+    <nlp:hasObject rdf:resource="http://example.org/nlp/concept_artificial_intelligence"/>
+    <nlp:relationType rdf:resource="http://example.org/nlp/synonymOf"/>
+    <nlp:confidence rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</nlp:confidence>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/family_Japonic">
+    <rdf:type rdf:resource="http://example.org/nlp/LanguageFamily"/>
+    <rdfs:label>Japonic</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/language_zh">
+    <rdf:type rdf:resource="http://example.org/nlp/Language"/>
+    <rdfs:label>Chinese</rdfs:label>
+    <nlp:languageCode>zh</nlp:languageCode>
+    <nlp:belongsToFamily rdf:resource="http://example.org/nlp/family_Sino-Tibetan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Sentence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Sentence</rdfs:label>
+    <rdfs:comment>A grammatical unit of text</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N04c7d4932d6b4470b46825d618499d5b">
+    <rdf:type rdf:resource="http://example.org/nlp/SemanticRelation"/>
+    <nlp:hasSubject rdf:resource="http://example.org/nlp/concept_NLP"/>
+    <nlp:hasObject rdf:resource="http://example.org/nlp/concept_natural_language_processing"/>
+    <nlp:relationType rdf:resource="http://example.org/nlp/synonymOf"/>
+    <nlp:confidence rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</nlp:confidence>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/language_ja">
+    <rdf:type rdf:resource="http://example.org/nlp/Language"/>
+    <rdfs:label>Japanese</rdfs:label>
+    <nlp:languageCode>ja</nlp:languageCode>
+    <nlp:belongsToFamily rdf:resource="http://example.org/nlp/family_Japonic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Token">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Token</rdfs:label>
+    <rdfs:comment>A linguistic unit such as a word or punctuation</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N33c9937e20e64447b5e955e8f99be0d5">
+    <rdf:type rdf:resource="http://example.org/nlp/SemanticRelation"/>
+    <nlp:hasSubject rdf:resource="http://example.org/nlp/concept_artificial_intelligence"/>
+    <nlp:hasObject rdf:resource="http://example.org/nlp/concept_machine_learning"/>
+    <nlp:relationType rdf:resource="http://example.org/nlp/includes"/>
+    <nlp:confidence rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.9</nlp:confidence>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/ontology">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:label>NLP Semantic Knowledge Base</rdfs:label>
+    <rdfs:comment>A semantic knowledge base for natural language processing applications</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_deep_learning">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>deep learning</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Document">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Document</rdfs:label>
+    <rdfs:comment>A collection of text with semantic meaning</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Concept">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Concept</rdfs:label>
+    <rdfs:comment>An abstract or concrete idea represented in text</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Text">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Text</rdfs:label>
+    <rdfs:comment>A piece of written or spoken text</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/document_doc_zh">
+    <rdf:type rdf:resource="http://example.org/nlp/Document"/>
+    <nlp:hasContent>自然语言处理帮助机器理解文本。</nlp:hasContent>
+    <nlp:inLanguage rdf:resource="http://example.org/nlp/language_zh"/>
+    <dcterms:identifier>doc_zh</dcterms:identifier>
+    <nlp:topic>NLP</nlp:topic>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/family_Sino-Tibetan">
+    <rdf:type rdf:resource="http://example.org/nlp/LanguageFamily"/>
+    <rdfs:label>Sino-Tibetan</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/family_Indo-European">
+    <rdf:type rdf:resource="http://example.org/nlp/LanguageFamily"/>
+    <rdfs:label>Indo-European</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/document_doc_ja">
+    <rdf:type rdf:resource="http://example.org/nlp/Document"/>
+    <nlp:hasContent>自然言語処理により、機械がテキストを理解できるようになる。</nlp:hasContent>
+    <nlp:inLanguage rdf:resource="http://example.org/nlp/language_ja"/>
+    <dcterms:identifier>doc_ja</dcterms:identifier>
+    <nlp:topic>NLP</nlp:topic>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/concept_artificial_intelligence">
+    <rdf:type rdf:resource="http://example.org/nlp/Concept"/>
+    <rdfs:label>artificial intelligence</rdfs:label>
+    <nlp:includes rdf:resource="http://example.org/nlp/concept_machine_learning"/>
+    <nlp:includes rdf:resource="http://example.org/nlp/concept_natural_language_processing"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/language_en">
+    <rdf:type rdf:resource="http://example.org/nlp/Language"/>
+    <rdfs:label>English</rdfs:label>
+    <nlp:languageCode>en</nlp:languageCode>
+    <nlp:belongsToFamily rdf:resource="http://example.org/nlp/family_Indo-European"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/SemanticRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>SemanticRelation</rdfs:label>
+    <rdfs:comment>A relationship between concepts or entities</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/language_ar">
+    <rdf:type rdf:resource="http://example.org/nlp/Language"/>
+    <rdfs:label>Arabic</rdfs:label>
+    <nlp:languageCode>ar</nlp:languageCode>
+    <nlp:belongsToFamily rdf:resource="http://example.org/nlp/family_Afro-Asiatic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/Language">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>Language</rdfs:label>
+    <rdfs:comment>A natural or artificial language</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/family_Afro-Asiatic">
+    <rdf:type rdf:resource="http://example.org/nlp/LanguageFamily"/>
+    <rdfs:label>Afro-Asiatic</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/nlp/PartOfSpeech">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label>PartOfSpeech</rdfs:label>
+    <rdfs:comment>Grammatical category of a word</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>

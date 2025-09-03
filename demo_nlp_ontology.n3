@@ -1,0 +1,149 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix nlp: <http://example.org/nlp/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+nlp:NamedEntity a owl:Class ;
+    rdfs:label "NamedEntity" ;
+    rdfs:comment "A real-world object denoted by a proper name" .
+
+nlp:PartOfSpeech a owl:Class ;
+    rdfs:label "PartOfSpeech" ;
+    rdfs:comment "Grammatical category of a word" .
+
+nlp:Sentence a owl:Class ;
+    rdfs:label "Sentence" ;
+    rdfs:comment "A grammatical unit of text" .
+
+nlp:Text a owl:Class ;
+    rdfs:label "Text" ;
+    rdfs:comment "A piece of written or spoken text" .
+
+nlp:Token a owl:Class ;
+    rdfs:label "Token" ;
+    rdfs:comment "A linguistic unit such as a word or punctuation" .
+
+nlp:document_doc_en a nlp:Document ;
+    nlp:hasContent "Natural language processing enables machines to understand text." ;
+    nlp:inLanguage nlp:language_en ;
+    nlp:topic "NLP" ;
+    dcterms:identifier "doc_en" .
+
+nlp:document_doc_ja a nlp:Document ;
+    nlp:hasContent "自然言語処理により、機械がテキストを理解できるようになる。" ;
+    nlp:inLanguage nlp:language_ja ;
+    nlp:topic "NLP" ;
+    dcterms:identifier "doc_ja" .
+
+nlp:document_doc_zh a nlp:Document ;
+    nlp:hasContent "自然语言处理帮助机器理解文本。" ;
+    nlp:inLanguage nlp:language_zh ;
+    nlp:topic "NLP" ;
+    dcterms:identifier "doc_zh" .
+
+nlp:language_ar a nlp:Language ;
+    rdfs:label "Arabic" ;
+    nlp:belongsToFamily nlp:family_Afro-Asiatic ;
+    nlp:languageCode "ar" .
+
+nlp:ontology a owl:Ontology ;
+    rdfs:label "NLP Semantic Knowledge Base" ;
+    rdfs:comment "A semantic knowledge base for natural language processing applications" .
+
+nlp:concept_AI a nlp:Concept ;
+    rdfs:label "AI" ;
+    nlp:synonymOf nlp:concept_artificial_intelligence .
+
+nlp:concept_NLP a nlp:Concept ;
+    rdfs:label "NLP" ;
+    nlp:synonymOf nlp:concept_natural_language_processing .
+
+nlp:family_Afro-Asiatic a nlp:LanguageFamily ;
+    rdfs:label "Afro-Asiatic" .
+
+nlp:family_Indo-European a nlp:LanguageFamily ;
+    rdfs:label "Indo-European" .
+
+nlp:family_Japonic a nlp:LanguageFamily ;
+    rdfs:label "Japonic" .
+
+nlp:family_Sino-Tibetan a nlp:LanguageFamily ;
+    rdfs:label "Sino-Tibetan" .
+
+nlp:language_en a nlp:Language ;
+    rdfs:label "English" ;
+    nlp:belongsToFamily nlp:family_Indo-European ;
+    nlp:languageCode "en" .
+
+nlp:language_ja a nlp:Language ;
+    rdfs:label "Japanese" ;
+    nlp:belongsToFamily nlp:family_Japonic ;
+    nlp:languageCode "ja" .
+
+nlp:language_zh a nlp:Language ;
+    rdfs:label "Chinese" ;
+    nlp:belongsToFamily nlp:family_Sino-Tibetan ;
+    nlp:languageCode "zh" .
+
+nlp:concept_deep_learning a nlp:Concept ;
+    rdfs:label "deep learning" .
+
+nlp:Document a owl:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "A collection of text with semantic meaning" .
+
+nlp:concept_machine_learning a nlp:Concept ;
+    rdfs:label "machine learning" ;
+    nlp:includes nlp:concept_deep_learning .
+
+nlp:Language a owl:Class ;
+    rdfs:label "Language" ;
+    rdfs:comment "A natural or artificial language" .
+
+nlp:concept_artificial_intelligence a nlp:Concept ;
+    rdfs:label "artificial intelligence" ;
+    nlp:includes nlp:concept_machine_learning,
+        nlp:concept_natural_language_processing .
+
+nlp:concept_natural_language_processing a nlp:Concept ;
+    rdfs:label "natural language processing" .
+
+nlp:SemanticRelation a owl:Class ;
+    rdfs:label "SemanticRelation" ;
+    rdfs:comment "A relationship between concepts or entities" .
+
+nlp:Concept a owl:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "An abstract or concrete idea represented in text" .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_natural_language_processing ;
+    nlp:hasSubject nlp:concept_NLP ;
+    nlp:relationType nlp:synonymOf .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_machine_learning ;
+    nlp:hasSubject nlp:concept_artificial_intelligence ;
+    nlp:relationType nlp:includes .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_natural_language_processing ;
+    nlp:hasSubject nlp:concept_artificial_intelligence ;
+    nlp:relationType nlp:includes .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_deep_learning ;
+    nlp:hasSubject nlp:concept_machine_learning ;
+    nlp:relationType nlp:includes .
+
+[] a nlp:SemanticRelation ;
+    nlp:confidence 9e-01 ;
+    nlp:hasObject nlp:concept_artificial_intelligence ;
+    nlp:hasSubject nlp:concept_AI ;
+    nlp:relationType nlp:synonymOf .
+
