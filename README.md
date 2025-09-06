@@ -16,7 +16,7 @@ from EnglishPatcher import EnglishPatcher
 # Create an English patcher instance
 patcher = EnglishPatcher()
 
-# Fix common English errors
+# Fix common non-English errors
 text = "teh quick brown fox jumps over the lazy dog.can you beleive it?"
 result = patcher.patch_text(text)
 
