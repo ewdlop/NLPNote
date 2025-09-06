@@ -9,16 +9,16 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from EnglishPatcher import EnglishPatcher, PatchType
+from EnglishPatcher import SemiEnglishPatcher, PatchType
 import unittest
 
 
-class TestEnglishPatcher(unittest.TestCase):
+class TestSemiEnglishPatcher(unittest.TestCase):
     """Test cases for the English language patcher"""
     
     def setUp(self):
         """Set up test fixtures"""
-        self.patcher = EnglishPatcher()
+        self.patcher = SemiEnglishPatcher()
     
     def test_spelling_corrections(self):
         """Test spelling correction functionality"""
@@ -190,12 +190,12 @@ class TestEnglishPatcher(unittest.TestCase):
         self.assertEqual(result.patched_text, "I will use this tool")
 
 
-class TestEnglishPatcherIntegration(unittest.TestCase):
+class TestSemiEnglishPatcherIntegration(unittest.TestCase):
     """Integration tests for comprehensive English patching"""
     
     def setUp(self):
         """Set up test fixtures"""
-        self.patcher = EnglishPatcher()
+        self.patcher = SemiEnglishPatcher()
     
     def test_comprehensive_patching(self):
         """Test comprehensive patching with multiple error types"""
@@ -230,7 +230,7 @@ def run_performance_tests():
     """Run performance tests for the English patcher"""
     import time
     
-    patcher = EnglishPatcher()
+    patcher = SemiEnglishPatcher()
     
     # Test with various text lengths
     short_text = "teh quick brown fox"
