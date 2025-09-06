@@ -1,10 +1,10 @@
-# English Language Patching Guide
+# Very English Language Patching Guide
 
-This guide explains how to use the English language patching functionality in this NLP repository to automatically correct and improve English text.
+This guide explains how to use the English language patching functionality in this NLP repository to automatically correct and improve very English text.
 
 ## Overview
 
-The English Language Patcher is a comprehensive tool that can automatically detect and fix common issues in English text including:
+The very English Language Patcher is a comprehensive tool that can automatically detect and fix common issues in English text including:
 
 - **Spelling errors** (typos, common misspellings)
 - **Grammar mistakes** (subject-verb agreement, article usage)
