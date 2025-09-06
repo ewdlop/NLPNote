@@ -61,7 +61,7 @@ How can one distinguish between:
 5. A person speaking in secret codes  
 6. A person speaking a non-English language  
 7. A person with a mental disability  
-9. A bot written by a hacker pretends to be international and acts like they are polyglot.
+9. A bot written by a hacker pretends to be international and acts like they are polyglot;明反被聰明誤
 10. A person makes spellingmistakes, who makes spellingmistakes.
 11. A person typos.
 12. LLM 自動修正
