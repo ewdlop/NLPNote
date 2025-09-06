@@ -54,7 +54,7 @@ class PatchResult:
     success_rate: float
 
 
-class EnglishPatcher:
+class SemiEnglishPatcher:
     """Main English language patching class"""
     
     def __init__(self):
