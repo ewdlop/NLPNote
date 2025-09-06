@@ -33,7 +33,7 @@ print("Simplified:", simplified.patched_text)
 
 ### Features
 
-The English patcher can automatically fix:
+The Semi-English patcher can automatically fix:
 - ✅ **Spelling errors** (typos, common misspellings)
 - ✅ **Grammar mistakes** (subject-verb agreement, articles)
 - ✅ **Punctuation issues** (spacing, missing punctuation)
