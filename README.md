@@ -43,7 +43,7 @@ The Semi-English patcher can automatically fix:
 
 ### Documentation
 
-See the [English Patching Guide](ENGLISH_PATCHING_GUIDE.md) for comprehensive documentation.
+See the [VERY_English Patching Guide](VERY_ENGLISH_PATCHING_GUIDE.md) for documentation.
 
 ---
 
