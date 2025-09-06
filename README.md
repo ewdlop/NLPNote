@@ -4,17 +4,17 @@
 
 American Humor. We are just kidding.
 
-## English Language Patching
+## SemiEnglish Language Patching
 
-**NEW**: This repository now includes comprehensive English language patching capabilities!
+**NEW**: This repository now includes comprehensive SemiEnglish language patching capabilities!
 
-### Quick Start with English Patching
+### Quick Start with SemiEnglish Patching
 
 ```python
-from EnglishPatcher import EnglishPatcher
+from EnglishPatcher import SemiEnglishPatcher
 
 # Create an English patcher instance
-patcher = EnglishPatcher()
+patcher = SemiEnglishPatcher()
 
 # Fix common non-English errors
 text = "teh quick brown fox jumps over the lazy dog.can you beleive it?"
