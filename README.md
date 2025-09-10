@@ -66,6 +66,7 @@ How can one distinguish between:
 11. A person typos.
 12. LLM 自動修正
 13. 越狱
+14. A person who pretends to be someone of another nationality, but acts as if people of that nationality speak poor English.
 
 ---
 
