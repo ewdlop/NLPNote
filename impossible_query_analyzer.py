@@ -19,6 +19,14 @@ except ImportError:
     print("Human Expression Evaluator not available. Running with simplified analysis.")
     EVALUATOR_AVAILABLE = False
 
+# Try to import the Big Bounce AI analyzer
+try:
+    from big_bounce_ai_analyzer import BigBounceAIAnalyzer
+    BIG_BOUNCE_AVAILABLE = True
+except ImportError:
+    print("Big Bounce AI Analyzer not available. Running without cosmological analysis.")
+    BIG_BOUNCE_AVAILABLE = False
+
 class ImpossibleQueryAnalyzer:
     """Analyzes queries that contain semantic impossibilities or contradictions."""
     
@@ -27,12 +35,24 @@ class ImpossibleQueryAnalyzer:
             self.expression_evaluator = HumanExpressionEvaluator()
         else:
             self.expression_evaluator = None
+        
+        if BIG_BOUNCE_AVAILABLE:
+            self.big_bounce_analyzer = BigBounceAIAnalyzer()
+        else:
+            self.big_bounce_analyzer = None
     
     def detect_impossibility_type(self, query):
         """Detects the type of impossibility in a query."""
         query_lower = query.lower()
         
         impossibility_types = []
+        
+        # Check for Big Bounce / cosmological queries first
+        if BIG_BOUNCE_AVAILABLE and self.big_bounce_analyzer:
+            big_bounce_types = self.big_bounce_analyzer.detect_query_type(query)
+            if any(t != "unknown_speculation" for t in big_bounce_types):
+                impossibility_types.extend(big_bounce_types)
+                return impossibility_types
         
         # Category mismatch detection
         spiritual_terms = ['angel', 'spirit', 'soul', 'ghost', 'divine', 'heavenly']
@@ -56,6 +76,13 @@ class ImpossibleQueryAnalyzer:
     
     def provide_educational_context(self, query):
         """Provides educational context for impossible queries."""
+        # Check if this is a Big Bounce query first
+        if BIG_BOUNCE_AVAILABLE and self.big_bounce_analyzer:
+            query_types = self.big_bounce_analyzer.detect_query_type(query)
+            if any(t != "unknown_speculation" for t in query_types):
+                return self.big_bounce_analyzer.provide_educational_context(query)
+        
+        # Original angel defecation logic
         if 'angel' in query.lower() and 'defecation' in query.lower():
             return {
                 "theological_context": "Angels are traditionally conceived as spiritual beings without physical bodies in most religious traditions.",
@@ -67,6 +94,13 @@ class ImpossibleQueryAnalyzer:
     
     def suggest_alternative_questions(self, query):
         """Suggests more meaningful alternative questions."""
+        # Check if this is a Big Bounce query first
+        if BIG_BOUNCE_AVAILABLE and self.big_bounce_analyzer:
+            query_types = self.big_bounce_analyzer.detect_query_type(query)
+            if any(t != "unknown_speculation" for t in query_types):
+                return self.big_bounce_analyzer.suggest_alternative_questions(query)
+        
+        # Original angel logic
         if 'angel' in query.lower():
             return [
                 "What are the characteristics of angels in different religious traditions?",
@@ -103,6 +137,13 @@ class ImpossibleQueryAnalyzer:
     
     def generate_response(self, query, context_type="general"):
         """Generates an appropriate response based on context."""
+        # Check if this is a Big Bounce query first
+        if BIG_BOUNCE_AVAILABLE and self.big_bounce_analyzer:
+            query_types = self.big_bounce_analyzer.detect_query_type(query)
+            if any(t != "unknown_speculation" for t in query_types):
+                return self.big_bounce_analyzer.generate_response(query, context_type)
+        
+        # Original logic for angel queries
         impossibility_types = self.detect_impossibility_type(query)
         educational_context = self.provide_educational_context(query)
         alternatives = self.suggest_alternative_questions(query)
@@ -183,6 +224,14 @@ If you're interested in learning more about angels, you might want to explore: {
             print(response)
             print()
         
+        # Use Big Bounce analyzer if available for specialized queries
+        if BIG_BOUNCE_AVAILABLE and self.big_bounce_analyzer:
+            query_types = self.big_bounce_analyzer.detect_query_type(query)
+            if any(t != "unknown_speculation" for t in query_types):
+                print("--- BIG BOUNCE AI ANALYSIS ---")
+                self.big_bounce_analyzer.full_analysis(query)
+                return
+        
         # Use expression evaluator if available
         if EVALUATOR_AVAILABLE:
             print("--- HUMAN EXPRESSION EVALUATION FRAMEWORK ANALYSIS ---")
@@ -213,11 +262,23 @@ def main():
     # The main query from the issue
     main_query = "What is an angel's defecation called?"
     
+    # The Big Bounce query from issue #362
+    big_bounce_query = "If Big Bounce were true, what is the probability of generative AI's hallucinations are rediscovery?"
+    
     print("🎯 CHALLENGE ACCEPTED: Figuring out the impossible!")
     print("=" * 60)
     print()
     
-    # Perform full analysis
+    # Check if we have the Big Bounce query
+    if "big bounce" in big_bounce_query.lower() or "hallucination" in big_bounce_query.lower():
+        print("🌌 COSMIC QUERY DETECTED: Analyzing Big Bounce AI question...")
+        print("=" * 60)
+        analyzer.full_analysis(big_bounce_query)
+        print()
+    
+    # Perform full analysis of original query
+    print("👼 ANGEL QUERY ANALYSIS:")
+    print("=" * 60)
     analyzer.full_analysis(main_query)
     
     # Add the creative "figured it out" section
