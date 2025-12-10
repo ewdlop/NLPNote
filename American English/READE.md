@@ -7,6 +7,7 @@ This directory contains tools and resources specifically for American English la
 - **English courses.md** - Information about English language learning and courses
 - **An intelligent is artificial.md** - Discussion on AI and intelligence in language processing
 - **A vague context.md** - Examples of ambiguous language usage
+- **A cloud computing is not an atmosphere.md** - Understanding countable and uncountable nouns in technical contexts
 
 ## Features
 
