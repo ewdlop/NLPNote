@@ -20,9 +20,6 @@ class TreeNodeType(Enum):
     GENUS = "genus"
     SPECIES = "species"
     ORNAMENT = "ornament"
-    STAR = "star"
-    LIGHT = "light"
-    SNOW = "snow"
 
 
 class OrnamentColor(Enum):
@@ -49,22 +46,30 @@ class MagicalEffect(Enum):
 @dataclass
 class GenusNode:
     """Represents a botanical genus (root of the tree)"""
-    node_type: TreeNodeType = TreeNodeType.GENUS
     name: str = ""
     common_name: str = ""
     family: str = ""
     magical_power: float = 0.0  # 0.0 to 1.0
     
+    @property
+    def node_type(self) -> TreeNodeType:
+        """Node type is always GENUS for GenusNode"""
+        return TreeNodeType.GENUS
+    
 
 @dataclass
 class SpeciesNode:
     """Represents a botanical species (branches of the tree)"""
-    node_type: TreeNodeType = TreeNodeType.SPECIES
     name: str = ""
     genus: str = ""
     characteristics: List[str] = None
     height_level: int = 0  # Position in tree hierarchy
     supernatural_glow: float = 0.0
+    
+    @property
+    def node_type(self) -> TreeNodeType:
+        """Node type is always SPECIES for SpeciesNode"""
+        return TreeNodeType.SPECIES
     
     def __post_init__(self):
         if self.characteristics is None:
@@ -74,12 +79,16 @@ class SpeciesNode:
 @dataclass
 class OrnamentNode:
     """Represents a supernatural ornament on the tree"""
-    node_type: TreeNodeType = TreeNodeType.ORNAMENT
     color: OrnamentColor = OrnamentColor.RED
     effect: MagicalEffect = MagicalEffect.SPARKLE
     intensity: float = 0.0
     semantic_meaning: str = ""
     position: Tuple[int, int] = (0, 0)
+    
+    @property
+    def node_type(self) -> TreeNodeType:
+        """Node type is always ORNAMENT for OrnamentNode"""
+        return TreeNodeType.ORNAMENT
 
 
 # Discriminated Union type for tree nodes
@@ -164,7 +173,6 @@ class SupernaturalChristmasTree:
         
         # Create root genus node
         self.root = GenusNode(
-            node_type=TreeNodeType.GENUS,
             name=self.genus_name,
             common_name=genus_data["common_name"],
             family=genus_data["family"],
@@ -175,7 +183,6 @@ class SupernaturalChristmasTree:
         species_list = genus_data["species"]
         for i, species_name in enumerate(species_list):
             species_node = SpeciesNode(
-                node_type=TreeNodeType.SPECIES,
                 name=species_name,
                 genus=self.genus_name,
                 height_level=i + 1,
@@ -209,7 +216,6 @@ class SupernaturalChristmasTree:
             intensity = (self.height - level + 1) / self.height
             
             ornament = OrnamentNode(
-                node_type=TreeNodeType.ORNAMENT,
                 color=color,
                 effect=effect,
                 intensity=intensity,

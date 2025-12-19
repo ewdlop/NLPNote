@@ -149,10 +149,10 @@ def demo_comparison():
         print(trees[genus].visualize_ascii())
 
 
-def interactive_demo():
-    """Interactive demo allowing user to choose genus"""
+def demo_automated_tree_showcase():
+    """Demo showcasing all available genera (automated, not interactive)"""
     print("\n" + "=" * 80)
-    print("INTERACTIVE DEMO: Create Your Own Supernatural Christmas Tree")
+    print("DEMO: Automated Tree Showcase - All Genera")
     print("=" * 80)
     
     genera = BotanicalDatabase.list_genera()
@@ -161,10 +161,9 @@ def interactive_demo():
         data = BotanicalDatabase.get_genus_data(genus)
         print(f"  {i}. {genus} ({data['common_name']}) - Magical Power: {data['magical_power']}")
     
-    # For demo purposes, just use the first genus
-    # In a real interactive scenario, you would get user input
+    # Auto-select the first genus for demo
     selected_genus = genera[0]
-    print(f"\n[Demo: Auto-selecting {selected_genus}]")
+    print(f"\n[Demo: Showcasing {selected_genus}]")
     
     tree = SupernaturalChristmasTree(selected_genus)
     print("\n🌱 Your tree has been planted!")
@@ -206,7 +205,7 @@ def main():
         ("3", "Discriminated Unions", demo_discriminated_unions),
         ("4", "Tree Evolution", demo_tree_evolution),
         ("5", "Comparison", demo_comparison),
-        ("6", "Interactive", interactive_demo),
+        ("6", "Automated Showcase", demo_automated_tree_showcase),
     ]
     
     print("\n📋 Available Demos:")
