@@ -134,8 +134,9 @@ class SyntaxTreeLightEmitter:
         Convert blackbody temperature to RGB color.
         Based on approximation of blackbody radiation spectrum.
         """
-        # Ensure temperature is positive and reasonable
-        temp = max(10.0, temperature / 100.0)  # Minimum 1000K
+        # Ensure temperature is at least 1000K for valid color conversion
+        temperature = max(1000.0, temperature)
+        temp = temperature / 100.0
         
         # Calculate Red
         if temp <= 66:
