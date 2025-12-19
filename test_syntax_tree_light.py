@@ -40,7 +40,9 @@ class TestSyntaxTreeLightEmitter(unittest.TestCase):
                 args=[],
                 kwonlyargs=[],
                 kw_defaults=[],
-                defaults=[]
+                defaults=[],
+                vararg=None,
+                kwarg=None
             ),
             body=[ast.Pass()],
             decorator_list=[]

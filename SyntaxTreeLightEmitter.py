@@ -134,7 +134,8 @@ class SyntaxTreeLightEmitter:
         Convert blackbody temperature to RGB color.
         Based on approximation of blackbody radiation spectrum.
         """
-        temp = temperature / 100.0
+        # Ensure temperature is positive and reasonable
+        temp = max(10.0, temperature / 100.0)  # Minimum 1000K
         
         # Calculate Red
         if temp <= 66:
@@ -147,7 +148,11 @@ class SyntaxTreeLightEmitter:
         # Calculate Green
         if temp <= 66:
             green = temp
-            green = 99.4708025861 * math.log(green) - 161.1195681661
+            # Guard against log(0) or log(negative)
+            if green > 0:
+                green = 99.4708025861 * math.log(green) - 161.1195681661
+            else:
+                green = 0
         else:
             green = temp - 60
             green = 288.1221695283 * (green ** -0.0755148492)
@@ -160,7 +165,11 @@ class SyntaxTreeLightEmitter:
             blue = 0
         else:
             blue = temp - 10
-            blue = 138.5177312231 * math.log(blue) - 305.0447927307
+            # Guard against log(0) or log(negative)
+            if blue > 0:
+                blue = 138.5177312231 * math.log(blue) - 305.0447927307
+            else:
+                blue = 0
             blue = max(0, min(255, blue))
         
         return (int(red), int(green), int(blue))
@@ -178,7 +187,10 @@ class SyntaxTreeLightEmitter:
         λ_max = b / T where b ≈ 2.898 × 10^6 nm·K
         """
         WIEN_CONSTANT = 2.898e6  # nm·K
-        return WIEN_CONSTANT / temperature if temperature > 0 else 0
+        # Ensure temperature is positive and meaningful
+        if temperature <= 0:
+            raise ValueError(f"Temperature must be positive, got {temperature}K")
+        return WIEN_CONSTANT / temperature
     
     def emit_light(self, node: ast.AST, position: Tuple[int, int] = (0, 0)) -> LightEmission:
         """
