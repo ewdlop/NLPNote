@@ -106,9 +106,9 @@ def demo_tree_evolution():
     print(tree.visualize_ascii())
     
     stages = [
-        (2, "🌿 After 2 growth cycles"),
-        (3, "🌲 After 5 growth cycles (mature)"),
-        (5, "✨ After 10 growth cycles (supernatural!)"),
+        (2, "🌿 Growing to 2 cycles..."),
+        (3, "🌲 Growing to 5 cycles (mature)..."),
+        (5, "✨ Growing to 10 cycles (supernatural!)..."),
     ]
     
     for iterations, description in stages:

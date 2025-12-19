@@ -9,7 +9,6 @@ and supernatural ornaments appearing based on linguistic/semantic properties.
 """
 
 import random
-import math
 from typing import Union, List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass
 from enum import Enum
