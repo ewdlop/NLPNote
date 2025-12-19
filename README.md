@@ -4,6 +4,57 @@
 
 American Humor. We are just kidding.
 
+## 🌟 Syntax Tree Light Emission - Bioluminescent AST Visualization 🌟
+
+**NEW**: The repository now features a unique visualization system that treats syntax trees as **bioluminescent structures** that emit light based on **blackbody radiation** principles!
+
+### Quick Start with Syntax Tree Light Emission
+
+```python
+from SyntaxTreeLightEmitter import SyntaxTreeLightEmitter
+
+# Create an emitter instance
+emitter = SyntaxTreeLightEmitter()
+
+# Analyze your code
+code = """
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+"""
+
+# Generate visualization
+visualization = emitter.generate_ascii_visualization(code)
+print(visualization)
+```
+
+### Concept
+
+Each syntax node emits "light" with properties based on:
+- **Intensity**: Semantic weight (information content)
+- **Color/Temperature**: Structural complexity (via blackbody radiation spectrum)
+  - 🔴 Red/Orange (1000-3000K): Simple structures
+  - 🟡 Yellow (3000-4000K): Moderate complexity  
+  - ⚪ White (4000-6000K): High complexity
+  - 🔵 Blue (6000-10000K): Very high complexity
+
+### Features
+
+- ✨ **Blackbody Radiation Mapping**: Physics-based color temperature from complexity
+- 🔬 **Wien's Displacement Law**: Wavelength calculation for each node
+- 📊 **Complexity Hotspot Detection**: Identify the most complex parts of your code
+- 🎨 **ASCII Visualization**: Beautiful terminal-based representations
+- 📈 **Semantic Weight Analysis**: Find the most information-rich code sections
+
+### Documentation
+
+See the [Syntax Tree Light Emission Guide](SYNTAX_TREE_LIGHT_EMISSION.md) for comprehensive documentation.
+
+Run the demo: `python demo_syntax_tree_light.py`
+
+---
+
 ## SemiEnglish Language Patching
 
 **NEW**: This repository now includes comprehensive SemiEnglish language patching capabilities!
