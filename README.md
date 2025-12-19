@@ -43,11 +43,28 @@ A creative NLP visualization project that combines:
 - 🔍 **Type Filtering**: Query nodes by their discriminator type
 - 📈 **Tree Statistics**: Track growth, ornaments, and magical aura
 
+### Multi-Language Implementation
+
+The Supernatural Christmas Tree is now available in **multiple languages**:
+
+#### Python Implementation
+- Production-ready with comprehensive tests
+- Dynamic typing with Union types
+- See: [Python Implementation](SupernaturalChristmasTree.py)
+- Run demo: `python demo_supernatural_christmas_tree.py`
+
+#### Carbon Implementation
+- Demonstrates Carbon's choice types (discriminated unions)
+- Compile-time type safety with pattern matching
+- See: [Carbon Implementation](Carbon/supernatural_christmas_tree.carbon)
+- Documentation: [Carbon README](Carbon/README.md)
+
+#### Language Comparison
+See [CARBON_COMPARISON.md](CARBON_COMPARISON.md) for a detailed comparison of how discriminated unions are implemented across different programming languages.
+
 ### Documentation
 
 See the [Supernatural Christmas Tree Guide](SUPERNATURAL_CHRISTMAS_TREE_README.md) for comprehensive documentation.
-
-Run the demo: `python demo_supernatural_christmas_tree.py`
 
 ---
 
