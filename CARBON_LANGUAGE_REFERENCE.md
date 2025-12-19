@@ -13,5 +13,5 @@ For more information, visit the official Carbon Language repository:
 
 ## Resources
 
-- [Carbon Language Website](https://github.com/carbon-language/carbon-lang)
+- [Carbon Language Repository](https://github.com/carbon-language/carbon-lang)
 - [Carbon Language Documentation](https://github.com/carbon-language/carbon-lang/tree/trunk/docs)
