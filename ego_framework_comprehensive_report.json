@@ -1,0 +1,40 @@
+{
+  "framework_info": {
+    "name": "Ego-based Neural Network Framework",
+    "version": "1.0.0",
+    "description": "形式化哲学框架：自我神经网络",
+    "mathematical_foundation": "康德哲学 + 贝叶斯推理 + 神经网络",
+    "key_innovation": "在真理追求与自我一致性之间的数学平衡"
+  },
+  "core_features": [
+    "世界状态空间建模 (World State Space Modeling)",
+    "自我信念与偏好系统 (Ego Beliefs & Preferences)",
+    "双重损失函数优化 (Dual Loss Function Optimization)",
+    "信念演化方程 (Belief Evolution Equation)",
+    "哲学光谱解释 (Philosophical Spectrum Interpretation)",
+    "认知偏见模拟 (Cognitive Bias Simulation)",
+    "NLP整合分析 (NLP Integration Analysis)"
+  ],
+  "mathematical_formulas": {
+    "ego_definition": "E = (B, P)",
+    "world_states": "W = {s ∈ S}",
+    "perception_action": "π_obs: S → O, π_act: O → A",
+    "loss_function": "L_total = L_world + λ·L_ego",
+    "belief_evolution": "B_{t+1}(s) ∝ B_t(s)^γ · P(o_t|s)^{1-γ}",
+    "update_rule": "θ_{t+1} = θ_t - η∇[L_world + λL_ego]"
+  },
+  "philosophical_modes": {
+    "λ → 0": "完全客观主义 (Pure Objectivism)",
+    "λ = 0.5": "务实自我 (Pragmatic Ego)",
+    "λ → ∞": "纯粹自我主义 (Pure Egoism)"
+  },
+  "applications": [
+    "对话系统自我一致性",
+    "推荐系统探索-利用平衡",
+    "认知科学研究",
+    "人类偏见建模",
+    "多语言表达分析"
+  ],
+  "validation_status": "✅ 全面验证通过",
+  "integration_status": "✅ 与现有NLP基础设施成功整合"
+}
