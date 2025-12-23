@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "artificial intelligence"
+    },
+    {
+      "id": "machine learning"
+    },
+    {
+      "id": "linguistics"
+    },
+    {
+      "id": "natural language processing"
+    },
+    {
+      "id": "NLP"
+    }
+  ],
+  "edges": [
+    {
+      "source": "machine learning",
+      "target": "natural language processing",
+      "relation": "relatedTo"
+    },
+    {
+      "source": "linguistics",
+      "target": "natural language processing",
+      "relation": "relatedTo"
+    },
+    {
+      "source": "artificial intelligence",
+      "target": "natural language processing",
+      "relation": "subsumes"
+    },
+    {
+      "source": "natural language processing",
+      "target": "NLP",
+      "relation": "synonymOf"
+    }
+  ]
+}
