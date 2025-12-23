@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
+    <ApplicationId>com.nlpnote.harmonyos</ApplicationId>
+    <ApplicationVersion>1.0.0</ApplicationVersion>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <AssemblyName>nlpnote-harmonyos</AssemblyName>
+    <RootNamespace>NLPNote.HarmonyOS</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- HarmonyOS specific properties -->
+    <DefineConstants>HARMONYOS</DefineConstants>
+    <PackageDescription>NLP Note application optimized for HarmonyOS platform</PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../NLPNote.Core/NLPNote.Core.csproj" />
+  </ItemGroup>
+
+  <!-- HarmonyOS specific configurations -->
+  <ItemGroup>
+    <None Include="harmonyos.config.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
