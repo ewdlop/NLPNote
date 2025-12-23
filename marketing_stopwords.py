@@ -44,6 +44,8 @@ class MarketingStopwords:
         self.data_file = data_file or self._get_default_data_file()
         self.stopwords: Set[str] = set()
         self.whitelist: Set[str] = set()
+        self.political_context_patterns: Set[str] = set()
+        self.political_preserved_terms: Set[str] = set()
         self.regex_patterns: List[re.Pattern] = []
         self._load_data()
     
@@ -65,6 +67,14 @@ class MarketingStopwords:
             whitelist_data = data.get('whitelist', {})
             self.whitelist = {term.lower() for term in whitelist_data.get('terms', [])}
             
+            # Load political context patterns
+            political_context_data = data.get('political_context_patterns', {})
+            self.political_context_patterns = {pattern.lower() for pattern in political_context_data.get('patterns', [])}
+            
+            # Load political preserved terms
+            political_preserved_data = data.get('political_preserved_terms', {})
+            self.political_preserved_terms = {term.lower() for term in political_preserved_data.get('terms', [])}
+            
             # Generate regex patterns for different categories
             self._generate_regex_patterns()
             
@@ -84,6 +94,16 @@ class MarketingStopwords:
         ]
         self.stopwords = {word.lower() for word in basic_stopwords}
         self.whitelist = {"first aid", "optimal transport", "fast fourier transform"}
+        
+        # Load default political context data
+        self.political_context_patterns = {
+            "democratic", "democracy", "government", "political", "election",
+            "candidate", "party", "vote", "voting", "governance", "policy"
+        }
+        self.political_preserved_terms = {
+            "best", "leading", "premier", "top", "ultimate", "revolutionary",
+            "comprehensive", "optimal", "superior", "effective", "efficient"
+        }
     
     def _generate_regex_patterns(self):
         """Generate regex patterns for capturing word variations."""
@@ -106,20 +126,39 @@ class MarketingStopwords:
         
         self.regex_patterns = [re.compile(pattern, re.IGNORECASE) for pattern in patterns]
     
-    def is_marketing_term(self, word: str) -> bool:
+    def _has_political_context(self, text: str) -> bool:
+        """
+        Check if text contains political or democratic context.
+        
+        Args:
+            text: Text to analyze for political context
+            
+        Returns:
+            True if political/democratic context is detected
+        """
+        text_lower = text.lower()
+        return any(pattern in text_lower for pattern in self.political_context_patterns)
+    
+    def is_marketing_term(self, word: str, context_text: str = "") -> bool:
         """
         Check if a word is a marketing/promotional term.
         
         Args:
             word: Word or phrase to check
+            context_text: Full text context for political awareness
             
         Returns:
-            True if word is a marketing term and not whitelisted
+            True if word is a marketing term and not whitelisted or in political context
         """
         word_lower = word.lower().strip()
         
         # Check whitelist first - preserve legitimate technical terms
         if word_lower in self.whitelist:
+            return False
+        
+        # If this is a political context and the word is politically preserved, don't filter it
+        if (context_text and self._has_political_context(context_text) and 
+            word_lower in self.political_preserved_terms):
             return False
             
         return word_lower in self.stopwords
@@ -138,15 +177,19 @@ class MarketingStopwords:
         if not text:
             return text
         
+        original_text = text  # Keep original for context checking
+        has_political_context = self._has_political_context(original_text)
+        
         # First check for exact phrase matches in whitelist
         for whitelisted in self.whitelist:
             if whitelisted in text.lower():
                 # Temporarily replace whitelisted terms to protect them
                 text = re.sub(re.escape(whitelisted), f"__WHITELIST_{hash(whitelisted)}__", text, flags=re.IGNORECASE)
         
-        # Apply regex patterns to remove marketing terms
-        for pattern in self.regex_patterns:
-            text = pattern.sub(replacement, text)
+        # Apply regex patterns to remove marketing terms only in non-political contexts
+        if not has_political_context:
+            for pattern in self.regex_patterns:
+                text = pattern.sub(replacement, text)
         
         # Remove individual stopwords while preserving punctuation
         words = re.findall(r'\S+', text)  # Split on whitespace but keep punctuation
@@ -155,7 +198,7 @@ class MarketingStopwords:
         for word in words:
             # Clean word of punctuation for checking, but preserve original
             clean_word = re.sub(r'[^\w\s-]', '', word).lower()
-            if clean_word and not self.is_marketing_term(clean_word):
+            if clean_word and not self.is_marketing_term(clean_word, original_text):
                 filtered_words.append(word)
             elif replacement and clean_word:
                 # Keep punctuation from original word
@@ -199,7 +242,7 @@ class MarketingStopwords:
         words = re.finditer(r'\b\w+(?:[-\s]\w+)*\b', text)
         for match in words:
             word = match.group().lower()
-            if self.is_marketing_term(word):
+            if self.is_marketing_term(word, text):
                 found_terms.append((match.group(), match.start(), match.end()))
         
         # Sort by position and remove duplicates

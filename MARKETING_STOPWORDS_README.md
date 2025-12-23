@@ -68,12 +68,39 @@ def clean_sentences(text):
     return [filter.filter_text(sent) for sent in sentences]
 ```
 
+### Political Context Awareness
+
+The filter includes intelligent context detection that preserves legitimate political terms:
+
+```python
+# Political context - terms are preserved
+political_text = "Democracy is the best form of government."
+filtered = filter.filter_text(political_text)
+# Result: "Democracy is the best form of government." (unchanged)
+
+# Marketing context - terms are filtered  
+marketing_text = "Our best-in-class software delivers optimal performance."
+filtered = filter.filter_text(marketing_text)
+# Result: "Our software delivers performance."
+```
+
+**Political Context Patterns**: The filter detects political/democratic contexts using patterns like:
+- democratic, democracy, government, political
+- election, candidate, party, vote, voting
+- governance, policy, legislation, congress, parliament
+
+**Preserved Terms in Political Context**:
+- best, leading, premier, top, ultimate
+- revolutionary, comprehensive, optimal
+- superior, effective, efficient, reliable
+
 ## Files Included
 
 - `marketing_stopwords.json` - Complete stopwords data with metadata and whitelist
 - `marketing_stopwords.py` - Main Python module with filtering functionality  
 - `marketing_stopwords.txt` - Simple text list of terms for reference
 - `test_marketing_stopwords.py` - Test suite demonstrating functionality
+- `test_political_context_filtering.py` - Political context-aware filtering tests
 
 ## Stopwords Categories
 
@@ -143,26 +170,30 @@ Run the test suite to verify functionality:
 
 ```bash
 python3 test_marketing_stopwords.py
+python3 test_political_context_filtering.py
 ```
 
-Expected output shows filtering of promotional terms while preserving technical language and maintaining text structure.
+Expected output shows filtering of promotional terms while preserving technical language and political discourse, maintaining text structure.
 
 ## Use Cases
 
 ### Content Editing
 - Clean marketing copy for government or academic publications
-- Improve technical documentation clarity
+- Improve technical documentation clarity  
 - Remove promotional language from user-generated content
+- **NEW**: Preserve legitimate political discourse and democratic language
 
 ### Text Analysis
 - Preprocess text before sentiment analysis
 - Normalize content for fair comparison
 - Identify marketing-heavy content automatically
+- **NEW**: Context-aware filtering for political and non-political content
 
 ### Writing Tools
 - Real-time editing suggestions
 - Style guide enforcement
 - Content quality scoring
+- **NEW**: Political context-sensitive recommendations
 
 ## Research Foundation
 
@@ -176,12 +207,15 @@ This implementation is based on:
 
 4. **Plain English Movement**: Advocates for clear, direct communication over promotional rhetoric.
 
+5. **Political Language Research**: Recognizes that certain terms have legitimate meanings in political and democratic contexts that should be preserved.
+
 ## Limitations
 
-- **Context sensitivity**: Some terms may be appropriate in certain technical contexts
+- **Context sensitivity**: Some terms may be appropriate in certain technical or political contexts
 - **Language support**: Primarily designed for English text
 - **Cultural variations**: Marketing language varies across cultures and regions
-- **False positives**: May occasionally filter legitimate usage
+- **False positives**: May occasionally filter legitimate usage, but now includes political context awareness
+- **Political context detection**: Currently focuses on English democratic terms and may need expansion for other political systems
 
 ## Recommendations
 

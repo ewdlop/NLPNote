@@ -155,6 +155,51 @@
       "Streamline Moderne"
     ]
   },
+  "political_context_patterns": {
+    "note": "Patterns that indicate political/democratic context where certain terms should be preserved",
+    "patterns": [
+      "democratic",
+      "democracy",
+      "government",
+      "political",
+      "election",
+      "candidate",
+      "party",
+      "vote",
+      "voting",
+      "governance",
+      "policy",
+      "legislation",
+      "congress",
+      "parliament",
+      "senate",
+      "institution",
+      "reform",
+      "campaign",
+      "leadership",
+      "administration"
+    ]
+  },
+  "political_preserved_terms": {
+    "note": "Terms that should be preserved when they appear in political/democratic contexts",
+    "terms": [
+      "best",
+      "leading",
+      "premier",
+      "top",
+      "ultimate",
+      "revolutionary",
+      "comprehensive",
+      "optimal",
+      "superior",
+      "effective",
+      "efficient",
+      "reliable",
+      "proven",
+      "trusted",
+      "innovative"
+    ]
+  },
   "usage_notes": [
     "Use case-insensitive matching",
     "Check whitelist before filtering",
