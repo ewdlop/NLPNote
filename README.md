@@ -145,6 +145,27 @@ See the [VERY_English Patching Guide](VERY_ENGLISH_PATCHING_GUIDE.md) for docume
 
 ---
 
+## Mathematical Concepts
+
+This repository also includes research and implementations of novel mathematical concepts:
+
+### Promise Rings
+A new algebraic structure that combines traditional ring theory with promise-based constraints. Promise rings provide a framework for formalizing behavioral guarantees in mathematical operations.
+
+- **Documentation**: [承諾環 (Promise Ring)](數學/承諾環.md)
+- **Implementation**: [promise_ring_demo.py](promise_ring_demo.py) 
+- **Tests**: [test_promise_ring.py](test_promise_ring.py)
+
+**Key Features:**
+- Formal mathematical definitions and axioms
+- Python implementation with Boolean and Integer promise rings
+- Applications in type systems, distributed systems, and formal verification
+- Comprehensive test suite verifying promise consistency
+
+See the [數學 (Mathematics) directory](數學/README.md) for more mathematical concepts and research.
+
+---
+
 # What say you?
 
 Endonym and Exonym
