@@ -4,9 +4,19 @@
 
 American Humor. We are just kidding.
 
-## 📚 Repository Management
+## 📚 Repository Management & GitHub Organization Help
 
-**IMPORTANT**: Having issues seeing your repositories after transferring to an organization? Check out our comprehensive [Repository Visibility Troubleshooting Guide](REPOSITORY_VISIBILITY_TROUBLESHOOTING.md) for step-by-step solutions.
+**Having issues with GitHub organizations or transferred repositories?** We've got you covered with comprehensive documentation:
+
+### 🆘 Quick Help
+- **Can't see repos after transfer?** → [Troubleshooting Guide](REPOSITORY_VISIBILITY_TROUBLESHOOTING.md)
+- **Need quick solutions?** → [Quick Reference Card](GITHUB_ORG_QUICK_REFERENCE.md)
+- **General questions?** → [Organization FAQ](GITHUB_ORGANIZATION_FAQ.md)
+
+### 📖 Documentation
+1. **[Repository Visibility Troubleshooting Guide](REPOSITORY_VISIBILITY_TROUBLESHOOTING.md)** - Step-by-step solutions for finding transferred repositories
+2. **[GitHub Organization Quick Reference](GITHUB_ORG_QUICK_REFERENCE.md)** - Quick fixes and important URLs
+3. **[GitHub Organization FAQ](GITHUB_ORGANIZATION_FAQ.md)** - Frequently asked questions about organizations
 
 ---
 
