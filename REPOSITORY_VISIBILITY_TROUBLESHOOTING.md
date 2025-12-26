@@ -176,7 +176,7 @@ To avoid this issue in the future:
 
 If you're still experiencing issues:
 - Check GitHub Status: [https://www.githubstatus.com/](https://www.githubstatus.com/)
-- GitHub Community Forum: [https://github.community/](https://github.community/)
+- GitHub Community Discussions: [https://github.com/orgs/community/discussions](https://github.com/orgs/community/discussions)
 - Contact your organization owner or administrator
 
 ---

@@ -216,7 +216,7 @@
 - **Detailed Troubleshooting**: [REPOSITORY_VISIBILITY_TROUBLESHOOTING.md](REPOSITORY_VISIBILITY_TROUBLESHOOTING.md)
 - **Quick Reference**: [GITHUB_ORG_QUICK_REFERENCE.md](GITHUB_ORG_QUICK_REFERENCE.md)
 - **GitHub Docs**: https://docs.github.com/en/organizations
-- **GitHub Community**: https://github.community/
+- **GitHub Community Discussions**: https://github.com/orgs/community/discussions
 - **GitHub Support**: https://support.github.com/
 
 ---

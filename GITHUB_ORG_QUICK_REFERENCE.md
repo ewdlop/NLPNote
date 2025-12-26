@@ -92,7 +92,7 @@ See [REPOSITORY_VISIBILITY_TROUBLESHOOTING.md](REPOSITORY_VISIBILITY_TROUBLESHOO
 ## Still Having Issues?
 
 1. **GitHub Support**: https://support.github.com/contact
-2. **GitHub Community**: https://github.community/
+2. **GitHub Community Discussions**: https://github.com/orgs/community/discussions
 3. **GitHub Status**: https://www.githubstatus.com/
 
 ---
