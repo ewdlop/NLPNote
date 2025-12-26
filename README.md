@@ -4,6 +4,12 @@
 
 American Humor. We are just kidding.
 
+## 📚 Repository Management
+
+**IMPORTANT**: Having issues seeing your repositories after transferring to an organization? Check out our comprehensive [Repository Visibility Troubleshooting Guide](REPOSITORY_VISIBILITY_TROUBLESHOOTING.md) for step-by-step solutions.
+
+---
+
 ## 🎄 Supernatural Christmas Tree Generator 🎄
 
 **NEW**: Grow a supernatural Christmas tree based on botanical genus taxonomy using discriminated unions from type theory!
